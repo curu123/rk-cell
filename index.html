@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RK CELL - Syarat, Ketentuan & Informasi Layanan Service HP</title>
+    <title>RK CELL - Service Center HP Professional & Digital Warranty</title>
     <style>
         :root {
-            /* VIBRANT COLOR PALETTE (DARK MODE) */
             --bg: #070b19;
             --panel: #0f172a;
             --panel-2: #1e293b;
@@ -14,7 +13,6 @@
             --muted: #94a3b8;
             --line: rgba(255, 255, 255, 0.1);
             
-            /* Accent Colors */
             --primary: #00f2fe;
             --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
             --secondary-gradient: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
@@ -29,7 +27,6 @@
         }
 
         body.light-mode {
-            /* VIBRANT COLOR PALETTE (LIGHT MODE) */
             --bg: #f0f4f8;
             --panel: #ffffff;
             --panel-2: #f8fafc;
@@ -50,34 +47,23 @@
             --glow: rgba(2, 132, 199, 0.15);
         }
 
-        @page {
-            size: A4;
-            margin: 12mm 10mm;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
+        @page { size: A4; margin: 12mm 10mm; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-            color: var(--text);
-            background-color: var(--bg);
+            color: var(--text); background-color: var(--bg);
             background-image: 
                 radial-gradient(circle at 10% 0%, rgba(121, 40, 202, 0.15), transparent 30%),
                 radial-gradient(circle at 90% 20%, rgba(0, 242, 254, 0.12), transparent 30%),
                 radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.1), transparent 35%);
             background-attachment: fixed;
-            font-size: 8.8pt;
-            line-height: 1.4;
+            font-size: 8.8pt; line-height: 1.4;
             transition: background-color .35s ease, color .35s ease;
         }
 
-        /* Utility Helpers */
         .text-center { text-align: center; }
         .text-cyan { color: var(--accent-cyan); }
         .text-green { color: var(--accent-green); }
@@ -85,64 +71,33 @@
         .text-red { color: var(--accent-red); }
         .text-purple { color: var(--accent-purple); }
 
-        /* Navigation Bar */
         .pro-nav {
-            max-width: 1100px;
-            margin: 10px auto 18px;
-            padding: 10px 18px;
-            display: flex; 
-            align-items: center; 
-            gap: 20px;
-            border: 1px solid var(--line);
-            border-radius: 999px;
+            max-width: 1100px; margin: 10px auto 18px; padding: 10px 18px;
+            display: flex; align-items: center; gap: 20px;
+            border: 1px solid var(--line); border-radius: 999px;
             background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             position: sticky; top: 10px; z-index: 900;
             box-shadow: 0 8px 32px var(--shadow);
         }
-        body.light-mode .pro-nav {
-            background: rgba(255, 255, 255, 0.85);
-        }
-        .nav-brand {
-            font-weight: 900; 
-            letter-spacing: 1px; 
-            font-size: 14pt; 
-            color: var(--text); 
-            margin-right: auto;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .nav-brand span {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .nav-links { display: flex; gap: 18px; }
-        .nav-links a { color: var(--muted); text-decoration: none; font-size: 8.5pt; font-weight: 700; transition: color .2s; }
+        body.light-mode .pro-nav { background: rgba(255, 255, 255, 0.85); }
+        .nav-brand { font-weight: 900; letter-spacing: 1px; font-size: 14pt; color: var(--text); margin-right: auto; display: flex; align-items: center; gap: 6px; }
+        .nav-brand span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 14px; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 8pt; font-weight: 700; transition: color .2s; }
         .nav-links a:hover { color: var(--accent-cyan); }
         .nav-wa {
-            text-decoration: none; 
-            color: #fff !important; 
-            background: linear-gradient(135deg, #10b981, #059669); 
-            padding: 8px 14px; 
-            border-radius: 999px; 
-            font-size: 8pt; 
-            font-weight: 800;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-            transition: transform .2s ease;
+            text-decoration: none; color: #fff !important; background: linear-gradient(135deg, #10b981, #059669); 
+            padding: 8px 14px; border-radius: 999px; font-size: 8pt; font-weight: 800;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3); transition: transform .2s ease;
         }
         .nav-wa:hover { transform: translateY(-2px); }
 
-        /* Hero Section */
         .pro-hero {
             max-width: 1100px; margin: 0 auto 16px;
             display: grid; grid-template-columns: 1.6fr 0.9fr; gap: 20px;
-            padding: 30px; border-radius: 24px;
-            background: var(--panel);
-            border: 1px solid var(--line);
-            overflow: hidden; position: relative;
+            padding: 30px; border-radius: 24px; background: var(--panel);
+            border: 1px solid var(--line); overflow: hidden; position: relative;
             box-shadow: 0 20px 50px var(--shadow);
         }
         .pro-hero::before {
@@ -150,25 +105,18 @@
             background: linear-gradient(90deg, #00f2fe, #7928ca, #ff0080, #10b981);
         }
         .hero-copy h1 { font-size: 26pt; line-height: 1.15; margin: 8px 0 12px; color: var(--text); font-weight: 900; }
-        .hero-copy h1 span {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .hero-copy h1 span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-copy p { color: var(--muted); font-size: 9.5pt; line-height: 1.6; }
         .eyebrow { font-size: 7.5pt; letter-spacing: 2px; color: var(--accent-cyan); font-weight: 900; text-transform: uppercase; }
         
         .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-        .primary-cta, .secondary-cta { text-decoration: none; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 8.5pt; transition: all .2s; }
+        .primary-cta, .secondary-cta { text-decoration: none; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 8.5pt; transition: all .2s; cursor: pointer; border: 0;}
         .primary-cta { background: var(--primary-gradient); color: #fff; box-shadow: 0 6px 20px var(--glow); }
         .primary-cta:hover { transform: translateY(-2px); }
         .secondary-cta { border: 1px solid var(--line); color: var(--text); background: rgba(255,255,255,0.03); }
         .secondary-cta:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 
-        .hero-card {
-            align-self: center; padding: 20px; border-radius: 18px;
-            background: var(--panel-2); border: 1px solid var(--line);
-        }
+        .hero-card { align-self: center; padding: 20px; border-radius: 18px; background: var(--panel-2); border: 1px solid var(--line); }
         .status { font-size: 7.5pt; font-weight: 900; letter-spacing: 1px; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
         .status i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green); margin-right: 6px; }
         .hero-stat { display: flex; justify-content: space-between; align-items: flex-end; padding: 10px 0; border-bottom: 1px solid var(--line); }
@@ -176,23 +124,17 @@
         .hero-stat strong { font-size: 14pt; color: var(--text); }
         .hero-stat span { font-size: 7.5pt; color: var(--muted); }
 
-        /* Feature Cards Grid */
         .quick-grid { max-width: 1100px; margin: 0 auto 22px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .quick-card {
-            display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 16px;
-            background: var(--panel); border: 1px solid var(--line); transition: all .25s ease;
-        }
+        .quick-card { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); transition: all .25s ease; }
         .quick-card:hover { transform: translateY(-3px); border-color: var(--accent-cyan); box-shadow: 0 8px 24px var(--shadow); }
         .quick-card > span { font-size: 22px; }
         .quick-card strong { display: block; color: var(--text); font-size: 8.5pt; }
         .quick-card small { display: block; color: var(--muted); font-size: 7.5pt; margin-top: 2px; }
 
-        /* Header Banner */
         .header-banner {
             max-width: 1100px; margin: 0 auto 16px;
             background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 242, 254, 0.2));
-            border: 2px solid var(--accent-cyan);
-            border-radius: 18px; padding: 16px; text-align: center;
+            border: 2px solid var(--accent-cyan); border-radius: 18px; padding: 16px; text-align: center;
             box-shadow: 0 10px 30px var(--glow);
         }
         .brand-title { font-size: 22pt; font-weight: 900; color: var(--text); letter-spacing: 2px; }
@@ -203,12 +145,28 @@
             font-size: 8.5pt; color: var(--muted); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;
         }
 
-        /* Section Labels */
+        .estimator-box {
+            max-width: 1100px; margin: 0 auto 20px; padding: 20px;
+            background: var(--panel); border: 1px solid var(--accent-cyan); border-radius: 20px;
+            box-shadow: 0 8px 30px var(--glow);
+        }
+        .estimator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 8pt; font-weight: 800; color: var(--accent-cyan); }
+        .form-group select {
+            background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+            padding: 10px; border-radius: 10px; font-size: 8.5pt; outline: none;
+        }
+        .form-group select:focus { border-color: var(--accent-cyan); }
+        .calc-result {
+            margin-top: 14px; padding: 14px; background: var(--panel-2); border-radius: 12px;
+            border: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center;
+        }
+
         .section-label { max-width: 1100px; margin: 24px auto 12px; padding: 0 4px; }
         .section-label span { display: block; color: var(--accent-cyan); font-size: 7.5pt; font-weight: 900; letter-spacing: 1.5px; }
         .section-label strong { display: block; color: var(--text); font-size: 15pt; margin-top: 2px; }
 
-        /* Accordion Collapsible Sections */
         details {
             max-width: 1100px; margin: 0 auto 12px;
             background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
@@ -238,27 +196,23 @@
 
         .details-body { padding: 16px; border-top: 1px solid var(--line); background: var(--panel); }
 
-        /* Layout Grid & Tables */
         .grid-table { width: 100%; border-collapse: collapse; border: none; }
         .grid-table td { border: none; padding: 6px; vertical-align: top; }
         .sub-box { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px; height: 100%; }
 
         .sub-header { font-size: 9.5pt; font-weight: 800; color: var(--accent-cyan); margin: 4px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
 
-        /* Badges & Highlights */
         .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 7.5pt; font-weight: 800; }
         .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
         .badge-yellow { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
         .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
         .badge-blue { background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
 
-        /* Data Tables */
         table.data-table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 8.2pt; }
         table.data-table th { background: var(--panel-2); color: var(--accent-cyan); padding: 8px 10px; text-align: left; border: 1px solid var(--line); font-weight: 800; }
         table.data-table td { padding: 8px 10px; border: 1px solid var(--line); color: var(--text); }
         table.data-table tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
 
-        /* Lists */
         ul { margin: 4px 0 8px 0; padding-left: 18px; }
         li { margin-bottom: 3px; color: var(--muted); }
         ul.check-list { list-style: none; padding-left: 0; }
@@ -272,11 +226,10 @@
         .price-text { font-size: 9.5pt; font-weight: 800; color: var(--accent-green); }
 
         .alert-box {
-            background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-red); border-radius: 10px; padding: 10px 14px; margin-top: 10px; color: var(--text); font-size: 8.5pt;
+            background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-red); border-radius: 10px; padding: 12px 14px; margin-top: 10px; color: var(--text); font-size: 8.5pt;
         }
-        .alert-title { color: var(--accent-red); font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .alert-title { color: var(--accent-red); font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-size: 9.5pt; }
 
-        /* GOOGLE MAPS SECTION */
         .map-container {
             max-width: 1100px; margin: 24px auto; padding: 20px;
             background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
@@ -289,9 +242,7 @@
             width: 100%; height: 380px; border-radius: 14px; overflow: hidden;
             border: 1px solid var(--line); position: relative;
         }
-        .map-wrapper iframe {
-            width: 100%; height: 100%; border: 0;
-        }
+        .map-wrapper iframe { width: 100%; height: 100%; border: 0; }
 
         .contact-panel {
             max-width: 1100px; margin: 24px auto; padding: 24px; border-radius: 20px;
@@ -303,7 +254,6 @@
 
         .footer-text { max-width: 1100px; margin: 20px auto 40px; text-align: center; font-size: 7.5pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
 
-        /* Controls & Theme Switcher */
         .theme-toggle {
             appearance: none; border: 1px solid var(--line); background: rgba(255,255,255,0.05);
             color: var(--text); border-radius: 999px; padding: 6px 12px; font-size: 7.5pt; font-weight: 800;
@@ -311,7 +261,7 @@
         }
         .theme-toggle:hover { border-color: var(--accent-cyan); background: rgba(0, 242, 254, 0.1); }
 
-        /* ===== HUMAN-LIKE AI ASSISTANT ===== */
+        /* AI WIDGET STYLES & MINIMIZE CONTROL */
         .ai-launcher {
             position: fixed; right: 24px; bottom: 24px; z-index: 2000;
             display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 14px;
@@ -336,42 +286,61 @@
 
         .ai-panel {
             position: fixed; right: 24px; bottom: 84px; z-index: 1999;
-            width: min(390px, calc(100vw - 32px)); height: min(580px, calc(100vh - 110px));
+            width: min(420px, calc(100vw - 32px)); height: min(620px, calc(100vh - 110px));
             display: flex; flex-direction: column; overflow: hidden;
             border-radius: 24px; border: 1px solid var(--accent-cyan);
             background: var(--panel); box-shadow: 0 20px 60px var(--shadow);
-            opacity: 0; visibility: hidden; transform: translateY(20px) scale(.95);
-            transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+            opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.95);
+            transition: opacity .25s ease, transform .25s ease, visibility .25s ease, height .25s ease;
         }
         .ai-panel.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .ai-panel.minimized {
+            height: 60px !important;
+            overflow: hidden;
+        }
+        .ai-panel.minimized .ai-body,
+        .ai-panel.minimized .ai-input { display: none !important; }
         
         .ai-header {
-            display: flex; justify-content: space-between; align-items: center; padding: 14px 18px;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 16px;
             background: var(--panel-2); border-bottom: 1px solid var(--line);
         }
         .ai-brand { display: flex; align-items: center; gap: 10px; color: var(--text); }
         .ai-brand strong { display: block; font-size: 9.5pt; }
         .ai-brand small { display: block; color: var(--accent-green); font-size: 7.5pt; }
-        .ai-close { border: 0; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; }
-        .ai-close:hover { color: var(--accent-red); }
+        
+        .ai-controls { display: flex; align-items: center; gap: 6px; }
+        .ai-btn-ctrl { border: 0; background: transparent; color: var(--muted); font-size: 16px; font-weight: bold; cursor: pointer; padding: 4px 6px; border-radius: 6px; transition: background .2s, color .2s; }
+        .ai-btn-ctrl:hover { background: rgba(255, 255, 255, 0.1); color: var(--text); }
+        .ai-btn-ctrl.close:hover { color: var(--accent-red); }
 
         .ai-body { flex: 1; overflow-y: auto; padding: 14px; background: rgba(0,0,0,0.05); }
-        .ai-message { max-width: 90%; padding: 10px 14px; border-radius: 16px; margin-bottom: 12px; font-size: 8.2pt; line-height: 1.5; }
+        .ai-message { max-width: 92%; padding: 10px 14px; border-radius: 16px; margin-bottom: 12px; font-size: 8.2pt; line-height: 1.5; }
         .ai-bot { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-top-left-radius: 4px; }
         .ai-user { margin-left: auto; background: var(--primary-gradient); color: #fff; border-top-right-radius: 4px; }
         
-        .ai-action-btn {
-            display: inline-block; margin-top: 8px; padding: 6px 12px; border-radius: 8px;
-            background: var(--primary-gradient); color: #fff; text-decoration: none; font-weight: 800; font-size: 7.5pt; cursor: pointer; border: 0;
+        .chip-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+        .chip-btn {
+            background: rgba(0, 242, 254, 0.1); border: 1px solid var(--accent-cyan); color: var(--text);
+            padding: 6px 12px; border-radius: 999px; font-size: 7.8pt; font-weight: 700; cursor: pointer;
+            transition: all .2s; display: flex; align-items: center; gap: 4px;
         }
-        .ai-wa-btn { background: linear-gradient(135deg, #10b981, #059669); }
+        .chip-btn:hover { background: var(--primary-gradient); color: #fff; border-color: transparent; transform: translateY(-1px); }
 
-        .ai-suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-        .ai-suggestions button {
-            border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
-            border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 7.5pt; font-weight: 700; transition: all .2s;
+        .verification-form {
+            background: rgba(15, 23, 42, 0.85); border: 1px solid var(--accent-amber);
+            border-radius: 12px; padding: 12px; margin-top: 10px;
+            display: flex; flex-direction: column; gap: 10px;
+            max-height: 320px; overflow-y: auto; scroll-behavior: smooth;
         }
-        .ai-suggestions button:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .verification-form label { font-size: 8pt; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .verification-form input[type="radio"], .verification-form input[type="checkbox"] { accent-color: var(--accent-cyan); width: 15px; height: 15px; cursor: pointer; }
+        .form-btn-submit { background: var(--primary-gradient); color: #fff; border: 0; border-radius: 8px; padding: 8px 12px; font-size: 8pt; font-weight: 800; cursor: pointer; transition: transform .15s; }
+        .form-btn-submit:hover { transform: scale(1.02); }
+
+        .sig-canvas-wrapper { display: none; flex-direction: column; gap: 4px; background: #fff; border-radius: 8px; padding: 6px; margin-top: 4px; }
+        .sig-canvas-wrapper canvas { width: 100%; height: 90px; background: #fff; border: 1px dashed #94a3b8; border-radius: 4px; cursor: crosshair; }
+        .sig-clear-btn { background: var(--accent-red); color: #fff; border: 0; border-radius: 4px; padding: 3px 8px; font-size: 7pt; align-self: flex-end; cursor: pointer; }
 
         .ai-input { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: var(--panel-2); }
         .ai-input input {
@@ -379,17 +348,15 @@
             color: var(--text); padding: 10px 12px; font-size: 8.5pt; outline: none;
         }
         .ai-input input:focus { border-color: var(--accent-cyan); }
-        .ai-input button {
-            width: 42px; border: 0; border-radius: 12px; background: var(--primary-gradient); color: #fff; font-weight: 900; cursor: pointer;
-        }
+        .ai-input button { width: 42px; border: 0; border-radius: 12px; background: var(--primary-gradient); color: #fff; font-weight: 900; cursor: pointer; }
 
-        /* Responsive */
         @media (max-width: 800px) {
             .nav-links { display: none; }
             .pro-hero { grid-template-columns: 1fr; padding: 20px; }
             .hero-copy h1 { font-size: 20pt; }
             .quick-grid { grid-template-columns: repeat(2, 1fr); }
             .contact-panel { flex-direction: column; text-align: center; }
+            .estimator-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 520px) {
             .quick-grid { grid-template-columns: 1fr; }
@@ -397,7 +364,7 @@
             .map-wrapper { height: 280px; }
         }
         @media print {
-            .pro-nav, .quick-grid, .contact-panel, .ai-launcher, .ai-panel, .map-container { display: none !important; }
+            .pro-nav, .quick-grid, .contact-panel, .ai-launcher, .ai-panel, .map-container, .estimator-box { display: none !important; }
         }
     </style>
 </head>
@@ -407,12 +374,13 @@
     <nav class="pro-nav">
         <div class="nav-brand"><span>RK</span> CELL</div>
         <div class="nav-links">
-            <a href="#digital">Digital & NFC</a>
-            <a href="#diagnosa">Diagnosa</a>
+            <a href="#estimasi">Kalkulator Biaya</a>
+            <a href="#digital">NFC & QR</a>
             <a href="#lcd">Layanan LCD</a>
-            <a href="#mesin">Mesin & Hardware</a>
-            <a href="#lokasi">Lokasi Kami</a>
-            <a href="#kontak">Kontak</a>
+            <a href="#mesin">Perbaikan Mesin</a>
+            <a href="#software">IMEI & Software</a>
+            <a href="#unlock">Unlock FRP</a>
+            <a href="#lokasi">Lokasi</a>
         </div>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ubah mode tampilan">
             <span class="theme-icon">☀️</span>
@@ -429,12 +397,12 @@
             <p>Pusat perbaikan smartphone profesional dengan Garansi Digital NFC, Lacak Status Realtime, serta informasi sparepart transparan.</p>
             <div class="hero-actions">
                 <a class="primary-cta" href="https://wa.me/6285148495045" target="_blank" rel="noopener">💬 Konsultasi via WhatsApp</a>
-                <a class="secondary-cta" href="#diagnosa">Lihat Diagnosa ↓</a>
+                <a class="secondary-cta" href="#estimasi">Cek Estimasi Biaya ↓</a>
             </div>
         </div>
         <div class="hero-card">
             <div class="status"><i></i> SYSTEM REALTIME ONLINE</div>
-            <div class="hero-stat"><strong>10</strong><span>Kategori Layanan</span></div>
+            <div class="hero-stat"><strong>12</strong><span>Kategori Layanan</span></div>
             <div class="hero-stat"><strong>NFC Card</strong><span>Garansi Anti-Hilang</span></div>
             <div class="hero-stat"><strong>QR Code</strong><span>Tracking Perbaikan</span></div>
         </div>
@@ -445,7 +413,7 @@
         <div class="quick-card"><span>🛡️</span><div><strong>Garansi Jelas</strong><small>Ketentuan transparan di awal</small></div></div>
         <div class="quick-card"><span>📱</span><div><strong>Tracking Digital</strong><small>Pantau progres via web</small></div></div>
         <div class="quick-card"><span>💳</span><div><strong>Nota NFC</strong><small>Riwayat servis serba praktis</small></div></div>
-        <div class="quick-card"><span>🔧</span><div><strong>Teknisi Handal</strong><small>Spesialis LCD hingga CPU</small></div></div>
+        <div class="quick-card"><span>⚡</span><div><strong>Service Express</strong><small>Bisa ditunggu untuk opsi fleksibel</small></div></div>
     </section>
 
     <!-- BRAND HEADER BANNER -->
@@ -459,6 +427,49 @@
             <div>⚡ Realtime Web QR & Digital NFC</div>
         </div>
     </div>
+
+    <!-- MODUL ESTIMASI BIAYA INTERAKTIF -->
+    <section class="estimator-box" id="estimasi">
+        <div class="eyebrow">INTERACTIVE ESTIMATOR</div>
+        <h3 style="margin: 4px 0; font-size: 14pt;">💡 SIMULASI ESTIMASI BIAYA & WAKTU PENGERJAAN</h3>
+        <p style="color: var(--muted); font-size: 8.5pt; margin: 0;">Pilih kategori masalah untuk mendapatkan perkiraan estimasi biaya & garansi sebelum diproses teknisi.</p>
+
+        <div class="estimator-grid">
+            <div class="form-group">
+                <label>PILIH KELUHAN PERBAIKAN:</label>
+                <select id="estService" onchange="calculateEstimate()">
+                    <option value="lem_sisi">Pengeleman LCD Sisi (Tanpa Bongkar) - Rp 20.000</option>
+                    <option value="lem_total">Pengeleman LCD Total (Bongkar Presisi) - Rp 50.000</option>
+                    <option value="lcd_std">Ganti LCD Grade Standar / Grade A - Mulai Rp 180.000</option>
+                    <option value="lcd_oled">Ganti LCD OLED Premium / Original - Mulai Rp 350.000</option>
+                    <option value="baterai">Ganti Baterai High Performance - Mulai Rp 140.000</option>
+                    <option value="charging">Perbaikan Port / Flexible Charging - Mulai Rp 60.000</option>
+                    <option value="unlock">Unlock Pola / FRP Google / MiCloud - Mulai Rp 75.000</option>
+                    <option value="imei">Fix Signal / IMEI Blocked / NVRAM - Mulai Rp 150.000</option>
+                    <option value="mesin">Perbaikan Mesin / Reball CPU / IC Power - Mulai Rp 200.000</option>
+                    <option value="air">Penanganan Khusus HP Terkena Cairan - Mulai Rp 75.000</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>TIPE KATEGORI PERANGKAT:</label>
+                <select id="estDevice" onchange="calculateEstimate()">
+                    <option value="android_entry">Android Entry Level (Tipe Low-End)</option>
+                    <option value="android_mid">Android Mid-Range (Tipe Menengah)</option>
+                    <option value="android_flagship">Android Flagship / High-End</option>
+                    <option value="iphone">Apple iPhone Series</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="calc-result" id="calcResultBox">
+            <div>
+                <span style="font-size: 7.5pt; color: var(--muted); display: block;">ESTIMASI HARGA & LAMA PENGERJAAN:</span>
+                <strong id="resPrice" style="font-size: 14pt; color: var(--accent-green);">Rp 20.000 - Rp 35.000</strong>
+                <span id="resTime" style="display: block; font-size: 7.5pt; color: var(--accent-cyan); margin-top:2px;">⚡ Waktu: 30 - 60 Menit (Bisa Ditunggu)</span>
+            </div>
+            <button class="primary-cta" onclick="sendEstimatorToWA()">Konsultasi WA ↗</button>
+        </div>
+    </section>
 
     <div class="section-label">
         <span>INFORMASI LAYANAN TERPADU</span>
@@ -520,12 +531,11 @@
                         <ul>
                             <li>Speaker mati / Suara pecah / Volume kecil / Earpiece mati.</li>
                             <li>Microphone mati / Lawan bicara tidak mendengar suara.</li>
-                            <li>Kamera gagal / Buram / Bergetar / Blank.</li>
                         </ul>
                         <div class="sub-header">4. Board & Software</div>
                         <ul>
                             <li>IC Power, Charger, Audio, RF, CPU, eMMC, UFS bermasalah.</li>
-                            <li>Lupa Pola, PIN, Password, Kunci FRP Akun Google.</li>
+                            <li>Lupa Pola, PIN, Password, Kunci FRP Akun Google, IMEI Hilang.</li>
                         </ul>
                     </td>
                 </tr>
@@ -537,7 +547,15 @@
     <details id="lcd" class="theme-yellow">
         <summary>3. KATALOG & SYARAT KETENTUAN SERVICE LCD & TOUCHSCREEN</summary>
         <div class="details-body">
-            <div class="sub-header">A. Pilihan Grade Kualitas LCD</div>
+            <p>Penggantian Layar LCD pecah, bergaris, blank, atau touchscreen macet untuk semua tipe Android & iPhone.</p>
+            <div class="sub-header">A. Estimasi Layanan LCD Standar</div>
+            <table class="data-table">
+                <tr><th>Jenis Kerusakan</th><th>Estimasi Pengerjaan</th><th>Garansi Layanan</th></tr>
+                <tr><td>Touchscreen Tidak Merespons / Pecah Kaca Outer</td><td>1 - 2 Jam</td><td><span class="badge badge-green">Tersedia</span></td></tr>
+                <tr><td>LCD Blank / Bergaris / Flashing</td><td>30 - 60 Menit</td><td><span class="badge badge-green">Tersedia</span></td></tr>
+            </table>
+
+            <div class="sub-header" style="margin-top: 14px;">B. Pilihan Grade Kualitas LCD</div>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -629,34 +647,41 @@
 
     <!-- BAGIAN 5: BATERAI & CHARGING -->
     <details id="baterai" class="theme-green">
-        <summary>5. PENGGANTIAN BATERAI & KONEKTOR CHARGER</summary>
+        <summary>5. PERBAIKAN BATERAI & SISTEM CHARGING</summary>
         <div class="details-body">
+            <p>Solusi baterai boros, kembung, tidak bisa di-cas, pengisian lambat, atau konektor pengisian rusak.</p>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Kategori Baterai</th>
-                        <th>Performa & Keunggulan</th>
-                        <th>Garansi Toko</th>
+                        <th>Tipe Kendala / Kategori</th>
+                        <th>Tindakan / Keunggulan Teknisi</th>
+                        <th>Estimasi Waktu / Garansi</th>
                         <th>Biaya Mulai</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Kualitas Standar</strong></td>
-                        <td>Kapasitas standar, ekonomis, penggunaan harian</td>
-                        <td><span class="badge badge-yellow">Garansi Toko</span></td>
+                        <td><strong>Flexible / Port Cas Rusak</strong></td>
+                        <td>Ganti Board / Connector Type-C / Micro</td>
+                        <td>30 - 45 Menit | <span class="badge badge-green">Tersedia</span></td>
+                        <td><span class="price-text">Rp 60.000</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Baterai Standar</strong></td>
+                        <td>Kapasitas OEM standar, ekonomis, harian</td>
+                        <td>20 - 30 Menit | <span class="badge badge-yellow">Garansi Toko</span></td>
                         <td><span class="price-text">Rp 140.000</span></td>
                     </tr>
                     <tr>
-                        <td><strong>High Performance</strong></td>
+                        <td><strong>Baterai High Performance</strong></td>
                         <td>Kapasitas optimal, tahan lama & adem</td>
-                        <td><span class="badge badge-green">3 Bulan</span></td>
+                        <td>20 - 30 Menit | <span class="badge badge-green">3 Bulan</span></td>
                         <td><span class="price-text">Rp 165.000</span></td>
                     </tr>
                     <tr>
                         <td><strong>Support Fast Charging</strong></td>
                         <td>Kapasitas Premium, mendukung pengisian cepat</td>
-                        <td><span class="badge badge-green">6 Bulan</span></td>
+                        <td>20 - 30 Menit | <span class="badge badge-green">6 Bulan</span></td>
                         <td><span class="price-text">Rp 250.000</span></td>
                     </tr>
                 </tbody>
@@ -710,40 +735,90 @@
         </div>
     </details>
 
-    <!-- BAGIAN 8: PERBAIKAN MESIN -->
+    <!-- BAGIAN 8: PERBAIKAN MESIN & CAIRAN -->
     <details id="mesin" class="theme-red">
-        <summary>8. PERBAIKAN MESIN (CPU, eMMC, UFS) & KERUSAKAN CAIRAN</summary>
+        <summary>8. REPAIR MESIN, MATI TOTAL, KONSLET & CAIRAN (HARDWARE SPECIALIST)</summary>
         <div class="details-body">
-            <div class="sub-header">Advanced Board Repair (Reball CPU / IC / Memory)</div>
-            <ul>
-                <li><strong>Reball CPU / Swap Board:</strong> Penanganan HP mati total, restart berulang, atau IC overheat.</li>
-                <li><strong>eMMC & UFS Repair:</strong> Penanganan memori internal corrupt, bad sector, atau stuck logo.</li>
-            </ul>
-            <div class="alert-box">
-                <div class="alert-title">⚠️ PERATURAN BEKAS CAIRAN (LIQUID DAMAGE)</div>
-                Perbaikan HP terkena air memiliki risiko korosi lanjutan. RK CELL <strong>TIDAK BERIKAN GARANSI</strong> untuk unit bekas masuk air/cairan.
+            <p>Penanganan akurat menggunakan analisa konsumsi arus Power Supply & USB Analyzer untuk HP Mati Total, Korslet, Reball/Ganti IC Power, IC CPU, eMMC/UFS, serta pembersihan korosi kena air.</p>
+            <table class="data-table">
+                <tr><th>Gejala Arus / Kerusakan</th><th>Diagnosa Hardware</th><th>Garansi</th></tr>
+                <tr><td>Short / Konslet VBUS/VBAT (Arus gantung/0A)</td><td>Analisis Thermal & Replacement Komponen Short</td><td><span class="badge badge-green">Tersedia</span></td></tr>
+                <tr><td>Stuck Bootloop / IC Memory Corrupt</td><td>Reball / Replacement eMMC / UFS Chip</td><td><span class="badge badge-blue">Kondisional</span></td></tr>
+            </table>
+
+            <div class="alert-box" style="margin-top:12px;">
+                <div class="alert-title">🚨 PERINGATAN BAHAYA: HP TERKENA CAIRAN (AIR, MINYAK, BENSIN, DLL)</div>
+                <p><strong>Dilarang keras menyambungkan HP ke charger atau menghidupkannya!</strong> Mengalirkan arus listrik saat komponen mesin basah akan memicu hubungan arus pendek (korsleting) yang merusak IC dan jalur utama secara permanen.</p>
+                <p style="margin-top:6px;"><strong>Langkah Darurat Wajib:</strong> HP yang terkena cairan <u>WAJIB BONGKAR SEGERA</u> untuk pembersihan mesin total menggunakan cairan pembersih khusus teknisi, pengeringan, serta deoksidasi korosi.</p>
+                <div style="margin-top:8px;">
+                    <span class="badge badge-red">KETENTUAN RK CELL</span> Perbaikan unit bekas terkena cairan <strong>TIDAK DIBERIKAN GARANSI</strong> karena sifat korosi yang dapat merusak komponen lain seiring waktu.
+                </div>
             </div>
         </div>
     </details>
 
-    <!-- BAGIAN 9: UNLOCK & FRP -->
+    <!-- BAGIAN 9: SOFTWARE LANJUTAN -->
+    <details id="software" class="theme-purple">
+        <summary>9. SERVIS SOFTWARE LANJUTAN (IMEI, NVRAM, UNBRICK & SENSOR)</summary>
+        <div class="details-body">
+            <p>Perbaikan sinyal hilang / IMEI NVRAM & NVDATA Corrupt, Unbrick, Hardbrick recovery, serta kalibrasi sensor.</p>
+            <table class="grid-table">
+                <tr>
+                    <td style="width: 50%;">
+                        <div class="sub-box">
+                            <div class="sub-header">📶 Fix Sinyal / IMEI & NVRAM Corrupt</div>
+                            <ul class="check-list">
+                                <li><strong>Repair Baseband Unknown:</strong> Solusi HP hilang sinyal / Panggilan Darurat.</li>
+                                <li><strong>NVRAM / NVDATA Repair:</strong> Mengembalikan parameter modem chipset MediaTek / Snapdragon.</li>
+                                <li><strong>Syarat Legalitas:</strong> Wajib IMEI bawaan asli mesin (Bukan IMEI kloning/kejahatan).</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div class="sub-box">
+                            <div class="sub-header">⚡ Unbrick, Hardbrick & Calibrate</div>
+                            <ul class="check-list">
+                                <li><strong>Hardbrick Recovery:</strong> Perbaikan HP mati suri akibat gagal update/flash firmware.</li>
+                                <li><strong>Fix Sensor Proximity:</strong> Kalibrasi sensor telepon / sensor layar mati saat panggilan.</li>
+                                <li><strong>Flashing Testpoint / EDL Mode:</strong> Pemulihan tingkat tinggi via jalur testpoint mesin.</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </details>
+
+    <!-- BAGIAN 10: UNLOCK & FRP -->
     <details id="unlock" class="theme-yellow">
-        <summary>9. UNLOCK AKUN, FRP & KUNCI LAYAR</summary>
+        <summary>10. UNLOCK AKUN, FRP & KUNCI LAYAR (LUPA POLA/SANDI)</summary>
         <div class="details-body">
-            <div class="sub-box">
-                <div class="sub-header">Ketentuan Legalitas Kepemilikan</div>
+            <p>Perbaikan sistem lupa pola, sandi, bypass FRP Akun Google, MiCloud, dan iCloud.</p>
+            <div class="sub-box" style="margin-top:8px;">
+                <div class="sub-header">Ketentuan Legalitas Kepemilikan & Verifikasi Sah</div>
                 <ul class="check-list">
-                    <li>Wajib unit milik pribadi yang sah (Bukan barang hasil kejahatan).</li>
-                    <li>Konsumen wajib membawa identitas/bukti kepemilikan yang valid.</li>
-                    <li>Seluruh data memori internal akan terhapus total (Reset Pabrik).</li>
+                    <li>Wajib unit milik pribadi yang sah (Bukan barang temuan, hasil curian, atau kejahatan).</li>
+                    <li>Seluruh data memori internal akan terhapus total (Reset Pabrik) sesuai kebijakan keamanan sistem.</li>
                 </ul>
+
+                <div class="alert-box">
+                    <div class="alert-title">⚖️ PERINGATAN KETAT UNTUK PERBAIKAN UNLOCK / LUPA POLA / FRP:</div>
+                    <p style="margin-top:4px;">Untuk menghindari tindak pidana penadah barang kejahatan, setiap pengerjaan buka pola, sandi, atau FRP Akun Google <strong>WAJIB MEMENUHI SALAH SATU SYARAT SAH DARI RK CELL:</strong></p>
+                    <ul style="margin-top:6px; padding-left: 18px;">
+                        <li><strong>1. Menyertakan Kotak / Dus Asli HP:</strong> Sebagai bukti sah kepemilikan unit pribadi.</li>
+                        <li><strong>2. Perjanjian Elektronik Wajib + E-Signature:</strong> Jika kotak/dus hilang, pemilik unit <strong>WAJIB MENANDATANGANI SURAT PERJANJIAN ELEKTRONIK & E-SIGNATURE</strong> saat penyerahan unit.</li>
+                    </ul>
+                    <p style="margin-top:6px; color: var(--accent-red); font-weight: 800;">
+                        ⚠️ Surat perjanjian tersebut menyatakan bahwa pemilik bersedia menanggung & menerima seluruh risiko hukum jika di kemudian hari HP yang diperbaiki terbukti bukan milik pribadi.
+                    </p>
+                </div>
             </div>
         </div>
     </details>
 
-    <!-- BAGIAN 10: ALUR GARANSI -->
+    <!-- BAGIAN 11: ALUR GARANSI -->
     <details id="garansi">
-        <summary>10. ALUR KLAIM GARANSI & KETENTUAN SERVICE</summary>
+        <summary>11. ALUR KLAIM GARANSI & KETENTUAN SERVICE</summary>
         <div class="details-body">
             <table class="grid-table">
                 <tr>
@@ -761,7 +836,7 @@
                             <div class="sub-header">✖ Garansi Ditolak/Hangus</div>
                             <ul class="cross-list">
                                 <li>Kerusakan fisik (jatuh, retak, tertekan).</li>
-                                <li>Terkena air, korosi, atau dibongkar pihak lain.</li>
+                                <li>Terkena air/cairan, korosi, atau dibongkar pihak lain.</li>
                             </ul>
                         </div>
                     </td>
@@ -770,12 +845,12 @@
         </div>
     </details>
 
-    <!-- GOOGLE MAPS SECTION (PENUNJUK ARAH LOKASI RK CELL) -->
+    <!-- GOOGLE MAPS SECTION -->
     <section class="map-container" id="lokasi">
         <div class="map-header">
             <span class="eyebrow">LOKASI TOKO & PETUNJUK ARAH</span>
-            <h3>📍 RK CELL Curup[cite: 1]</h3>
-            <p>Jalan Veteran Belakang POS Curup[cite: 1]. Silakan gunakan peta interaktif di bawah ini untuk rute terbaik menuju toko kami.</p>
+            <h3>📍 RK CELL Curup</h3>
+            <p>Jalan Veteran Belakang POS Curup. Silakan gunakan peta interaktif di bawah ini untuk rute terbaik menuju toko kami.</p>
         </div>
         <div class="map-wrapper">
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d248.90748028926177!2d102.52485494462947!3d-3.4661562914766963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1787755073159!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -790,54 +865,47 @@
             <p>Tim teknisi RK CELL siap memberikan informasi diagnosa & estimasi terbaik.</p>
         </div>
         <div>
-            <a class="primary-cta" href="https://wa.me/6285148495045" target="_blank" rel="noopener" style="background: #fff; color: #000;">Hubungi WhatsApp 0851-4849-5045[cite: 1]</a>
+            <a class="primary-cta" href="https://wa.me/6285148495045" target="_blank" rel="noopener" style="background: #fff; color: #000;">Hubungi WhatsApp 0851-4849-5045</a>
         </div>
     </section>
 
     <div class="footer-text">
-        <strong>RK CELL CURUP[cite: 1]</strong> — Pusat Layanan Service HP & Aksesoris Professional.<br>
-        <i>Hak Cipta © 2026 RK CELL[cite: 1]. All Rights Reserved.</i>
+        <strong>RK CELL CURUP</strong> — Pusat Layanan Service HP & Aksesoris Professional.<br>
+        <i>Hak Cipta © 2026 RK CELL. All Rights Reserved.</i>
     </div>
 
-    <!-- AI ASSISTANT WIDGET -->
+    <!-- SMART AI ASSISTANT WIDGET WITH MINIMIZE FUNCTION -->
     <div class="ai-launcher" id="aiLauncher" aria-label="Buka Asisten AI">
         <span class="ai-pulse"></span>
         <div class="ai-avatar-icon">✦</div>
-        <span>Asisten RK CELL</span>
+        <span>Asisten Smart RK CELL</span>
     </div>
 
-    <aside class="ai-panel" id="aiPanel">
+    <aside class="ai-panel open" id="aiPanel">
         <div class="ai-header">
             <div class="ai-brand">
                 <div class="ai-avatar-icon">✦</div>
                 <div>
-                    <strong>Asisten Pintar RK CELL</strong>
-                    <small>Online • Siap Membantu</small>
+                    <strong>RK CELL AI Engine 3.0</strong>
+                    <small style="color:var(--accent-green); display:block; font-size:7.5pt;">Smart Fuzzy Matching Active</small>
                 </div>
             </div>
-            <button class="ai-close" id="aiClose" type="button">×</button>
+            <div class="ai-controls">
+                <button class="ai-btn-ctrl" id="voiceToggleBtn" type="button" title="Suara AI">🔊</button>
+                <button class="ai-btn-ctrl" id="aiMinimize" type="button" title="Minimize Panel">−</button>
+                <button class="ai-btn-ctrl close" id="aiClose" type="button" title="Tutup Chat">×</button>
+            </div>
         </div>
 
-        <div class="ai-body" id="aiBody">
-            <div class="ai-message ai-bot">
-                <strong>Halo! 👋 Ada masalah apa dengan HP-nya hari ini?</strong>
-                <p>Ketik aja keluhannya santai (contoh: <em>"Layar retak"</em>, <em>"Baterai boros banget"</em>, atau <em>"HP habis diajak berenang"</em>).</p>
-                <div class="ai-suggestions">
-                    <button type="button" data-ai="LCD pecah dan bergaris">📱 LCD / Layar</button>
-                    <button type="button" data-ai="Baterai cepat habis dan boros">🔋 Baterai</button>
-                    <button type="button" data-ai="HP mati total terkena air">🌊 Kena Air</button>
-                    <button type="button" data-ai="Lupa sandi dan kunci akun FRP">🔐 FRP / Kunci</button>
-                </div>
-            </div>
-        </div>
+        <div class="ai-body" id="aiBody"></div>
 
         <form class="ai-input" id="aiForm">
-            <input id="aiInput" type="text" autocomplete="off" placeholder="Ketik keluhan HP Anda..." />
+            <input id="aiInput" type="text" autocomplete="off" placeholder="Tuliskan nama, tipe HP, atau keluhan Anda..." />
             <button type="submit">➤</button>
         </form>
     </aside>
 
-    <!-- JAVASCRIPT INTEGRATED LOGIC -->
+    <!-- JAVASCRIPT ADVANCED AI ENGINE -->
     <script>
     (() => {
         // 1. Theme Toggle Logic
@@ -854,9 +922,9 @@
         themeToggle?.addEventListener('click', () => setTheme(document.body.classList.contains('light-mode') ? 'dark' : 'light'));
         setTheme(localStorage.getItem('rkcell-theme') === 'light' ? 'light' : 'dark');
 
-        // 2. Accordion Scroll Helper
-        window.openAndScrollToSection = function(sectionId) {
-            const el = document.getElementById(sectionId);
+        // 2. Accordion Helper
+        window.openSection = function(id) {
+            const el = document.getElementById(id);
             if (el && el.tagName === 'DETAILS') {
                 document.querySelectorAll('details').forEach(d => d.open = false);
                 el.open = true;
@@ -865,10 +933,141 @@
             }
         };
 
-        // 3. HUMAN-LIKE AI ASSISTANT + OPTIMIZED TEXT TO SPEECH (VOICE)
+        // 3. Interactive Estimator Engine
+        window.calculateEstimate = function() {
+            const s = document.getElementById('estService').value;
+            const d = document.getElementById('estDevice').value;
+            let pMin = 20000, pMax = 35000, tInfo = "⚡ Waktu: 30 - 60 Menit (Bisa Ditunggu)";
+
+            if (s === 'lem_sisi') { pMin = 20000; pMax = 35000; }
+            else if (s === 'lem_total') { pMin = 50000; pMax = 75000; tInfo = "⏱️ Waktu: 2 - 3 Jam (Pengeringan Presisi)"; }
+            else if (s === 'lcd_std') { pMin = 180000; pMax = 320000; tInfo = "⏱️ Waktu: 1 - 2 Jam"; }
+            else if (s === 'lcd_oled') { pMin = 350000; pMax = 750000; tInfo = "⏱️ Waktu: 1 - 2 Jam"; }
+            else if (s === 'baterai') { pMin = 140000; pMax = 250000; tInfo = "⚡ Waktu: 30 - 45 Menit"; }
+            else if (s === 'charging') { pMin = 60000; pMax = 120000; tInfo = "⚡ Waktu: 45 Menit"; }
+            else if (s === 'unlock') { pMin = 75000; pMax = 200000; tInfo = "⏱️ Waktu: 1 - 3 Jam (Tergantung Tipe Chipset)"; }
+            else if (s === 'imei') { pMin = 150000; pMax = 350000; tInfo = "⏱️ Waktu: 1 Hari Kerja"; }
+            else if (s === 'mesin') { pMin = 200000; pMax = 600000; tInfo = "⏳ Waktu: 1 - 3 Hari (Pemeriksaan Jalur Micro)"; }
+            else if (s === 'air') { pMin = 75000; pMax = 250000; tInfo = "⏳ Waktu: 1 - 2 Hari (Bongkar & Pembersihan Total)"; }
+
+            if (d === 'android_mid') { pMin += 25000; pMax += 50000; }
+            else if (d === 'android_flagship') { pMin += 75000; pMax += 150000; }
+            else if (d === 'iphone') { pMin += 50000; pMax += 120000; }
+
+            document.getElementById('resPrice').textContent = `Rp ${pMin.toLocaleString('id-ID')} - Rp ${pMax.toLocaleString('id-ID')}`;
+            document.getElementById('resTime').textContent = tInfo;
+        };
+        calculateEstimate();
+
+        window.sendEstimatorToWA = function() {
+            const sText = document.getElementById('estService').options[document.getElementById('estService').selectedIndex].text;
+            const dText = document.getElementById('estDevice').options[document.getElementById('estDevice').selectedIndex].text;
+            const pr = document.getElementById('resPrice').textContent;
+
+            const text = `Halo RK CELL, saya mau menanyakan estimasi perbaikan via Web Estimator:\n\n` +
+                         `🛠️ Keluhan: ${sText}\n` +
+                         `📱 Perangkat: ${dText}\n` +
+                         `💰 Perkiraan Estimasi: ${pr}\n\n` +
+                         `Apakah unit bisa dibawa langsung ke toko untuk dicek? Terima kasih!`;
+            window.open(`https://wa.me/6285148495045?text=${encodeURIComponent(text)}`, '_blank');
+        };
+
+        // 4. SMART FUZZY & DICTIONARY ENGINE FOR AI
+        const BRAND_MAP = {
+            'iphone': ['iphone', 'ipon', 'ayfon', 'aifon', 'apple', 'aple', 'ipone'],
+            'samsung': ['samsung', 'samcung', 'samsul', 'samson', 'samsun'],
+            'oppo': ['oppo', 'opo'],
+            'vivo': ['vivo', 'fifo', 'vipo'],
+            'xiaomi': ['xiaomi', 'siomi', 'xiomi', 'somi', 'shomi', 'mi'],
+            'redmi': ['redmi', 'retmi', 'rembi'],
+            'realme': ['realme', 'relme', 'rilmi', 'relmi'],
+            'infinix': ['infinix', 'imfinix', 'infinik', 'infinixs'],
+            'poco': ['poco', 'poko'],
+            'asus': ['asus', 'asws'],
+            'rog': ['rog'],
+            'tecno': ['tecno', 'tekno'],
+            'iqoo': ['iqoo', 'ikoo']
+        };
+
+        const ISSUE_CATEGORIES = {
+            LCD: {
+                id: 'lcd',
+                label: 'Layar LCD & Touchscreen',
+                keywords: ['lcd', 'layar', 'touch', 'touchscreen', 'retak', 'pecah', 'petah', 'garis', 'blank', 'hitam', 'kedip', 'sentuh', 'gelap', 'bayang', 'ganti layar', 'lcr', 'sekerin', 'screen']
+            },
+            BATTERY: {
+                id: 'baterai',
+                label: 'Baterai & Port Charger',
+                keywords: ['baterai', 'batre', 'batrai', 'batere', 'boros', 'kembung', 'drop', 'panas', 'cas', 'charger', 'casan', 'konektor', 'persen', 'ngecas', 'ngisi', 'rusak cas', 'colokan', 'ganti batre']
+            },
+            UNLOCK: {
+                id: 'unlock',
+                label: 'Unlock FRP / Lupa Pola / Sandi',
+                keywords: ['pola', 'pin', 'sandi', 'password', 'pasword', 'frp', 'google', 'terkunci', 'lock', 'locked', 'micloud', 'icloud', 'bypass', 'lupa', 'terkunci akun', 'lupa kata sandi']
+            },
+            SIGNAL_IMEI: {
+                id: 'software',
+                label: 'Fix Sinyal / IMEI Blocked / NVRAM',
+                keywords: ['imei', 'sinyal', 'singnal', 'signal', 'nvram', 'nvdata', 'no service', 'darurat', 'baseband', 'kartu', 'sim', 'tidak ada layanan', 'hilang sinyal', 'imei terblokir']
+            },
+            LIQUID: {
+                id: 'mesin',
+                label: 'Kerusakan Kena Cairan (Air/Minyak)',
+                keywords: ['air', 'basah', 'cairan', 'cuci', 'minyak', 'bensin', 'kopi', 'teh', 'sungai', 'laut', 'hujan', 'cebur', 'masuk air', 'kena air', 'kecebur']
+            },
+            BOARD_POWER: {
+                id: 'mesin',
+                label: 'Perbaikan Mesin (Matot / IC Power / Short)',
+                keywords: ['mati', 'matot', 'mati total', 'restart', 'stuck', 'bootloop', 'logo', 'mesin', 'cpu', 'ic', 'emmc', 'ufs', 'panas sekali', 'korslet', 'konslet', 'arus', 'power supply', 'konslet hp']
+            }
+        };
+
+        // Helper Levenshtein Distance for Typo Correction
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        // Smart Natural Responses (Menghilangkan kesan monoton)
+        const RANDOM_RESPONSES = {
+            GREETINGS: [
+                (name) => `Senang bisa membantu Kak <strong>${name}</strong>! 😊`,
+                (name) => `Halo Kak <strong>${name}</strong>, salam kenal dari tim RK CELL! ✨`,
+                (name) => `Hi Kak <strong>${name}</strong>! Langsung saja ya, saya siap bantu keluhan HP-nya. 🚀`
+            ],
+            ASK_ISSUE: [
+                `Bisa informasikan <strong>Tipe HP</strong> dan <strong>apa kendala/kerusakannya</strong>?`,
+                `HP tipe apa yang sedang bermasalah dan bagaimana gejala kerusakannya saat ini Kak?`,
+                `Silakan sebutkan tipe smartphone beserta kerusakannya, biar kami bantu diagnosa presisi.`
+            ]
+        };
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // AI PANEL CONTROLS (Open, Close, Minimize)
         const launcher = document.getElementById('aiLauncher');
         const panel = document.getElementById('aiPanel');
-        const close = document.getElementById('aiClose');
+        const closeBtn = document.getElementById('aiClose');
+        const minimizeBtn = document.getElementById('aiMinimize');
         const body = document.getElementById('aiBody');
         const form = document.getElementById('aiForm');
         const input = document.getElementById('aiInput');
@@ -876,88 +1075,65 @@
         let isMuted = false;
         const synth = window.speechSynthesis;
 
-        // Tambahkan Tombol Mute/Unmute Suara di Header AI
-        const aiHeader = document.querySelector('.ai-header');
-        const voiceBtn = document.createElement('button');
-        voiceBtn.type = 'button';
-        voiceBtn.id = 'voiceToggleBtn';
-        voiceBtn.style.cssText = 'border:none; background:transparent; font-size:16px; cursor:pointer; margin-right:8px;';
-        voiceBtn.innerHTML = '🔊';
-        voiceBtn.title = 'Matikan/Hidupkan Suara AI';
-        aiHeader.insertBefore(voiceBtn, close);
-
-        voiceBtn.addEventListener('click', () => {
+        const voiceBtn = document.getElementById('voiceToggleBtn');
+        voiceBtn?.addEventListener('click', () => {
             isMuted = !isMuted;
             voiceBtn.innerHTML = isMuted ? '🔇' : '🔊';
-            if (isMuted && synth.speaking) {
-                synth.cancel();
-            }
+            if (isMuted && synth.speaking) synth.cancel();
         });
 
-        // SANITIZER KHUSUS: Membersihkan Tanda Baca, Emoji, dan Tag HTML agar Suara AI Natural
-        function prepareTextForSpeech(rawHtml) {
-            let text = rawHtml;
-
-            // Buang tombol aksi (button & link WA) agar tidak terbaca oleh AI Voice
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = text;
-            tempDiv.querySelectorAll('button, a, style, script').forEach(el => el.remove());
-            text = tempDiv.textContent || tempDiv.innerText || '';
-
-            // Bersihkan simbol markdown & formatting
-            text = text.replace(/\*\*/g, ''); 
-            text = text.replace(/_/g, '');     
-            text = text.replace(/~/g, '');     
-            text = text.replace(/#/g, '');     
-
-            // Ubah Emoji menjadi jeda titik/koma alami
-            text = text.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '. ');
-
-            // Normalisasi tanda baca ganda agar jeda bicaranya wajar
-            text = text.replace(/\.{2,}/g, '.'); 
-            text = text.replace(/!+/g, '!');     
-            text = text.replace(/\?+/g, '?');    
-            text = text.replace(/[-–—]/g, ', '); 
-
-            // Bersihkan spasi ganda
-            text = text.replace(/\s+/g, ' ').trim();
-
-            return text;
+        function togglePanel(action) {
+            if (action === 'close') {
+                panel.classList.remove('open', 'minimized');
+                if (synth.speaking) synth.cancel();
+            } else if (action === 'minimize') {
+                panel.classList.toggle('minimized');
+            } else { // toggle / open
+                if (panel.classList.contains('minimized')) {
+                    panel.classList.remove('minimized');
+                } else {
+                    panel.classList.toggle('open');
+                }
+                if (panel.classList.contains('open') && !panel.classList.contains('minimized')) {
+                    input?.focus();
+                }
+            }
         }
 
-        // Fungsi Pembaca Suara AI (Text-To-Speech)
+        launcher?.addEventListener('click', () => togglePanel('open'));
+        closeBtn?.addEventListener('click', () => togglePanel('close'));
+        minimizeBtn?.addEventListener('click', () => togglePanel('minimize'));
+
+        function prepareTextForSpeech(rawHtml) {
+            let text = rawHtml;
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = text;
+            tempDiv.querySelectorAll('button, a, style, script, form, input, label, canvas, table').forEach(el => el.remove());
+            text = tempDiv.textContent || tempDiv.innerText || '';
+            text = text.replace(/\*\*/g, '').replace(/_/g, '').replace(/~/g, '').replace(/#/g, '');
+            text = text.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '. ');
+            return text.replace(/\s+/g, ' ').trim();
+        }
+
         function speakText(rawHtml) {
             if (isMuted || !('speechSynthesis' in window)) return;
             synth.cancel();
-
             const cleanSpeechText = prepareTextForSpeech(rawHtml);
             if (!cleanSpeechText) return;
-
             const utterance = new SpeechSynthesisUtterance(cleanSpeechText);
-            utterance.lang = 'id-ID';
-            utterance.rate = 0.95; // Kecepatan ideal untuk bahasa Indonesia
-            utterance.pitch = 1.0;
-
+            utterance.lang = 'id-ID'; utterance.rate = 1.0; utterance.pitch = 1.0;
             synth.speak(utterance);
         }
 
-        let userSession = {
-            step: 'IDLE',
-            category: null,
-            mainIssue: '',
+        let state = {
+            step: 'INIT',
+            customerName: '',
+            deviceModel: '',
+            detectedCategory: null,
             chronology: '',
-            duration: ''
+            duration: '',
+            verificationProof: ''
         };
-
-        function toggleAI() { 
-            panel.classList.toggle('open'); 
-            if(panel.classList.contains('open')) input?.focus(); 
-        }
-        launcher?.addEventListener('click', toggleAI);
-        close?.addEventListener('click', () => {
-            toggleAI();
-            if (synth.speaking) synth.cancel();
-        });
 
         function addMsg(html, isUser = false) {
             const div = document.createElement('div');
@@ -965,142 +1141,319 @@
             div.innerHTML = html;
             body.appendChild(div);
             body.scrollTop = body.scrollHeight;
-
-            if (!isUser) {
-                speakText(html);
-            }
+            if (!isUser) speakText(html);
         }
 
-        function showTypingAndReply(callback, delay = 900) {
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'ai-message ai-bot ai-typing';
-            typingDiv.innerHTML = '<em>Teknisi RK CELL lagi ngetik... ☕</em>';
-            body.appendChild(typingDiv);
+        function showTyping(callback, delay = 350) {
+            const typing = document.createElement('div');
+            typing.className = 'ai-message ai-bot';
+            typing.innerHTML = '<em>Asisten RK CELL sedang menganalisa... ⚡</em>';
+            body.appendChild(typing);
             body.scrollTop = body.scrollHeight;
-
             setTimeout(() => {
-                typingDiv.remove();
+                typing.remove();
                 callback();
             }, delay);
         }
 
-        function detectCategory(text) {
-            if (/(lcd|layar|touch|retak|pecah|garis|blank|gelap|berkedip)/i.test(text)) return 'lcd';
-            if (/(baterai|batre|boros|kembung|drop|cas|charge|charging|konektor)/i.test(text)) return 'baterai';
-            if (/(air|basah|masuk air|kena air|cairan|korosi|kemasukan)/i.test(text)) return 'air';
-            if (/(mati|matot|bootloop|restart|stuck|logo|hang|cpu|emmc|ufs)/i.test(text)) return 'mesin';
-            if (/(lupa|pola|pin|sandi|frp|google|terkunci|lock)/i.test(text)) return 'unlock';
-            return 'umum';
+        // FUZZY & ADVANCED NLP PARSER
+        function parseUserInputSmart(text) {
+            const cleanText = text.toLowerCase().trim();
+            const words = cleanText.split(/\s+/);
+            
+            let detectedBrand = '';
+            let detectedSeries = '';
+            let foundCategory = null;
+
+            // 1. Detect Brand (dengan toleransi ejaan/typo)
+            words.forEach(word => {
+                for (const brandKey in BRAND_MAP) {
+                    const variations = BRAND_MAP[brandKey];
+                    if (variations.some(v => v === word || (word.length > 3 && levenshteinDistance(word, v) <= 1))) {
+                        detectedBrand = brandKey.toUpperCase();
+                        break;
+                    }
+                }
+            });
+
+            // 2. Detect Model/Series Pattern (misal: a51, f11, note 8, 11 pro, x3, dll)
+            const seriesRegex = /(note\s?\d+|pro\s?max|\d{1,2}\s?pro|a\d{1,2}|y\d{1,2}|v\d{1,2}|f\d{1,2}|reno\s?\d+|\d{1,2}|x\d{1,2})/gi;
+            const matchSeries = cleanText.match(seriesRegex);
+            if (matchSeries) {
+                detectedSeries = matchSeries.join(' ').toUpperCase();
+            }
+
+            let fullDeviceName = `${detectedBrand} ${detectedSeries}`.trim();
+
+            // 3. Detect Issue Category (dengan Keyword & Fuzzy Matching)
+            for (const catKey in ISSUE_CATEGORIES) {
+                const cat = ISSUE_CATEGORIES[catKey];
+                for (const kw of cat.keywords) {
+                    if (cleanText.includes(kw)) {
+                        foundCategory = cat;
+                        break;
+                    }
+                    // Jika kata terpisah cocok fuzzy
+                    for (const w of words) {
+                        if (w.length >= 4 && kw.length >= 4 && levenshteinDistance(w, kw) <= 1) {
+                            foundCategory = cat;
+                            break;
+                        }
+                    }
+                    if (foundCategory) break;
+                }
+                if (foundCategory) break;
+            }
+
+            return { foundCategory, fullDeviceName, rawText: text };
         }
 
-        // Percakapan Humoris & Manusiawi
-        function handleHumanConversation(userInput) {
-            const cleanInput = userInput.trim();
+        window.toggleCanvas = function(value) {
+            const wrapper = document.getElementById('sigWrapper');
+            if(wrapper) {
+                wrapper.style.display = (value === 'perjanjian') ? 'flex' : 'none';
+                if(value === 'perjanjian') initCanvas();
+            }
+        };
 
-            // TAHAP 1
-            if (userSession.step === 'IDLE') {
-                userSession.mainIssue = cleanInput;
-                userSession.category = detectCategory(cleanInput);
-                userSession.step = 'ASKING_CHRONOLOGY';
+        let isDrawing = false;
+        function initCanvas() {
+            const canvas = document.getElementById('sigCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.strokeStyle = "#000";
+            ctx.lineWidth = 2;
 
-                showTypingAndReply(() => {
-                    addMsg(`<strong>Aduh, kasihan HP-nya... 🥲</strong><br>
-                            Masalah "${cleanInput}" memang suka bikin senam jantung ya kak. 
-                            <p>Bisa bisikin kronologinya dikit? HP-nya sempat **kebanting, tertekan, diajak berenang, atau tiba-tiba ngambek mati sendiri?**</p>`);
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: (e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0)) - rect.left,
+                    y: (e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0)) - rect.top
+                };
+            }
+
+            canvas.onmousedown = canvas.ontouchstart = (e) => {
+                isDrawing = true;
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+            };
+
+            canvas.onmousemove = canvas.ontouchmove = (e) => {
+                if(!isDrawing) return;
+                const pos = getPos(e);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            };
+
+            canvas.onmouseup = canvas.ontouchend = () => { isDrawing = false; };
+        }
+
+        window.clearCanvas = function() {
+            const canvas = document.getElementById('sigCanvas');
+            if(canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        };
+
+        window.submitVerificationForm = function() {
+            const proofOption = document.querySelector('input[name="proofOption"]:checked');
+            const acceptTerms = document.getElementById('agreeTerms');
+
+            if (!proofOption) {
+                alert("Silakan pilih salah satu bukti kepemilikan.");
+                return;
+            }
+            if (!acceptTerms.checked) {
+                alert("Anda wajib menyetujui pernyataan melepaskan tuntutan hukum.");
+                return;
+            }
+
+            let proofText = (proofOption.value === "dus") ? "Ada Kotak / Dus HP Asli" : "Surat Perjanjian + E-Signature Tanda Tangan Digital";
+            state.verificationProof = proofText;
+
+            addMsg(`<strong>Verifikasi Kepemilikan:</strong> ${proofText}`, true);
+            document.querySelectorAll('.verification-form button, .verification-form input').forEach(el => el.disabled = true);
+            state.step = 'ASK_CHRONOLOGY';
+
+            showTyping(() => {
+                let msg = `Verifikasi kepemilikan diterima ✔️.<br><br>Bagaimana kronologi awal kerusakannya Kak?`;
+                addMsg(msg);
+            });
+        };
+
+        function processFlow(userText, overrideCategory = null) {
+            // STEP 1: MENANGKAP NAMA USER
+            if (state.step === 'ASK_NAME') {
+                // Pembersihan nama agar tidak terpengaruh jika user asal mengetik kalimat
+                let cleanedName = userText.replace(/(nama saya|saya|halo|hai|nama aku|aku)/gi, '').trim();
+                state.customerName = cleanedName || userText;
+                state.step = 'ASK_DEVICE_AND_ISSUE';
+                
+                showTyping(() => {
+                    let greeting = getRandomItem(RANDOM_RESPONSES.GREETINGS)(state.customerName);
+                    let ask = getRandomItem(RANDOM_RESPONSES.ASK_ISSUE);
+                    let html = `${greeting}<br><p>${ask}</p>` +
+                        `<div class="chip-container">` +
+                        `<button class="chip-btn" onclick="handleChipClick('Layar LCD / Touchscreen', 'LCD')">📱 Layar LCD / Touchscreen</button>` +
+                        `<button class="chip-btn" onclick="handleChipClick('Baterai / Charger', 'BATTERY')">🔋 Baterai / Port Cas</button>` +
+                        `<button class="chip-btn" onclick="handleChipClick('Lupa Pola / FRP Google', 'UNLOCK')">🔓 Lupa Pola / FRP</button>` +
+                        `<button class="chip-btn" onclick="handleChipClick('Sinyal Hilang / IMEI', 'SIGNAL_IMEI')">📶 Sinyal / IMEI</button>` +
+                        `<button class="chip-btn" onclick="handleChipClick('Mati Total / Terkena Air', 'LIQUID')">💧 Terkena Cairan / Matot</button>` +
+                        `</div>`;
+                    addMsg(html);
                 });
                 return;
             }
 
-            // TAHAP 2
-            if (userSession.step === 'ASKING_CHRONOLOGY') {
-                userSession.chronology = cleanInput;
-                userSession.step = 'ASKING_DURATION';
+            // STEP 2: DETEKSI TIPE HP & KATEGORI KERUSAKAN
+            if (state.step === 'ASK_DEVICE_AND_ISSUE' || state.step === 'CLARIFY_CATEGORY') {
+                let parsed = parseUserInputSmart(userText);
+                
+                if (overrideCategory && ISSUE_CATEGORIES[overrideCategory]) {
+                    parsed.foundCategory = ISSUE_CATEGORIES[overrideCategory];
+                }
 
-                showTypingAndReply(() => {
-                    addMsg(`<strong>Paham-paham... Sip, info yang bagus! 👍</strong>
-                            <p>Btw, gejala ini sudah terjadi **sejak kapan kak?** (Baru tadi pas bangun tidur, kemarin, atau sudah bertahan berbulan-bulan kayak hubungan tanpa status? 😅)</p>`);
-                });
-                return;
-            }
+                if (parsed.fullDeviceName) {
+                    state.deviceModel = parsed.fullDeviceName;
+                } else if (!state.deviceModel && userText.length < 20 && !parsed.foundCategory) {
+                    state.deviceModel = userText.toUpperCase();
+                }
 
-            // TAHAP 3 (SOLUSI & JOKES SUMMARY)
-            if (userSession.step === 'ASKING_DURATION') {
-                userSession.duration = cleanInput;
-                userSession.step = 'COMPLETED';
+                if (parsed.foundCategory) {
+                    state.detectedCategory = parsed.foundCategory;
 
-                showTypingAndReply(() => {
-                    let responseHtml = `<strong>Penerawangan Teknisi RK CELL:</strong><br>`;
-                    let targetSection = null;
-
-                    switch(userSession.category) {
-                        case 'lcd':
-                            targetSection = 'lcd';
-                            responseHtml += `<p>Hasil deteksi: Kerusakan pada **layar/LCD** karena <em>"${userSession.chronology}"</em> sejak <em>${userSession.duration}</em>. Tenang kak, ini bisa kita ganti baru biar mulus lagi seperti HP baru beli!</p>
-                            <button class="ai-action-btn" onclick="openAndScrollToSection('lcd')">Cek Pilihan Grade & Harga LCD ↓</button>`;
-                            break;
-
-                        case 'baterai':
-                            targetSection = 'baterai';
-                            responseHtml += `<p>Ini sih Fix sel baterainya sudah lelah atau IC Charger-nya ngambek. Baterai boros atau cepat habis memang bikin emosi ya kak!</p>
-                            <button class="ai-action-btn" onclick="openAndScrollToSection('baterai')">Lihat Pilihan Baterai Awet ↓</button>`;
-                            break;
-
-                        case 'air':
-                            targetSection = 'mesin';
-                            responseHtml += `<p>🚨 <strong>PERINGATAN DARURAT:</strong> Tolong banget **jangan dicolok charger** ya kak! HP bekas air sejak <em>${userSession.duration}</em> rawan konslet total kalau diisi listrik. Mending langsung bawa ke toko biar diservis/di-cuci komponennya.</p>
-                            <button class="ai-action-btn" onclick="openAndScrollToSection('mesin')">Aturan Servis Kena Air ↓</button>`;
-                            break;
-
-                        case 'mesin':
-                            targetSection = 'mesin';
-                            responseHtml += `<p>Indikasi kerusakannya sudah masuk ke tingkat mesin (IC Power/Memory). Perlu kita bedah dan cek pakai alat Power Supply di meja kerja teknisi.</p>
-                            <button class="ai-action-btn" onclick="openAndScrollToSection('mesin')">Rincian Service Mesin ↓</button>`;
-                            break;
-
-                        default:
-                            responseHtml += `<p>Biar diagnosanya tidak salah dan tidak bikin dompet kaget, mending langsung bawa unitnya ke toko RK CELL buat dicek gratis!</p>`;
+                    if (parsed.foundCategory.id === 'unlock') {
+                        state.step = 'WAIT_FORM_VERIFICATION';
+                        showTyping(() => {
+                            let formHtml = `<strong>Kategori Terdeteksi:</strong> <span class="badge badge-yellow" style="font-size:8.5pt;">📂 ${parsed.foundCategory.label}</span><br><br>` +
+                                `<div class="alert-box"><div class="alert-title">⚖️ VERIFIKASI HUKUM & KEPEMILIKAN SAH</div>` +
+                                `<p style="margin-top:4px;">RK CELL tidak menerima servis HP dari hasil kejahatan/temuan. Silakan isi verifikasi kepemilikan di bawah ini:</p></div>` +
+                                `<div class="verification-form">` +
+                                `<strong>Pilih Bukti Kepemilikan Sah:</strong>` +
+                                `<label><input type="radio" name="proofOption" value="dus" onclick="toggleCanvas('dus')"> 📦 Ada Kotak / Dus HP Asli</label>` +
+                                `<label><input type="radio" name="proofOption" value="perjanjian" onclick="toggleCanvas('perjanjian')"> 📝 Tidak Ada Dus (TTD Surat Perjanjian)</label>` +
+                                `<div class="sig-canvas-wrapper" id="sigWrapper">` +
+                                `<span style="font-size:7pt; color:#000;">Tanda Tangan Digital Pelanggan:</span>` +
+                                `<canvas id="sigCanvas"></canvas>` +
+                                `<button type="button" class="sig-clear-btn" onclick="clearCanvas()">Hapus TTD</button>` +
+                                `</div>` +
+                                `<hr style="border:0; border-top:1px solid var(--line); margin:4px 0;">` +
+                                `<label style="font-size:7.5pt; color:var(--accent-red);"><input type="checkbox" id="agreeTerms"> Bersedia menerima risiko hukum & melepaskan RK CELL jika unit terbukti hasil kejahatan.</label>` +
+                                `<button type="button" class="form-btn-submit" onclick="submitVerificationForm()">Kirim Verifikasi & Lanjutkan ➤</button>` +
+                                `</div>`;
+                            addMsg(formHtml);
+                        });
+                        return;
                     }
 
-                    const waSummary = `Halo RK CELL, mau tanya service HP:\n` +
-                                     `- Kendala: ${userSession.mainIssue}\n` +
-                                     `- Kronologi: ${userSession.chronology}\n` +
-                                     `- Durasi: ${userSession.duration}\n` +
-                                     `Bisa bantu estimasi biayanya mas?`;
+                    state.step = 'ASK_CHRONOLOGY';
+                    showTyping(() => {
+                        let msg = `Tercatat perbaikan pada <strong><span class="badge badge-blue">${parsed.foundCategory.label}</span></strong>`;
+                        if (state.deviceModel) msg += ` untuk unit <strong>${state.deviceModel}</strong>`;
+                        msg += `.<br><br>`;
+                        
+                        if (parsed.foundCategory.id === 'mesin' && userText.toLowerCase().includes('air')) {
+                            msg += `<div class="alert-box" style="margin-bottom:10px;"><div class="alert-title">🚨 PERINGATAN BAHAYA CAIRAN!</div><p><strong>JANGAN DIPASANG CASAN HP!</strong> Mengalirkan listrik saat basah memicu korsleting IC total.</p></div>`;
+                        }
+                        
+                        msg += `Bisa diceritakan sedikit kronologi kerusakannya Kak? (Misal: Bekas jatuh, tiba-tiba mati, atau kena air?)`;
+                        addMsg(msg);
+                    });
+                } else {
+                    state.step = 'CLARIFY_CATEGORY';
+                    showTyping(() => {
+                        let html = `Sip, untuk HP <strong>${state.deviceModel || 'tersebut'}</strong>, bagian apa yang bermasalah Kak? 😊<br>` +
+                            `<div class="chip-container">` +
+                            `<button class="chip-btn" onclick="handleChipClick('Perbaikan Layar / LCD', 'LCD')">📱 Layar LCD / Touchscreen</button>` +
+                            `<button class="chip-btn" onclick="handleChipClick('Baterai / Gagal Charging', 'BATTERY')">🔋 Baterai & Charger</button>` +
+                            `<button class="chip-btn" onclick="handleChipClick('Lupa Pola / Sandi / FRP', 'UNLOCK')">🔓 Buka Pola / Sandi</button>` +
+                            `<button class="chip-btn" onclick="handleChipClick('Mati Total / Mesin', 'BOARD_POWER')">⚡ Mati Total / Mesin</button>` +
+                            `</div>`;
+                        addMsg(html);
+                    });
+                }
+                return;
+            }
 
-                    const waUrl = `https://wa.me/6285148495045?text=${encodeURIComponent(waSummary)}`;
+            // STEP 3: KRONOLOGI
+            if (state.step === 'ASK_CHRONOLOGY') {
+                state.chronology = userText;
+                state.step = 'ASK_DURATION';
 
-                    responseHtml += `<div style="margin-top:10px;">
-                        <a class="ai-action-btn ai-wa-btn" href="${waUrl}" target="_blank">💬 Langsung Chat WA Teknisi ↗</a>
-                    </div>
-                    <p style="margin-top:8px; font-size:7.5pt; color:var(--muted);">Mau tanya keluhan HP yang lain? Tinggal ketik aja lagi di bawah ya!</p>`;
+                showTyping(() => {
+                    addMsg(`Kronologi dipahami. Keluhan ini **sudah berlangsung berapa lama?** (Misal: Baru hari ini, seminggu lalu, dll.)`);
+                });
+                return;
+            }
 
-                    addMsg(responseHtml);
-                    if (targetSection) openAndScrollToSection(targetSection);
+            // STEP 4: LAMA KERUSAKAN & REKAP
+            if (state.step === 'ASK_DURATION') {
+                state.duration = userText;
+                state.step = 'FINISHED';
 
-                    userSession.step = 'IDLE';
-                }, 1000);
+                showTyping(() => {
+                    const categoryObj = state.detectedCategory || { id: 'lcd', label: 'Perbaikan Hardware / Software' };
+                    
+                    let waText = `Halo RK CELL, saya mau konsultasi / servis HP via Web Assistant:\n\n` +
+                                   `👤 Nama Customer: ${state.customerName}\n` +
+                                   `📱 Perangkat / Tipe: ${state.deviceModel || 'Belum Diisi'}\n` +
+                                   `📂 Kategori Kerusakan: ${categoryObj.label}\n` +
+                                   `📝 Kronologi Kejadian: ${state.chronology}\n` +
+                                   `⏳ Lama Kejadian: ${state.duration}\n`;
+
+                    if (state.verificationProof) {
+                        waText += `⚖️ Status Legalitas: ${state.verificationProof}\n`;
+                    }
+                    waText += `\nMohon estimasi biaya dan penanganannya mas, terima kasih!`;
+
+                    const waUrl = `https://wa.me/6285148495045?text=${encodeURIComponent(waText)}`;
+
+                    let summary = `<strong>RINGKASAN DIAGNOSA PINTAR RK CELL 📑</strong><br>` +
+                        `<table class="data-table" style="margin-top:8px;">` +
+                        `<tr><td><strong>Customer</strong></td><td>${state.customerName}</td></tr>` +
+                        `<tr><td><strong>Perangkat</strong></td><td>${state.deviceModel || 'HP Android/iOS'}</td></tr>` +
+                        `<tr><td><strong>Kategori</strong></td><td><span class="badge badge-green">${categoryObj.label}</span></td></tr>` +
+                        `<tr><td><strong>Kronologi</strong></td><td>${state.chronology}</td></tr>` +
+                        `<tr><td><strong>Lama Kejadian</strong></td><td>${state.duration}</td></tr>`;
+                    
+                    if (state.verificationProof) {
+                        summary += `<tr><td><strong>Verifikasi</strong></td><td><span class="badge badge-blue">${state.verificationProof}</span></td></tr>`;
+                    }
+
+                    summary += `</table>` +
+                        `<p style="margin-top:8px;">Terima kasih Kak ${state.customerName}! Klik tombol di bawah untuk mengirim data ini langsung ke WhatsApp Admin RK CELL:</p>` +
+                        `<a href="${waUrl}" target="_blank" style="display:inline-block; margin-top:6px; padding:10px 16px; background:linear-gradient(135deg, #10b981, #059669); color:#fff; font-weight:800; border-radius:10px; text-decoration:none; font-size:8.5pt;">📲 Kirim Hasil ke WhatsApp Admin ↗</a>`;
+
+                    addMsg(summary);
+                    openSection(categoryObj.id);
+                    state.step = 'ASK_NAME';
+                });
             }
         }
+
+        window.handleChipClick = function(label, categoryKey) {
+            addMsg(label, true);
+            processFlow(label, categoryKey);
+        };
 
         form?.addEventListener('submit', (e) => {
             e.preventDefault();
             const val = input.value.trim();
             if (!val) return;
+
             addMsg(val, true);
             input.value = '';
-            handleHumanConversation(val);
-        });
-
-        document.querySelectorAll('[data-ai]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const txt = btn.getAttribute('data-ai');
-                addMsg(txt, true);
-                handleHumanConversation(txt);
-            });
+            processFlow(val);
         });
 
         window.addEventListener('load', () => {
-            setTimeout(() => panel.classList.add('open'), 800);
+            panel.classList.add('open');
+            state.step = 'ASK_NAME';
+            addMsg(`<strong>Selamat Datang di RK CELL Smart Assistant 3.0! 🛠️</strong><br><p>Saya sudah dilengkapi fitur pendeteksi ejaan otomatis untuk membantu diagnosa kerusakan HP Anda.</p><p>Untuk memulai, <strong>siapa nama Anda Kak?</strong></p>`);
         });
     })();
     </script>
