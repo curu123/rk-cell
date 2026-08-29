@@ -441,6 +441,7 @@
             flex:1; border:1px solid var(--line); border-radius:10px; padding:8px;
             background:var(--panel); color:var(--text); cursor:pointer; font-weight:800;
         }
+        .service-analysis-grid{display:grid;gap:5px;margin-top:9px}.service-analysis-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:7.8pt}.service-analysis-row b{color:var(--accent-cyan)}.service-analysis-row span{text-align:right;word-break:break-word}.service-analysis-section{margin-top:10px;padding:8px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.025);font-size:7.8pt}.service-analysis-section ul{margin:5px 0 0 18px;padding:0}.muted{color:var(--muted)}
         .tracking-card {
             border:1px solid var(--accent-green); border-radius:12px; padding:10px;
             background:rgba(16,185,129,.07); margin-top:8px;
@@ -2482,6 +2483,150 @@
                 (cleaned.length > 1200 ? '…' : '');
         }
 
+        function parseServiceDate(value) {
+            if (!value) return null;
+            const m = String(value).match(/(\d{1,2})\s+(Jan|Feb|Mar|Apr|Mei|May|Jun|Jul|Agu|Aug|Sep|Okt|Oct|Nov|Des|Dec)[a-z]*\s+(\d{4})/i);
+            if (!m) return null;
+            const months = {jan:0,feb:1,mar:2,apr:3,mei:4,may:4,jun:5,jul:6,agu:7,aug:7,sep:8,okt:9,oct:9,nov:10,des:11,dec:11};
+            return new Date(Number(m[3]), months[m[2].slice(0,3).toLowerCase()], Number(m[1]));
+        }
+
+        function findLabelValue(text, labels) {
+            const escaped = labels.map(x => x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+            const re = new RegExp(`(?:${escaped})\\s*[:\\-]?\\s*([^|•\\n]{1,100})`, 'i');
+            const m = String(text).match(re);
+            return m ? m[1].trim().replace(/\\s{2,}/g,' ') : '';
+        }
+
+        function analyzeServiceTrackingText(text, url) {
+            const t = String(text || '').replace(/\s+/g,' ').trim();
+            const lower = t.toLowerCase();
+            const isServiceTracking = /(rk\s*cell\s*service|tracking servis|tracking service|no\.?\s*tiket|hasil qc akhir|garansi\s+\d+\s*(hari|bulan|tahun)|tgl masuk|tanggal selesai)/i.test(t);
+
+            // Parser khusus halaman Tracking Service RK CELL.
+            // Tidak hanya mencari pola "Label: Value", karena halaman dapat
+            // merender label dan value sebagai elemen HTML terpisah.
+            function valueAfter(labels) {
+                const allLabels = ['No\\.?\\s*Tiket','Status','Perangkat','Device','Tipe','Type','Keluhan','Kerusakan','Complaint','Tgl Masuk','Tanggal Masuk','Tanggal Service','Tanggal Servis','Estimasi Selesai','Estimasi','Tanggal Selesai','Detail','Garansi','Hasil QC Akhir','QC Android','Test Final','Validasi Air'];
+                const stop = allLabels.join('|');
+                for (const label of labels) {
+                    const re = new RegExp(label + '\\s*(?:[:\\-])?\\s*([\\s\\S]{1,140}?)(?=\\s+(?:' + stop + ')\\b|$)', 'i');
+                    const m = t.match(re);
+                    if (m && m[1]) {
+                        const v = m[1].trim().replace(/[|•]+$/,'').trim();
+                        if (v && !/^(live|detail|progress|svg)$/i.test(v)) return v;
+                    }
+                }
+                return '';
+            }
+
+            const ticket = (t.match(/(?:no\.?\s*tiket|ticket)\s*[:#-]?\s*(SRV-[A-Z0-9-]+)/i)||[])[1] ||
+                           (t.match(/\b(SRV-\d{8}-\d{4,})\b/i)||[])[1] || '';
+
+            // Status akhir diprioritaskan. Contoh: "Selesai" + "HP Sudah Diambil".
+            let status = '';
+            if (/HP\s*Sudah\s*Diambil/i.test(t)) status = 'Selesai — HP Sudah Diambil';
+            else if (/\bSelesai\b/i.test(t)) status = 'Selesai';
+            else if (/\bDalam\s+Antrian\b/i.test(t)) status = 'Dalam Antrian';
+            else if (/\bMenunggu\b/i.test(t)) status = 'Menunggu';
+            else status = valueAfter(['Status']);
+
+            const device = valueAfter(['Perangkat','Device']);
+            const type = valueAfter(['Tipe','Type']);
+            const complaint = valueAfter(['Keluhan','Kerusakan','Complaint']);
+            const entryDate = valueAfter(['Tgl Masuk','Tanggal Masuk','Tanggal Service','Tanggal Servis']);
+            const finishDate = valueAfter(['Tanggal Selesai','Tanggal Selesai Service','Selesai Pada']);
+            const finishEstimate = valueAfter(['Estimasi Selesai','Estimasi selesai','Estimasi']);
+            const pickedUp = (t.match(/perangkat diambil pada\s+(.{5,100}?)(?:\.|terima kasih|$)/i)||[])[1] || '';
+
+            // Ambil garansi secara utuh, termasuk "Berlaku hingga ..." atau "s/d ...".
+            let warrantyText = '';
+            const wm = t.match(/Garansi\s+([^]{0,220}?)(?=Tanggal Selesai|Detail|Hasil QC Akhir|QC Android|$)/i);
+            if (wm) warrantyText = wm[1].replace(/\s+/g,' ').trim();
+            if (!warrantyText) {
+                const wm2 = t.match(/Garansi\s+(\d+\s*(?:HARI|BULAN|TAHUN)[^]{0,180})/i);
+                if (wm2) warrantyText = wm2[1].replace(/\s+/g,' ').trim();
+            }
+            const warrantyDurationMatch = t.match(/Garansi\s+(\d+)\s*(hari|day|bulan|month|tahun|year)/i);
+            const warrantyDays = warrantyDurationMatch ? (() => {
+                const n = Number(warrantyDurationMatch[1]); const u = warrantyDurationMatch[2].toLowerCase();
+                return /bulan|month/.test(u) ? n*30 : /tahun|year/.test(u) ? n*365 : n;
+            })() : null;
+            const explicitWarrantyEnd = (t.match(/(?:berlaku\s+hingga|berlaku\s+sampai|s\/d\.?|sampai)\s+([A-Za-zÀ-ÿ]+\s+\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{4}|\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{4}|\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{4})/i)||[])[1] ||
+                (t.match(/(?:berlaku\s+hingga|berlaku\s+sampai)\s+(\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{4})/i)||[])[1] || '';
+
+            // Ambil QC sebagai pernyataan asli, bukan sekadar kategori keyword.
+            const qcLines = [];
+            const qcRegexes = [
+                /Quality Control\s+Lulus[^.\n]*/i,
+                /QC Android\s*:\s*[^.\n]+/gi,
+                /Test Final\s*:\s*[^.\n]+/gi,
+                /Validasi Air\s*:\s*[^.\n]+/gi,
+                /QC iPhone\s*:\s*[^.\n]+/gi
+            ];
+            qcRegexes.forEach(re => {
+                const hits = t.match(re) || [];
+                hits.forEach(x => { if (!qcLines.includes(x.trim())) qcLines.push(x.trim()); });
+            });
+            const qcHits = qcLines.length ? qcLines : [];
+
+            return {isServiceTracking,url,ticket,status,device,type,complaint,entryDate,finishDate,finishEstimate,pickedUp,warrantyText,warrantyDays,explicitWarrantyEnd,qcHits,raw:t};
+        }
+
+        function renderServiceTrackingAnalysis(a) {
+            const warranty = a.warrantyText
+                ? `<div class="service-analysis-row"><b>Garansi</b><span>${escapeHtml(a.warrantyText)}</span></div>`
+                : `<div class="service-analysis-row"><b>Garansi</b><span class="muted">Tidak ditemukan pada halaman</span></div>`;
+
+            let warrantyLimit = 'Batas garansi belum dapat ditentukan dari data yang terbaca.';
+            if (a.explicitWarrantyEnd) {
+                warrantyLimit = `Halaman menyatakan garansi berlaku hingga <strong>${escapeHtml(a.explicitWarrantyEnd)}</strong>. Ini diprioritaskan sebagai batas garansi resmi yang tertulis di halaman.`;
+            } else if (a.finishDate && a.warrantyDays) {
+                const d = parseServiceDate(a.finishDate);
+                if (d) {
+                    const end = new Date(d); end.setDate(end.getDate() + a.warrantyDays);
+                    warrantyLimit = `Berdasarkan tanggal selesai ${escapeHtml(a.finishDate)} dan garansi ${a.warrantyDays} hari, perkiraan batas garansi adalah <strong>${end.toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}</strong>.`;
+                }
+            } else if (a.entryDate && a.warrantyDays) {
+                const d = parseServiceDate(a.entryDate);
+                if (d) {
+                    const end = new Date(d); end.setDate(end.getDate() + a.warrantyDays);
+                    warrantyLimit = `Jika ketentuan RK CELL menghitung garansi sejak tanggal masuk ${escapeHtml(a.entryDate)}, perkiraan batasnya <strong>${end.toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}</strong>.`;
+                }
+            }
+
+            const qc = a.qcHits.length
+                ? `<ul>${a.qcHits.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>`
+                : `<div class="muted">Daftar QC tidak ditemukan secara eksplisit pada data yang berhasil dibaca.</div>`;
+
+            const pickup = a.pickedUp ? `<div class="service-analysis-row"><b>Pengambilan</b><span>HP sudah diambil — ${escapeHtml(a.pickedUp)}</span></div>` : '';
+            const finish = a.finishDate ? `<div class="service-analysis-row"><b>Tanggal Selesai</b><span>${escapeHtml(a.finishDate)}</span></div>` : '';
+
+            let conclusion = `${a.device || 'Perangkat'} dengan keluhan ${a.complaint || 'tidak diketahui'} berstatus ${a.status || 'tidak diketahui'}.`;
+            if (a.explicitWarrantyEnd) conclusion += ` Garansi tercantum berlaku hingga ${a.explicitWarrantyEnd}.`;
+            if (/Quality Control\s+Lulus/i.test(a.raw)) conclusion += ' Hasil QC Akhir dinyatakan lulus.';
+            if (a.qcHits.length) conclusion += ` Terdapat ${a.qcHits.length} catatan QC/validasi yang terbaca dari halaman.`;
+
+            return `<div class="tracking-card service-ai-analysis">
+                <strong>🧠 RK CELL — Kesimpulan AI Tracking Servis</strong>
+                <div class="service-analysis-grid">
+                    <div class="service-analysis-row"><b>No. Tiket</b><span>${escapeHtml(a.ticket||'Tidak ditemukan')}</span></div>
+                    <div class="service-analysis-row"><b>Status</b><span>${escapeHtml(a.status||'Tidak ditemukan')}</span></div>
+                    ${pickup}${finish}
+                    <div class="service-analysis-row"><b>Perangkat</b><span>${escapeHtml(a.device||'Tidak ditemukan')}</span></div>
+                    <div class="service-analysis-row"><b>Tipe</b><span>${escapeHtml(a.type||'Tidak ditemukan')}</span></div>
+                    <div class="service-analysis-row"><b>Keluhan</b><span>${escapeHtml(a.complaint||'Tidak ditemukan')}</span></div>
+                    <div class="service-analysis-row"><b>Tgl Masuk</b><span>${escapeHtml(a.entryDate||'Tidak ditemukan')}</span></div>
+                    <div class="service-analysis-row"><b>Estimasi Selesai</b><span>${escapeHtml(a.finishEstimate||'Tidak ditemukan')}</span></div>
+                    ${warranty}
+                </div>
+                <div class="service-analysis-section"><b>🛡️ Analisa Batas Garansi</b><p>${warrantyLimit}</p></div>
+                <div class="service-analysis-section"><b>🔍 Hasil QC yang Terbaca</b>${qc}</div>
+                <div class="service-analysis-section"><b>📌 Kesimpulan</b><p>${conclusion}</p></div>
+                <div class="service-analysis-section" style="font-size:7.5pt;color:var(--muted);">ℹ️ AI hanya menyimpulkan data yang benar-benar terbaca dari halaman tracking. Jika suatu QC atau ketentuan garansi tidak tertulis, AI tidak menganggapnya sudah dilakukan.</div>
+            </div>`;
+        }
+
         window.summarizeScannedWeb = async function() {
             const url = lastScannedCode;
             if (!isValidHttpUrl(url)) {
@@ -2519,9 +2664,15 @@
                     }
                     const html = await response.text();
                     const text = extractReadableTextFromHtml(html);
-                    const summary = makeLocalSummary(text, url);
-                    addMsg(`<strong>✨ Ringkasan Web</strong><br><small style="color:var(--muted);">Sumber: ${escapeHtml(url)}</small><br><br>${escapeHtml(summary).replace(/\n/g,'<br>')}`);
-                    setVoiceStatus('', 'Ringkasan selesai');
+                    const serviceAnalysis = analyzeServiceTrackingText(text, url);
+                    if (serviceAnalysis.isServiceTracking) {
+                        addMsg(renderServiceTrackingAnalysis(serviceAnalysis));
+                        setVoiceStatus('', 'Analisa tracking servis selesai');
+                    } else {
+                        const summary = makeLocalSummary(text, url);
+                        addMsg(`<strong>✨ Ringkasan Web</strong><br><small style="color:var(--muted);">Sumber: ${escapeHtml(url)}</small><br><br>${escapeHtml(summary).replace(/\n/g,'<br>')}`);
+                        setVoiceStatus('', 'Ringkasan selesai');
+                    }
                 } catch (err) {
                     addMsg(`<div class="alert-box">
                         <div class="alert-title">⚠️ Web tidak dapat dibaca langsung</div>
@@ -3983,5 +4134,210 @@ function goToTroubleshooting(){const t=document.getElementById('troubleshooting'
   if(count){ const ids=['digital','diagnosa','lcd','pengeleman','baterai','audio','kamera','mesin','software','unlock','troubleshooting-mandiri','garansi','troubleshooting']; count.textContent=String(ids.filter(id=>document.getElementById(id)).length); }
 })();
 </script>
+
+<script>
+/* ============================================================
+   RK CELL AI LENS — STATUS ONLY MODE
+   AI hanya menyimpulkan status utama dari tampilan tracking.
+   ============================================================ */
+(function () {
+  const RK_TRACKING_HOST = 'tracking-page-omega.vercel.app';
+
+  function esc(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+    }[c]));
+  }
+
+  function getTicket(url) {
+    try { return new URL(url).searchParams.get('t') || ''; }
+    catch (_) { return ''; }
+  }
+
+  function classifyTrackingStatus(text) {
+    const t = String(text || '').toLowerCase().replace(/\s+/g, ' ').trim();
+
+    // Prioritas selesai/diambil agar "Selesai" tidak kalah oleh kata lain.
+    if (
+      /hp\s*sudah\s*diambil/.test(t) ||
+      /sudah\s*diambil/.test(t) ||
+      /service\s*sudah\s*selesai/.test(t)
+    ) {
+      return {
+        key: 'picked',
+        icon: '🟢',
+        title: 'Service selesai & HP sudah diambil.',
+        detail: 'Halaman tracking menunjukkan perangkat sudah selesai dan telah diambil.'
+      };
+    }
+
+    if (/\bselesai\b/.test(t)) {
+      return {
+        key: 'done',
+        icon: '🟢',
+        title: 'Service sudah selesai.',
+        detail: 'Halaman tracking menunjukkan status service selesai.'
+      };
+    }
+
+    if (/\bperbaikan\b/.test(t)) {
+      return {
+        key: 'repair',
+        icon: '🟡',
+        title: 'Service masih dalam proses.',
+        detail: 'Saat ini perangkat berada pada tahap perbaikan.'
+      };
+    }
+
+    if (/\bdiagnosa\b|\bdiagnosis\b/.test(t)) {
+      return {
+        key: 'diagnosis',
+        icon: '🟡',
+        title: 'Service masih dalam proses.',
+        detail: 'Saat ini perangkat berada pada tahap diagnosa.'
+      };
+    }
+
+    if (/\bmenunggu\b|\bdalam antrian\b|\bantrian\b/.test(t)) {
+      return {
+        key: 'waiting',
+        icon: '🟡',
+        title: 'Service masih dalam proses.',
+        detail: 'Perangkat sedang menunggu giliran pemeriksaan.'
+      };
+    }
+
+    return {
+      key: 'unknown',
+      icon: '🔵',
+      title: 'Status service belum dapat dipastikan.',
+      detail: 'AI tidak menemukan status utama yang cukup jelas pada tampilan tracking.'
+    };
+  }
+
+  function addTrackingAIResult(url, pageText) {
+    const result = classifyTrackingStatus(pageText);
+    const ticket = getTicket(url);
+
+    // Gunakan fungsi chat yang sudah ada bila tersedia.
+    if (typeof window.addMsg === 'function') {
+      const card = `
+        <div class="rk-ai-lens-result" style="
+          margin-top:10px;padding:14px;border:1px solid rgba(0,242,254,.25);
+          border-radius:14px;background:rgba(255,255,255,.04)">
+          <div style="font-weight:900;margin-bottom:7px">🧠 RK CELL AI LENS</div>
+          <div style="font-size:13px;font-weight:800">${result.icon} ${esc(result.title)}</div>
+          <div style="margin-top:6px;font-size:12px;opacity:.82">${esc(result.detail)}</div>
+          ${ticket ? `<div style="margin-top:8px;font-size:11px;opacity:.65">No. Tiket: ${esc(ticket)}</div>` : ''}
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+            <button type="button" onclick="rkLensOpenWeb(${JSON.stringify(url)})"
+              style="padding:9px 12px;border:0;border-radius:10px;cursor:pointer;font-weight:800">
+              🌐 Buka Halaman Tracking
+            </button>
+            <button type="button" onclick="rkLensKeepChat()"
+              style="padding:9px 12px;border:1px solid rgba(255,255,255,.18);
+              background:transparent;color:inherit;border-radius:10px;cursor:pointer;font-weight:800">
+              💬 Tetap di Chat AI
+            </button>
+          </div>
+        </div>`;
+      window.addMsg(card);
+    } else {
+      alert(result.title);
+    }
+  }
+
+  window.rkLensOpenWeb = function (url) {
+    window.location.href = url; // sesuai permintaan: meninggalkan halaman sekarang
+  };
+
+  window.rkLensKeepChat = function () {
+    // Tidak melakukan navigasi; pengguna tetap berada di chat.
+    if (typeof window.setVoiceStatus === 'function') {
+      window.setVoiceStatus('', 'Tetap di Chat AI • siap membantu');
+    }
+  };
+
+  // Dipanggil scanner jika mendapatkan QR/barcode.
+  window.rkCellAITrackingResult = function (url, renderedText) {
+    const text = renderedText || '';
+    addTrackingAIResult(url, text);
+  };
+
+  // Helper untuk halaman tracking yang sama-origin / bisa dibaca.
+  window.rkCellAnalyzeTrackingHTML = function (url, htmlText) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = htmlText;
+    const text = tmp.innerText || tmp.textContent || htmlText || '';
+    addTrackingAIResult(url, text);
+  };
+
+  // Override fungsi scanner lama agar URL hasil scan selalu masuk ke AI Lens.
+  // Fungsi lama tetap dipakai bila tersedia, tetapi hasil URL ditangani khusus.
+  const oldShow = window.showTrackingResult;
+  window.showTrackingResult = function (value) {
+    const url = String(value || '').trim();
+
+    if (/^https?:\/\//i.test(url) && url.includes(RK_TRACKING_HOST)) {
+      // Jika URL tracking RK CELL, coba baca halaman yang bisa diakses.
+      fetch(url, { method: 'GET', credentials: 'omit' })
+        .then(r => r.text())
+        .then(raw => {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = raw;
+          const visible = tmp.innerText || tmp.textContent || '';
+          // Bila data sudah ter-render di response, analisa.
+          // Bila hanya shell JS, tampilkan hasil "belum dapat dipastikan"
+          // dan tetap berikan pilihan buka halaman.
+          rkCellAITrackingResult(url, visible);
+        })
+        .catch(() => {
+          rkCellAITrackingResult(url, '');
+        });
+      return;
+    }
+
+    // Barcode/QR non-URL atau URL lain: gunakan alur lama.
+    if (typeof oldShow === 'function') oldShow(value);
+  };
+
+  // Fungsi global agar tombol onclick yang ada di HTML selalu dapat memanggil scanner.
+  if (typeof window.openTrackingScanner !== 'function') {
+    window.openTrackingScanner = function () {
+      const btn = document.querySelector('[onclick*="openTrackingScanner"]');
+      if (btn) btn.click();
+    };
+  }
+
+  // Greeting langsung saat website dibuka.
+  function ensureOpeningGreeting() {
+    if (window.__rkOpeningGreetingDone) return;
+    window.__rkOpeningGreetingDone = true;
+
+    const greeting = `
+      <div class="rk-opening-greeting" style="
+        position:fixed;left:18px;bottom:90px;z-index:99999;max-width:340px;
+        padding:15px 17px;border-radius:18px;background:#111827;color:#fff;
+        box-shadow:0 12px 35px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12)">
+        <div style="font-weight:900;font-size:15px">👋 Halo, selamat datang di RK CELL!</div>
+        <div style="font-size:12px;line-height:1.5;margin-top:5px">
+          Saya siap membantu. Anda juga bisa <b>scan QR/Barcode Tracking Service</b>
+          dengan AI Lens.
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" style="
+          margin-top:10px;padding:7px 10px;border:0;border-radius:9px;
+          cursor:pointer;font-weight:800">Tutup</button>
+      </div>`;
+    document.body.insertAdjacentHTML('beforeend', greeting);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(ensureOpeningGreeting, 500));
+  } else {
+    setTimeout(ensureOpeningGreeting, 500);
+  }
+})();
+</script>
+
 </body>
 </html>
