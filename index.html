@@ -1007,6 +1007,47 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <style id="rkInternalNavigationStyles">
 .rk-nav-card{overflow:hidden}.rk-nav-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:0}.rk-nav-toggle{border:1px solid var(--accent-cyan);background:rgba(0,242,254,.08);color:var(--text);border-radius:10px;padding:8px 11px;font-weight:900;cursor:pointer;white-space:nowrap}.rk-nav-body{margin-top:14px}.rk-nav-body.collapsed{display:none}.rk-nav-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.rk-nav-status{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);color:var(--muted);font-size:8pt;margin-bottom:10px}.rk-nav-status.ok{border-color:var(--accent-green);color:var(--accent-green);background:rgba(16,185,129,.07)}.rk-nav-status.warn{border-color:var(--accent-amber);color:var(--accent-amber);background:rgba(245,158,11,.07)}.rk-nav-status.error{border-color:var(--accent-red);color:var(--accent-red);background:rgba(239,68,68,.07)}.rk-nav-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.rk-nav-summary>div{padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--panel-2);text-align:center}.rk-nav-summary small{display:block;color:var(--muted);font-size:7pt;margin-bottom:3px}.rk-nav-summary strong{font-size:10pt;color:var(--text)}.rk-leaflet-map{height:340px!important;background:#dbeafe}.rk-nav-next{margin-top:10px;padding:12px;border:1px solid var(--accent-cyan);border-radius:11px;background:rgba(0,242,254,.07);font-weight:800;line-height:1.45}.rk-nav-steps-box{margin-top:10px!important}.rk-nav-steps{margin:8px 0 0 22px;padding:0}.rk-nav-steps li{padding:5px 2px;color:var(--text)}.rk-nav-note{margin-top:10px;color:var(--muted);font-size:7.3pt}.rk-nav-body .leaflet-container{font-family:inherit}.rk-nav-body .leaflet-control-attribution{font-size:9px}.rk-user-dot,.rk-store-dot{display:grid;place-items:center;border-radius:50%;font-size:17px;box-shadow:0 2px 10px rgba(0,0,0,.25)}.rk-user-dot{width:34px;height:34px;background:#fff;border:3px solid #0ea5e9}.rk-store-dot{width:38px;height:38px;background:#fff;border:3px solid #10b981}
 @media(max-width:600px){.rk-nav-head{align-items:flex-start}.rk-nav-body{margin-top:10px}.rk-nav-summary{grid-template-columns:repeat(3,1fr);gap:5px}.rk-nav-summary>div{padding:8px 4px}.rk-leaflet-map{height:280px!important}.rk-nav-actions{display:grid;grid-template-columns:1fr 1fr}.rk-nav-actions .primary-cta,.rk-nav-actions .secondary-cta{padding:9px 8px;font-size:7.5pt}.rk-nav-card{margin-left:10px!important;margin-right:10px!important}.rk-nav-body.mobile-default-collapsed{display:none}}
+
+.rk-nav-guide{display:grid;grid-template-columns:150px 1fr;gap:12px;margin:10px 0;align-items:stretch}.rk-nav-arrow-card{border:1px solid var(--accent-cyan);border-radius:14px;background:rgba(0,242,254,.06);display:grid;place-items:center;padding:12px;text-align:center}.rk-nav-arrow-wrap{width:92px;height:92px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;position:relative;background:var(--panel)}.rk-nav-arrow{font-size:54px;line-height:1;display:block;transform-origin:50% 50%;transition:transform .35s ease}.rk-nav-arrow-card small{display:block;color:var(--muted);font-size:6.8pt;margin-top:7px}.rk-nav-arrow-card strong{display:block;font-size:8pt;margin-top:2px}.rk-nav-ai-tip{border:1px solid var(--line);border-radius:14px;background:var(--panel-2);padding:12px}.rk-nav-ai-tip b{color:var(--accent-cyan)}.rk-nav-ai-tip p{margin:6px 0 0;color:var(--text);font-size:8pt;line-height:1.5}.rk-route-choices{display:grid;gap:7px;margin:10px 0}.rk-route-choice{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;width:100%;text-align:left;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:var(--panel-2);color:var(--text);cursor:pointer}.rk-route-choice:hover,.rk-route-choice.active{border-color:var(--accent-cyan);background:rgba(0,242,254,.08)}.rk-route-choice strong{display:block;font-size:8.2pt}.rk-route-choice small{display:block;color:var(--muted);font-size:7pt;margin-top:2px}.rk-route-choice .rk-route-metric{text-align:right;white-space:nowrap;font-weight:900;color:var(--accent-green);font-size:8pt}.rk-nav-compass-btn{margin-top:7px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:9px;padding:7px 9px;font-size:7pt;font-weight:800;cursor:pointer}.rk-route-legend{font-size:7pt;color:var(--muted);margin-top:4px}.rk-route-pill{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:999px;border:1px solid var(--line);font-size:6.5pt;color:var(--muted)}
+@media(max-width:600px){.rk-nav-guide{grid-template-columns:110px 1fr}.rk-nav-arrow-wrap{width:76px;height:76px}.rk-nav-arrow{font-size:44px}.rk-route-choice{padding:9px}.rk-route-choice small{font-size:6.7pt}}
+
+
+/* RK CELL AI Navigator V3 */
+.rk-nav-live{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:center;padding:12px;margin:10px 0;border:1px solid var(--accent-cyan);border-radius:14px;background:rgba(0,242,254,.07)}
+.rk-nav-live-arrow{font-size:58px;line-height:1;text-align:center;transition:transform .25s ease}.rk-nav-live-copy small{display:block;color:var(--accent-cyan);font-weight:900;letter-spacing:1px}.rk-nav-live-copy strong{display:block;font-size:12pt;margin:3px 0}.rk-nav-live-copy span{font-size:9pt;color:var(--muted);font-weight:800}
+.rk-nav-toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:9px 0}.rk-nav-tool{border:1px solid var(--line);border-radius:10px;padding:9px 7px;background:var(--panel-2);color:var(--text);font-weight:900;cursor:pointer;font-size:7.3pt}.rk-nav-tool.active{border-color:var(--accent-green);color:var(--accent-green)}.rk-nav-tool.danger{border-color:rgba(239,68,68,.5);color:var(--accent-red)}
+.rk-nav-alert{padding:10px 12px;margin:8px 0;border-radius:10px;border:1px solid var(--accent-amber);background:rgba(245,158,11,.08);color:var(--accent-amber);font-weight:800;font-size:7.5pt}.rk-nav-alert.error{border-color:var(--accent-red);background:rgba(239,68,68,.08);color:var(--accent-red)}.rk-nav-alert.ok{border-color:var(--accent-green);background:rgba(16,185,129,.08);color:var(--accent-green)}
+.rk-nav-map-hidden{display:none!important}
+@media(max-width:600px){.rk-nav-live{grid-template-columns:72px 1fr;position:sticky;top:64px;z-index:600;box-shadow:0 8px 24px var(--shadow)}.rk-nav-live-arrow{font-size:48px}.rk-nav-live-copy strong{font-size:10.5pt}.rk-nav-toolbar{grid-template-columns:repeat(3,1fr)}}
+</style>
+
+<style id="rkTrustRedesignV1">
+.rk-trust-shell{max-width:1100px;margin:0 auto 18px;padding:0 10px}.rk-trust-proof{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}.rk-proof-item{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 6px 18px var(--shadow)}.rk-proof-item b{display:block;color:var(--text);font-size:8.5pt}.rk-proof-item small{display:block;color:var(--muted);font-size:7.3pt;line-height:1.45;margin-top:3px}.rk-proof-icon{font-size:20px;margin-bottom:6px}.rk-trust-cta{margin-top:14px;padding:15px;border:1px solid var(--accent-cyan);border-radius:16px;background:linear-gradient(135deg,rgba(0,242,254,.08),rgba(168,85,247,.06));display:flex;justify-content:space-between;gap:14px;align-items:center}.rk-trust-cta h3{margin:0 0 4px;font-size:12pt}.rk-trust-cta p{margin:0;color:var(--muted);font-size:8pt}.rk-trust-cta button{border:0;border-radius:10px;padding:10px 14px;background:var(--primary-gradient);color:#fff;font-weight:900;cursor:pointer;white-space:nowrap}.rk-standard-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.rk-standard-step{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 12px}.rk-standard-step .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(0,242,254,.12);border:1px solid var(--accent-cyan);color:var(--accent-cyan);font-weight:900;font-size:8pt;margin-bottom:8px}.rk-standard-step b{display:block;font-size:8.5pt}.rk-standard-step small{display:block;color:var(--muted);font-size:7.3pt;line-height:1.45;margin-top:4px}.rk-social-proof{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}.rk-testimonial-card,.rk-stats-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}.rk-testimonial-stars{color:#f59e0b;letter-spacing:1px;font-size:11pt}.rk-verified{display:inline-flex;align-items:center;gap:4px;margin-top:6px;padding:4px 8px;border-radius:999px;border:1px solid rgba(16,185,129,.5);background:rgba(16,185,129,.1);color:var(--accent-green);font-size:7pt;font-weight:900}.rk-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.rk-stat{padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2)}.rk-stat strong{display:block;font-size:14pt}.rk-stat span{font-size:7pt;color:var(--muted)}.rk-ai-simple-note{font-size:7.4pt;color:var(--muted)}
+@media(max-width:900px){.rk-trust-proof,.rk-standard-grid{grid-template-columns:1fr 1fr}.rk-social-proof{grid-template-columns:1fr}}
+@media(max-width:600px){.rk-trust-proof,.rk-standard-grid{grid-template-columns:1fr}.rk-trust-cta{align-items:flex-start;flex-direction:column}.rk-trust-cta button{width:100%}}
+</style>
+
+<style id="rkServiceTransparentProStyles">
+.rk-pro-suite{margin-top:10px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025);overflow:hidden}
+.rk-pro-suite>summary{padding:10px 12px;border-left:4px solid var(--accent-cyan);background:var(--panel-2);font-size:8.3pt;font-weight:900;cursor:pointer;display:flex;align-items:center;gap:7px}
+.rk-pro-suite>summary::after{margin-left:auto}
+.rk-pro-body{padding:10px}
+.rk-health-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.rk-health-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 9px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);font-size:7.4pt}
+.rk-health-item strong{font-size:7.6pt}.rk-health-ok{color:var(--accent-green)}.rk-health-note{color:var(--accent-amber)}.rk-health-na{color:var(--muted)}
+.rk-passport-line{position:relative;padding:0 0 12px 22px;border-left:2px solid rgba(0,242,254,.25);margin-left:7px}.rk-passport-line:last-child{padding-bottom:0}.rk-passport-line::before{content:"";position:absolute;left:-6px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--accent-cyan);box-shadow:0 0 0 3px rgba(0,242,254,.12)}
+.rk-passport-line b{display:block;font-size:7.8pt}.rk-passport-line small{color:var(--muted);font-size:7pt}
+.rk-ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rk-ba-card{border:1px solid var(--line);border-radius:10px;background:var(--panel-2);padding:8px;text-align:center}.rk-ba-card img{width:100%;max-height:180px;object-fit:cover;border-radius:8px;display:block;margin-top:7px}.rk-ba-upload{display:inline-flex;justify-content:center;align-items:center;width:100%;padding:8px;border:1px dashed var(--accent-cyan);border-radius:8px;cursor:pointer;font-weight:800;font-size:7.2pt}.rk-ba-upload input{display:none}
+.rk-pro-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.rk-pro-btn{border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--panel-2);color:var(--text);font-weight:900;cursor:pointer;font-size:7.5pt}.rk-pro-btn.primary{background:var(--primary-gradient);color:#fff;border:0}.rk-pro-btn.green{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:0}.rk-pro-btn.red{border-color:rgba(239,68,68,.5);color:var(--accent-red)}
+.rk-pro-status{margin-top:7px;font-size:7.2pt;color:var(--muted)}.rk-pro-status.ok{color:var(--accent-green)}.rk-pro-status.err{color:var(--accent-red)}
+.rk-approval-box{padding:9px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.06);border-radius:10px}.rk-approval-box strong{color:var(--accent-amber)}
+.rk-claim-text{width:100%;min-height:78px;padding:9px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);color:var(--text);resize:vertical;font:inherit;font-size:7.6pt}
+.rk-aftercare{display:grid;gap:6px}.rk-aftercare li{color:var(--text)}
+@media(max-width:600px){.rk-health-grid,.rk-ba-grid,.rk-pro-actions{grid-template-columns:1fr}.rk-pro-suite>summary{font-size:8pt}}
+</style>
+
+<style id="rkLiveStatsSupabaseStyle">
+.rk-stats-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}.rk-stats-head b{display:block}.rk-stats-head small{display:block;color:var(--muted);font-size:6.8pt;margin-top:2px}.rk-stats-refresh{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2);color:var(--accent-cyan);font-weight:900;cursor:pointer}.rk-stats-refresh.loading{animation:rkStatsSpin .8s linear infinite}.rk-stats-detail-toggle{width:100%;margin-top:9px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);color:var(--text);font-size:7.2pt;font-weight:850;cursor:pointer}.rk-stats-detail{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.rk-stats-detail[hidden]{display:none}.rk-stats-detail>div{display:flex;justify-content:space-between;gap:8px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.02);font-size:7pt}.rk-stats-detail span{color:var(--muted)}.rk-stats-detail b{color:var(--text)}.rk-stats-error{color:var(--accent-red)!important}.rk-stats-live{color:var(--accent-green)!important}@keyframes rkStatsSpin{to{transform:rotate(360deg)}}@media(max-width:600px){.rk-stats-detail{grid-template-columns:1fr}.rk-stat strong{font-size:13pt}}
 </style>
 </head>
 <body>
@@ -1021,7 +1062,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div class="hero-copy">
 <div class="eyebrow">SERVICE CENTER HP • CURUP</div>
 <h1>Service HP <span>Transparan</span>, Modern &amp; Terpercaya.</h1>
-<p>Pusat perbaikan smartphone profesional dengan Garansi Digital NFC, Lacak Status Secara Real-Time, serta informasi sparepart transparan.</p>
+<p>Servis HP yang prosesnya bisa Anda pantau. Diagnosa jelas, tracking digital, QC, dan garansi tercatat agar pelanggan tahu apa yang sedang dikerjakan.</p>
 <div class="hero-actions">
 <a class="primary-cta" href="https://wa.me/6285148495045" rel="noopener" target="_blank">💬 Konsultasi via WhatsApp</a>
 <a class="secondary-cta" href="#estimasi">Cek Estimasi Biaya ↓</a>
@@ -1040,6 +1081,68 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div class="quick-card"><span>📱</span><div><strong>Tracking Digital</strong><small>Pantau progres via web</small></div></div>
 <div class="quick-card"><span>💳</span><div><strong>Nota NFC</strong><small>Riwayat servis serba praktis</small></div></div>
 <div class="quick-card"><span>⚡</span><div><strong>Servis Express</strong><small>Tersedia untuk jenis perbaikan tertentu</small></div></div>
+</section>
+
+<section class="rk-trust-shell" id="kenapa-rkcell">
+  <div class="section-label" style="margin-left:0;margin-right:0"><span>KENAPA RK CELL</span><strong>Bukti layanan, bukan sekadar janji.</strong></div>
+  <div class="rk-trust-proof">
+    <div class="rk-proof-item"><div class="rk-proof-icon">🛡️</div><b>Garansi Digital</b><small>Riwayat dan masa garansi dapat dicek kembali dari data servis.</small></div>
+    <div class="rk-proof-item"><div class="rk-proof-icon">📱</div><b>Tracking Servis</b><small>Pelanggan dapat memantau tahapan pengerjaan menggunakan nomor tiket.</small></div>
+    <div class="rk-proof-item"><div class="rk-proof-icon">🔍</div><b>Diagnosa Sebelum Tindakan</b><small>Keluhan dipisahkan dari kemungkinan penyebab sebelum menentukan perbaikan lanjutan.</small></div>
+    <div class="rk-proof-item"><div class="rk-proof-icon">💰</div><b>Biaya Dikomunikasikan</b><small>Tindakan dan estimasi biaya dijelaskan sebelum pekerjaan lanjutan dilakukan.</small></div>
+    <div class="rk-proof-item"><div class="rk-proof-icon">✅</div><b>QC Sebelum Diserahkan</b><small>Fungsi terkait diperiksa kembali setelah pengerjaan sebelum unit diserahkan.</small></div>
+  </div>
+  <div class="rk-trust-cta">
+    <div><h3>Jangan hanya percaya kata kami. Cek sendiri proses servis Anda.</h3><p>Masukkan nomor invoice/tiket dan lihat status, estimasi, progress, QC, serta riwayat servis yang tersedia.</p></div>
+    <button type="button" onclick="document.getElementById('aiLauncher')?.click();setTimeout(()=>document.getElementById('invoiceTrackToggle')?.click?.(),250)">🔎 Cek Tracking</button>
+  </div>
+</section>
+<section class="rk-trust-shell" id="standar-servis">
+  <div class="section-label" style="margin-left:0;margin-right:0"><span>STANDAR SERVIS RK CELL</span><strong>Alur kerja yang mudah dipahami pelanggan.</strong></div>
+  <div class="rk-standard-grid">
+    <div class="rk-standard-step"><span class="num">01</span><b>Terima & Cek Kondisi</b><small>Kondisi awal, keluhan, dan fungsi penting dicatat sebelum pengerjaan.</small></div>
+    <div class="rk-standard-step"><span class="num">02</span><b>Diagnosa</b><small>Pemeriksaan dilakukan untuk mempersempit sumber masalah sebelum tindakan.</small></div>
+    <div class="rk-standard-step"><span class="num">03</span><b>Konfirmasi</b><small>Tindakan, opsi part, risiko, dan estimasi biaya dikomunikasikan bila diperlukan.</small></div>
+    <div class="rk-standard-step"><span class="num">04</span><b>Perbaikan</b><small>Pengerjaan dilakukan sesuai hasil pemeriksaan dan persetujuan yang tercatat.</small></div>
+    <div class="rk-standard-step"><span class="num">05</span><b>QC + Garansi</b><small>Fungsi terkait diperiksa kembali dan informasi garansi dicatat sebelum selesai.</small></div>
+  </div>
+</section>
+<section class="rk-trust-shell" id="bukti-pelanggan">
+  <div class="section-label" style="margin-left:0;margin-right:0"><span>BUKTI PELANGGAN</span><strong>Testimoni terverifikasi dari tiket servis.</strong></div>
+  <div class="rk-social-proof">
+    <div class="rk-testimonial-card">
+      <div class="rk-testimonial-stars">★★★★★</div>
+      <p id="rkVerifiedTestimonialText" style="margin:8px 0;color:var(--text)">Testimoni pelanggan akan tampil di sini setelah tersinkron dari tiket servis yang valid.</p>
+      <div id="rkVerifiedTestimonialMeta" class="muted" style="font-size:7.4pt">Data testimoni publik mengikuti data tracking yang tersedia.</div>
+      <span class="rk-verified">✓ Servis Terverifikasi</span>
+    </div>
+    <div class="rk-stats-card" id="rkLiveStatsCard">
+      <div class="rk-stats-head">
+        <div><b>📊 RK CELL dalam angka</b><small id="rkStatsUpdated">Menghubungkan ke database…</small></div>
+        <button type="button" id="rkStatsRefresh" class="rk-stats-refresh" aria-label="Perbarui statistik">↻</button>
+      </div>
+      <div class="rk-stat-grid">
+        <div class="rk-stat"><strong id="rkStatServices">—</strong><span>Servis tercatat</span></div>
+        <div class="rk-stat"><strong id="rkStatMonth">—</strong><span>Servis bulan ini</span></div>
+        <div class="rk-stat"><strong id="rkStatCompleted">—</strong><span>Servis selesai</span></div>
+        <div class="rk-stat"><strong id="rkStatRating">—</strong><span>Rating pelanggan</span></div>
+      </div>
+      <button type="button" class="rk-stats-detail-toggle" id="rkStatsDetailToggle" aria-expanded="false">Lihat statistik lengkap ▾</button>
+      <div class="rk-stats-detail" id="rkStatsDetail" hidden>
+        <div><span>Masuk hari ini</span><b id="rkStatToday">—</b></div>
+        <div><span>Selesai bulan ini</span><b id="rkStatCompletedMonth">—</b></div>
+        <div><span>Menunggu</span><b id="rkStatWaiting">—</b></div>
+        <div><span>Sedang dikerjakan</span><b id="rkStatProgress">—</b></div>
+        <div><span>Servis aktif</span><b id="rkStatActive">—</b></div>
+        <div><span>Quick Service</span><b id="rkStatQuick">—</b></div>
+        <div><span>Dibatalkan</span><b id="rkStatCancelled">—</b></div>
+        <div><span>Tidak dapat diperbaiki</span><b id="rkStatCannotRepair">—</b></div>
+        <div><span>Jumlah rating</span><b id="rkStatRatingCount">—</b></div>
+        <div><span>Testimoni</span><b id="rkStatTestimonialCount">—</b></div>
+      </div>
+      <div id="rkStatsState" class="rk-ai-simple-note" style="margin-top:8px">Statistik dibaca langsung dari database Service Order RK CELL.</div>
+    </div>
+  </div>
 </section>
 <!-- BRAND HEADER BANNER -->
 <div class="header-banner">
@@ -1859,6 +1962,26 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div><small>Estimasi</small><strong id="rkNavDuration">—</strong></div>
 <div><small>GPS</small><strong id="rkNavAccuracy">—</strong></div>
 </div>
+<div class="rk-nav-guide" id="rkNavGuide" hidden>
+<div class="rk-nav-arrow-card">
+<div class="rk-nav-arrow-wrap"><span class="rk-nav-arrow" id="rkNavArrow">↑</span></div>
+<small>Arah RK CELL</small><strong id="rkNavBearing">—</strong>
+<button class="rk-nav-compass-btn" id="rkNavCompass" type="button">🧭 Aktifkan Kompas</button>
+</div>
+<div class="rk-nav-ai-tip"><b>🤖 AI Navigator RK CELL</b><p id="rkNavAiTip">Setelah GPS aktif, AI akan membandingkan beberapa rute dan merekomendasikan pilihan terbaik.</p></div>
+</div>
+<div class="rk-route-choices" id="rkRouteChoices" hidden></div>
+<div class="rk-route-legend" id="rkRouteLegend" hidden>Ketuk salah satu rute untuk mengganti jalur dan petunjuk arah.</div>
+<div class="rk-nav-live" id="rkNavLive" hidden>
+  <div class="rk-nav-live-arrow" id="rkNavTurnArrow">↑</div>
+  <div class="rk-nav-live-copy"><small>NAVIGASI AKTIF</small><strong id="rkNavLiveInstruction">Ikuti rute menuju RK CELL</strong><span id="rkNavLiveDistance">—</span></div>
+</div>
+<div class="rk-nav-toolbar">
+  <button type="button" id="rkNavVoice" class="rk-nav-tool active">🔊 Suara ON</button>
+  <button type="button" id="rkNavMapToggle" class="rk-nav-tool">🗺️ Peta</button>
+  <button type="button" id="rkNavLost" class="rk-nav-tool danger">🆘 Saya Tersesat</button>
+</div>
+<div class="rk-nav-alert" id="rkNavAlert" hidden></div>
 <div class="map-wrapper rk-leaflet-map" id="rkNavMap"></div>
 <div class="rk-nav-next" id="rkNavNext" hidden></div>
 <details class="rk-nav-steps-box" id="rkNavStepsBox">
@@ -1887,7 +2010,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div aria-label="Buka sapaan Asisten RK CELL" class="ai-welcome-bubble" id="aiWelcomeBubble" role="button" tabindex="0">
 <button aria-label="Tutup sapaan" class="ai-welcome-close" id="aiWelcomeClose" type="button">×</button>
 <div class="welcome-title"><span class="ai-avatar-icon">✦</span> Halo, selamat datang di RK CELL!</div>
-<p>Saya siap membantu konsultasi service HP. Kadang saya serius, kadang bercanda, kadang jadi detektif—tergantung kasusnya 😄 Anda juga bisa <strong>scan QR/barcode seperti Google Lens</strong> untuk membuka halaman atau merangkum isi web.</p>
+<p>Saya bisa membantu cek keluhan HP, tracking servis, harga, garansi, dan arah menuju RK CELL. Gunakan nomor tiket atau QR jika ingin mengecek servis yang sedang berjalan.</p>
 </div>
 <!-- SMART AI ASSISTANT WIDGET WITH MINIMIZE FUNCTION -->
 <div aria-label="Buka Asisten AI" class="ai-launcher" id="aiLauncher">
@@ -1900,8 +2023,8 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div class="ai-brand">
 <div class="ai-avatar-icon">✦</div>
 <div>
-<strong>RK CELL AI Engine 3.5</strong>
-<small style="color:var(--accent-green); display:block; font-size:7.5pt;">Voice ↔ Chat Sinkron • Smart Dynamic Switch</small>
+<strong>Asisten RK CELL</strong>
+<small style="color:var(--accent-green); display:block; font-size:7.5pt;">Bantu cek kerusakan • Tracking • Harga • Garansi • Arah toko</small>
 </div>
 </div>
 <div class="ai-controls">
@@ -3986,7 +4109,10 @@ const ISSUE_CATEGORIES = {
                 qc:qcItems, note:String(fc?.qc_note||''), updatedAt:String(r.completed_at||r.created_at||''),
                 pickedUp:!!r.final_receipt_printed_at, pickedUpAt:String(r.final_receipt_printed_at||''),
                 promoName:String(r.promo_name||''), promoBenefit:String(r.promo_benefit_label||''),
-                rating:r.customer_rating??null, testimonial:String(r.customer_testimonial||'')
+                rating:r.customer_rating??null, testimonial:String(r.customer_testimonial||''),
+                finalChecklist: fc || {},
+                orderId: String(r.id||''),
+                cost: (fc?.total_cost ?? fc?.total ?? fc?.cost ?? fc?.price ?? fc?.grand_total ?? '')
             };
         }
 
@@ -4263,6 +4389,12 @@ const ISSUE_CATEGORIES = {
                 ${timingInfo}
                 ${progressSteps}
                 ${progress}${qc}
+                ${buildServiceHealthReport(r)}
+                ${buildServicePassport(r)}
+                ${buildBeforeAfterEvidence(r)}
+                ${buildDigitalApproval(r)}
+                ${buildWarrantyClaim(r)}
+                ${buildAfterServiceAI(r)}
                 ${trackingWa}
                 <div class="service-analysis-section"><b>🤖 Penjelasan AI</b><p>${escapeHtml(buildTrackingAISummary(r))}</p></div>
                 ${testimonial}
@@ -5696,92 +5828,213 @@ window.addEventListener('DOMContentLoaded',()=>{
 <script id="rkInternalNavigationLogic">
 (function(){
   const STORE={lat:-3.4661562914766963,lng:102.52485494462947,name:'RK CELL Curup'};
-  const toggle=document.getElementById('rkNavToggle');
-  const body=document.getElementById('rkNavBody');
-  const start=document.getElementById('rkNavStart');
-  const refresh=document.getElementById('rkNavRefresh');
-  const status=document.getElementById('rkNavStatus');
-  const summary=document.getElementById('rkNavSummary');
-  const distanceEl=document.getElementById('rkNavDistance');
-  const durationEl=document.getElementById('rkNavDuration');
-  const accuracyEl=document.getElementById('rkNavAccuracy');
-  const nextEl=document.getElementById('rkNavNext');
-  const stepsEl=document.getElementById('rkNavSteps');
-  const stepsBox=document.getElementById('rkNavStepsBox');
-  if(!toggle||!body||!start||!window.L) return;
-  let map=null,userMarker=null,storeMarker=null,routeLine=null,watchId=null,lastPos=null,lastRouteAt=0;
-  const mobile=window.matchMedia('(max-width:600px)').matches;
-  if(mobile){body.classList.add('collapsed');toggle.textContent='Buka ▸';toggle.setAttribute('aria-expanded','false')}
-  else{toggle.textContent='Minimize ▾';toggle.setAttribute('aria-expanded','true')}
-
-  function setOpen(open){body.classList.toggle('collapsed',!open);toggle.textContent=open?'Minimize ▾':'Buka ▸';toggle.setAttribute('aria-expanded',open?'true':'false');if(open){setTimeout(()=>{ensureMap();map?.invalidateSize()},80)}}
+  const $=id=>document.getElementById(id);
+  const toggle=$('rkNavToggle'),body=$('rkNavBody'),startBtn=$('rkNavStart'),refresh=$('rkNavRefresh'),status=$('rkNavStatus'),summary=$('rkNavSummary');
+  const distanceEl=$('rkNavDistance'),durationEl=$('rkNavDuration'),accuracyEl=$('rkNavAccuracy'),nextEl=$('rkNavNext'),stepsEl=$('rkNavSteps');
+  const guide=$('rkNavGuide'),arrow=$('rkNavArrow'),bearingEl=$('rkNavBearing'),compassBtn=$('rkNavCompass'),aiTip=$('rkNavAiTip'),choices=$('rkRouteChoices'),legend=$('rkRouteLegend');
+  const live=$('rkNavLive'),turnArrow=$('rkNavTurnArrow'),liveInstruction=$('rkNavLiveInstruction'),liveDistance=$('rkNavLiveDistance'),voiceBtn=$('rkNavVoice'),mapToggle=$('rkNavMapToggle'),lostBtn=$('rkNavLost'),alertBox=$('rkNavAlert'),mapEl=$('rkNavMap');
+  if(!toggle||!body||!startBtn||!window.L) return;
+  let map=null,userMarker=null,storeMarker=null,watchId=null,lastPos=null,lastRouteAt=0,lastRoutePos=null,wakeLock=null;
+  let routeLines=[],routes=[],selectedRoute=0,deviceHeading=null,targetBearing=null,orientationBound=false,voiceOn=true,lastSpoken='',lastSpeakAt=0,offRouteHits=0,arrived=false;
+  const mobile=matchMedia('(max-width:600px)').matches;
+  if(mobile){body.classList.add('collapsed');toggle.textContent='Buka ▸';toggle.setAttribute('aria-expanded','false')}else{toggle.textContent='Minimize ▾';toggle.setAttribute('aria-expanded','true')}
+  function setOpen(open){body.classList.toggle('collapsed',!open);toggle.textContent=open?'Minimize ▾':'Buka ▸';toggle.setAttribute('aria-expanded',open?'true':'false');if(open)setTimeout(()=>{ensureMap();map?.invalidateSize()},80)}
   toggle.addEventListener('click',()=>setOpen(body.classList.contains('collapsed')));
-
-  function ensureMap(){
-    if(map) return;
-    map=L.map('rkNavMap',{zoomControl:true}).setView([STORE.lat,STORE.lng],16);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
-    const storeIcon=L.divIcon({className:'',html:'<div class="rk-store-dot">🏪</div>',iconSize:[38,38],iconAnchor:[19,19]});
-    storeMarker=L.marker([STORE.lat,STORE.lng],{icon:storeIcon}).addTo(map).bindPopup('<strong>RK CELL Curup</strong><br>Jalan Veteran Belakang POS Curup');
-  }
+  function ensureMap(){if(map)return;map=L.map('rkNavMap',{zoomControl:true}).setView([STORE.lat,STORE.lng],16);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);const storeIcon=L.divIcon({className:'',html:'<div class="rk-store-dot">🏪</div>',iconSize:[38,38],iconAnchor:[19,19]});storeMarker=L.marker([STORE.lat,STORE.lng],{icon:storeIcon}).addTo(map).bindPopup('<strong>RK CELL Curup</strong><br>Jalan Veteran Belakang POS Curup')}
   function setStatus(msg,type=''){status.className='rk-nav-status'+(type?' '+type:'');status.textContent=msg}
+  function alert(msg,type=''){alertBox.hidden=!msg;alertBox.className='rk-nav-alert'+(type?' '+type:'');alertBox.textContent=msg||''}
   function fmtDistance(m){return m<1000?Math.round(m)+' m':(m/1000).toFixed(m<10000?1:0)+' km'}
   function fmtDuration(sec){const min=Math.max(1,Math.round(sec/60));if(min<60)return '± '+min+' menit';const h=Math.floor(min/60),r=min%60;return '± '+h+' jam'+(r?' '+r+' mnt':'')}
-  function maneuverText(step){
-    const t=step.maneuver?.type||'',mod=step.maneuver?.modifier||'',name=step.name?(' ke '+step.name):'';
-    const dir={left:'belok kiri',right:'belok kanan','sharp left':'belok tajam kiri','sharp right':'belok tajam kanan','slight left':'sedikit ke kiri','slight right':'sedikit ke kanan',straight:'lurus','uturn':'putar balik'}[mod]||'';
-    if(t==='depart') return 'Mulai perjalanan'+name;
-    if(t==='arrive') return 'Tiba di RK CELL';
-    if(t==='roundabout'||t==='rotary') return 'Masuk bundaran'+name;
-    if(t==='turn'||t==='continue'||t==='new name'||t==='merge'||t==='fork'||t==='end of road') return (dir?dir:'Lanjutkan')+name;
-    return (dir?dir:'Lanjutkan')+name;
+  const rad=d=>d*Math.PI/180,deg=r=>r*180/Math.PI;
+  function hav(a,b,c,d){const R=6371000,p1=rad(a),p2=rad(c),dp=rad(c-a),dl=rad(d-b),x=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;return 2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
+  function bearingTo(a,b,c,d){const p1=rad(a),p2=rad(c),dl=rad(d-b),y=Math.sin(dl)*Math.cos(p2),x=Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl);return(deg(Math.atan2(y,x))+360)%360}
+  function compassName(d){return['Utara','Timur Laut','Timur','Tenggara','Selatan','Barat Daya','Barat','Barat Laut'][Math.round(d/45)%8]}
+  function updateArrow(pos){targetBearing=bearingTo(pos.coords.latitude,pos.coords.longitude,STORE.lat,STORE.lng);const h=Number.isFinite(deviceHeading)?deviceHeading:(Number.isFinite(pos.coords.heading)?pos.coords.heading:null),rot=h===null?targetBearing:(targetBearing-h+360)%360;arrow.style.transform=`rotate(${rot}deg)`;bearingEl.textContent=Math.round(targetBearing)+'° • '+compassName(targetBearing);guide.hidden=false;compassBtn.textContent=h===null?'🧭 Aktifkan Kompas':'🧭 Kompas Aktif'}
+  function orientationHandler(e){let h=null;if(typeof e.webkitCompassHeading==='number')h=e.webkitCompassHeading;else if(typeof e.alpha==='number')h=(360-e.alpha)%360;if(Number.isFinite(h)){deviceHeading=h;if(lastPos)updateArrow(lastPos)}}
+  async function enableCompass(){try{if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){if(await DeviceOrientationEvent.requestPermission()!=='granted')throw Error('Izin kompas ditolak')}if(!orientationBound){addEventListener('deviceorientationabsolute',orientationHandler,true);addEventListener('deviceorientation',orientationHandler,true);orientationBound=true}compassBtn.textContent='🧭 Kompas Aktif'}catch(e){alert('Kompas tidak tersedia. Panah tetap memakai arah utara sebagai acuan.')}}
+  compassBtn?.addEventListener('click',enableCompass);
+  function maneuverText(st){const t=st.maneuver?.type||'',m=st.maneuver?.modifier||'',name=st.name?(' ke '+st.name):'',dir={left:'Belok kiri',right:'Belok kanan','sharp left':'Belok tajam kiri','sharp right':'Belok tajam kanan','slight left':'Sedikit ke kiri','slight right':'Sedikit ke kanan',straight:'Lurus',uturn:'Putar balik'}[m]||'';if(t==='depart')return'Mulai perjalanan'+name;if(t==='arrive')return'Tiba di RK CELL';if(t==='roundabout'||t==='rotary')return'Masuk bundaran'+name;return(dir||'Lanjutkan')+name}
+  function arrowFor(st){const m=st?.maneuver?.modifier||'';return m.includes('left')?'↰':m.includes('right')?'↱':m==='uturn'?'↶':'↑'}
+  function routeScore(r){const steps=(r.legs?.[0]?.steps||[]).length;return r.duration + steps*5}
+  function routeLabel(i){const r=routes[i],fast=Math.min(...routes.map(x=>x.duration)),short=Math.min(...routes.map(x=>x.distance)),simple=Math.min(...routes.map(routeScore));if(r.duration===fast&&r.distance===short)return'⭐ Rekomendasi AI';if(routeScore(r)===simple)return'🧠 Paling Sederhana';if(r.duration===fast)return'⚡ Tercepat';if(r.distance===short)return'📏 Terpendek';return'🛣️ Alternatif '+(i+1)}
+  function renderChoices(){if(routes.length<2){choices.hidden=true;legend.hidden=true;return}choices.hidden=false;legend.hidden=false;choices.innerHTML=routes.map((r,i)=>`<button class="rk-route-choice${i===selectedRoute?' active':''}" data-route="${i}"><span><strong>${routeLabel(i)}</strong><small>${fmtDistance(r.distance)} • ${fmtDuration(r.duration)} • ${(r.legs?.[0]?.steps||[]).length} arahan</small></span><span class="rk-route-metric">Pilih ›</span></button>`).join('');choices.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>selectRoute(+b.dataset.route,true))}
+  function drawRoutes(){routeLines.forEach(x=>x.remove());routeLines=[];routes.forEach((r,i)=>{const line=L.polyline(r.geometry.coordinates.map(c=>[c[1],c[0]]),{weight:i===selectedRoute?7:4,opacity:i===selectedRoute?.95:.35,dashArray:i===selectedRoute?null:'8 8'}).addTo(map);line.on('click',()=>selectRoute(i,true));routeLines.push(line)});routeLines[selectedRoute]?.bringToFront()}
+  function aiRouteSummary(){const r=routes[selectedRoute];if(!r)return;aiTip.textContent=`${routeLabel(selectedRoute)} dipilih. ${fmtDistance(r.distance)}, ${fmtDuration(r.duration)}, sekitar ${(r.legs?.[0]?.steps||[]).length} arahan. AI akan menghitung ulang bila Anda keluar jalur.`}
+  function selectedSteps(){return(routes[selectedRoute]?.legs?.[0]?.steps||[]).filter(x=>x.distance>1||x.maneuver?.type==='arrive')}
+  function selectRoute(i,fit=false){if(!routes[i])return;selectedRoute=i;const r=routes[i];distanceEl.textContent=fmtDistance(r.distance);durationEl.textContent=fmtDuration(r.duration);drawRoutes();renderChoices();aiRouteSummary();stepsEl.innerHTML=selectedSteps().map(st=>`<li><strong>${maneuverText(st)}</strong>${st.distance>1?' • '+fmtDistance(st.distance):''}</li>`).join('');if(fit&&routeLines[i])map.fitBounds(routeLines[i].getBounds(),{padding:[35,35]});updateLive(lastPos)}
+  function nearestStep(pos){const steps=selectedSteps();if(!steps.length)return null;let best=null;for(const st of steps){const loc=st.maneuver?.location;if(!loc)continue;const d=hav(pos.coords.latitude,pos.coords.longitude,loc[1],loc[0]);if(!best||d<best.d)best={st,d}}return best}
+  function distanceToRoute(pos){const coords=routes[selectedRoute]?.geometry?.coordinates||[];let best=Infinity;for(let i=0;i<coords.length;i+=Math.max(1,Math.floor(coords.length/180))){best=Math.min(best,hav(pos.coords.latitude,pos.coords.longitude,coords[i][1],coords[i][0]))}return best}
+  function speak(text){if(!voiceOn||!('speechSynthesis'in window)||!text)return;const now=Date.now();if(text===lastSpoken&&now-lastSpeakAt<20000)return;lastSpoken=text;lastSpeakAt=now;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='id-ID';u.rate=1.05;speechSynthesis.speak(u)}
+  function updateLive(pos){if(!pos||!routes[selectedRoute])return;live.hidden=false;const n=nearestStep(pos),toStore=hav(pos.coords.latitude,pos.coords.longitude,STORE.lat,STORE.lng);if(toStore<55){arrived=true;liveInstruction.textContent='Anda sudah sampai di RK CELL';liveDistance.textContent=fmtDistance(toStore)+' dari lokasi';turnArrow.textContent='🏪';alert('Selamat datang di RK CELL. Anda sudah berada di area tujuan.','ok');speak('Anda sudah sampai di area RK CELL. Selamat datang.');stopWatch();releaseWake();return}if(toStore<150){alert('🏪 Anda sudah sangat dekat dengan RK CELL. Perhatikan area Jalan Veteran belakang POS Curup.','ok')}
+    if(n){liveInstruction.textContent=maneuverText(n.st);liveDistance.textContent=n.d<25?'Sekarang':fmtDistance(n.d)+' lagi';turnArrow.textContent=arrowFor(n.st);nextEl.hidden=false;nextEl.innerHTML='🧭 <strong>Arah berikutnya:</strong> '+maneuverText(n.st)+' • '+fmtDistance(n.d);if(n.d<520&&n.d>350)speak('Dalam sekitar 500 meter, '+maneuverText(n.st));else if(n.d<230&&n.d>130)speak('Dalam sekitar 200 meter, '+maneuverText(n.st));else if(n.d<120&&n.d>65)speak('Dalam sekitar 100 meter, '+maneuverText(n.st));else if(n.d<60)speak(maneuverText(n.st)+' sekarang')}
   }
-  async function routeFrom(pos,fit=true){
-    ensureMap();
-    const {latitude:lat,longitude:lng,accuracy}=pos.coords;lastPos=pos;
-    const userIcon=L.divIcon({className:'',html:'<div class="rk-user-dot">●</div>',iconSize:[34,34],iconAnchor:[17,17]});
-    if(userMarker) userMarker.setLatLng([lat,lng]); else userMarker=L.marker([lat,lng],{icon:userIcon}).addTo(map).bindPopup('Lokasi Anda');
-    accuracyEl.textContent='± '+Math.round(accuracy||0)+' m';summary.hidden=false;refresh.disabled=false;
-    setStatus('Menghitung rute terbaik menuju RK CELL…');
-    try{
-      const url=`https://router.project-osrm.org/route/v1/driving/${lng},${lat};${STORE.lng},${STORE.lat}?overview=full&geometries=geojson&steps=true`;
-      const res=await fetch(url,{headers:{'Accept':'application/json'}});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      const data=await res.json();
-      const route=data.routes?.[0];if(!route) throw new Error('Rute tidak ditemukan');
-      distanceEl.textContent=fmtDistance(route.distance);durationEl.textContent=fmtDuration(route.duration);
-      const coords=route.geometry.coordinates.map(c=>[c[1],c[0]]);
-      if(routeLine) routeLine.remove();routeLine=L.polyline(coords,{weight:6,opacity:.8}).addTo(map);
-      if(fit) map.fitBounds(routeLine.getBounds(),{padding:[35,35]});
-      const steps=(route.legs?.[0]?.steps||[]).filter(x=>x.distance>1||x.maneuver?.type==='arrive');
-      stepsEl.innerHTML=steps.map(st=>`<li><strong>${maneuverText(st)}</strong>${st.distance>1?' • '+fmtDistance(st.distance):''}</li>`).join('');
-      const first=steps.find(x=>x.maneuver?.type!=='depart')||steps[0];
-      if(first){nextEl.hidden=false;nextEl.innerHTML='🧭 <strong>Arah berikutnya:</strong> '+maneuverText(first)+(first.distance>1?' • '+fmtDistance(first.distance):'')}
-      setStatus('Rute aktif. Posisi Anda akan diperbarui selama halaman ini tetap terbuka.','ok');lastRouteAt=Date.now();
-    }catch(err){
-      distanceEl.textContent='—';durationEl.textContent='—';nextEl.hidden=true;stepsEl.innerHTML='';
-      setStatus('GPS berhasil, tetapi layanan rute sedang tidak tersedia. Posisi Anda dan RK CELL tetap ditampilkan di peta.','warn');
-      map.fitBounds(L.latLngBounds([[lat,lng],[STORE.lat,STORE.lng]]),{padding:[35,35]});
-    }
-  }
-  function onGeoError(err){const msg=err.code===1?'Izin lokasi ditolak. Aktifkan izin lokasi browser untuk memakai navigasi.':err.code===2?'Lokasi tidak dapat ditentukan. Pastikan GPS aktif.':'GPS terlalu lama merespons. Coba lagi.';setStatus(msg,'error')}
-  function begin(){
-    setOpen(true);ensureMap();
-    if(!navigator.geolocation){setStatus('Browser ini tidak mendukung lokasi GPS.','error');return}
-    setStatus('Meminta lokasi perangkat…');
-    navigator.geolocation.getCurrentPosition(p=>routeFrom(p,true),onGeoError,{enableHighAccuracy:true,timeout:15000,maximumAge:5000});
-    if(watchId!==null) navigator.geolocation.clearWatch(watchId);
-    watchId=navigator.geolocation.watchPosition(p=>{
-      lastPos=p;
-      if(userMarker) userMarker.setLatLng([p.coords.latitude,p.coords.longitude]);
-      accuracyEl.textContent='± '+Math.round(p.coords.accuracy||0)+' m';
-      if(Date.now()-lastRouteAt>30000) routeFrom(p,false);
-    },()=>{}, {enableHighAccuracy:true,maximumAge:8000,timeout:20000});
-  }
-  start.addEventListener('click',begin);
-  refresh.addEventListener('click',()=>{if(lastPos) routeFrom(lastPos,true); else begin()});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden&&watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null}});
+  async function acquireWake(){try{if('wakeLock'in navigator)wakeLock=await navigator.wakeLock.request('screen')}catch(e){}}
+  async function releaseWake(){try{await wakeLock?.release()}catch(e){}wakeLock=null}
+  function stopWatch(){if(watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null}}
+  async function routeFrom(pos,fit=true,reason=''){ensureMap();const {latitude:lat,longitude:lng,accuracy}=pos.coords;lastPos=pos;updateArrow(pos);const userIcon=L.divIcon({className:'',html:'<div class="rk-user-dot">●</div>',iconSize:[34,34],iconAnchor:[17,17]});if(userMarker)userMarker.setLatLng([lat,lng]);else userMarker=L.marker([lat,lng],{icon:userIcon}).addTo(map).bindPopup('Lokasi Anda');accuracyEl.textContent='± '+Math.round(accuracy||0)+' m';summary.hidden=false;refresh.disabled=false;if(accuracy>80)alert('⚠️ Akurasi GPS sedang lemah (±'+Math.round(accuracy)+' m). Tunggu beberapa saat di area terbuka.');setStatus(reason||'AI sedang membandingkan beberapa rute menuju RK CELL…');
+    try{const url=`https://router.project-osrm.org/route/v1/driving/${lng},${lat};${STORE.lng},${STORE.lat}?overview=full&geometries=geojson&steps=true&alternatives=3`;const res=await fetch(url,{headers:{Accept:'application/json'}});if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json();routes=(data.routes||[]).slice(0,3);if(!routes.length)throw Error('Rute tidak ditemukan');selectedRoute=routes.map(routeScore).indexOf(Math.min(...routes.map(routeScore)));drawRoutes();renderChoices();selectRoute(selectedRoute,false);if(fit){const g=L.featureGroup(routeLines);map.fitBounds(g.getBounds(),{padding:[35,35]})}lastRouteAt=Date.now();lastRoutePos=pos;offRouteHits=0;setStatus(routes.length>1?`Ditemukan ${routes.length} opsi. AI memilih rute yang cepat dan sederhana.`:'Navigasi aktif. AI akan memantau posisi dan menghitung ulang bila diperlukan.','ok');updateLive(pos)}catch(e){alert('Koneksi/routing sedang bermasalah. Rute terakhir tetap dipertahankan bila tersedia.','error');setStatus('Layanan rute sedang tidak tersedia. GPS dan panah arah tujuan tetap aktif.','warn');if(!routes.length)map.fitBounds(L.latLngBounds([[lat,lng],[STORE.lat,STORE.lng]]),{padding:[35,35]})}}
+  function onPosition(p){lastPos=p;if(userMarker)userMarker.setLatLng([p.coords.latitude,p.coords.longitude]);accuracyEl.textContent='± '+Math.round(p.coords.accuracy||0)+' m';updateArrow(p);updateLive(p);if(arrived)return;const off=routes.length?distanceToRoute(p):0;if(off>85&&p.coords.accuracy<70)offRouteHits++;else offRouteHits=Math.max(0,offRouteHits-1);if(offRouteHits>=2&&Date.now()-lastRouteAt>12000){alert('↩️ Anda terlihat keluar dari rute. AI sedang menghitung ulang jalur terbaik.');speak('Sepertinya Anda keluar dari rute. Saya hitung ulang jalur terbaik.');routeFrom(p,false,'Menghitung ulang karena Anda keluar dari rute…');return}if(lastRoutePos&&hav(p.coords.latitude,p.coords.longitude,lastRoutePos.coords.latitude,lastRoutePos.coords.longitude)>450&&Date.now()-lastRouteAt>45000)routeFrom(p,false,'Memperbarui rute dari posisi terbaru…')}
+  function onGeoError(e){setStatus(e.code===1?'Izin lokasi ditolak. Aktifkan izin lokasi browser.':e.code===2?'Lokasi tidak dapat ditentukan. Pastikan GPS aktif.':'GPS terlalu lama merespons. Coba lagi.','error')}
+  function begin(){arrived=false;setOpen(true);ensureMap();if(!navigator.geolocation)return setStatus('Browser ini tidak mendukung GPS.','error');alert('');setStatus('Meminta lokasi perangkat…');acquireWake();navigator.geolocation.getCurrentPosition(p=>routeFrom(p,true),onGeoError,{enableHighAccuracy:true,timeout:15000,maximumAge:3000});stopWatch();watchId=navigator.geolocation.watchPosition(onPosition,onGeoError,{enableHighAccuracy:true,maximumAge:3000,timeout:20000})}
+  startBtn.onclick=begin;refresh.onclick=()=>lastPos?routeFrom(lastPos,true,'Memperbarui rute…'):begin();
+  voiceBtn.onclick=()=>{voiceOn=!voiceOn;voiceBtn.classList.toggle('active',voiceOn);voiceBtn.textContent=voiceOn?'🔊 Suara ON':'🔇 Suara OFF';if(!voiceOn)speechSynthesis?.cancel()};
+  mapToggle.onclick=()=>{mapEl.classList.toggle('rk-nav-map-hidden');mapToggle.classList.toggle('active',!mapEl.classList.contains('rk-nav-map-hidden'));mapToggle.textContent=mapEl.classList.contains('rk-nav-map-hidden')?'🗺️ Buka Peta':'🗺️ Peta ON';setTimeout(()=>map?.invalidateSize(),80)};
+  lostBtn.onclick=()=>{alert('🆘 Mode bantuan aktif: mengambil ulang GPS dan menghitung rute dari posisi Anda.');speak('Baik, saya bantu cari rute lagi dari posisi Anda sekarang.');navigator.geolocation?.getCurrentPosition(p=>routeFrom(p,true,'Mode tersesat: mencari jalur baru…'),onGeoError,{enableHighAccuracy:true,timeout:15000,maximumAge:0})};
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){releaseWake()}else if(watchId!==null){acquireWake()}});addEventListener('pagehide',()=>{stopWatch();releaseWake()});
 })();
 </script>
-</body>
+
+<script id="rkTrustDataV1">
+(function(){
+  async function loadTrustData(){
+    try{
+      const getClient=window.getTrackingSupabaseClient || (()=>window.supabaseClient||window.supabase);
+      const c=getClient?.();
+      if(!c?.from) return;
+      let q=await c.from('service_orders').select('ticket_number,status,customer_rating,customer_testimonial,warranty_until,finished_at,updated_at').limit(500);
+      if(q.error||!Array.isArray(q.data)) return;
+      const rows=q.data;
+      const services=rows.length;
+      const rated=rows.filter(r=>Number(r.customer_rating)>0);
+      const avg=rated.length?(rated.reduce((a,r)=>a+Number(r.customer_rating||0),0)/rated.length):null;
+      const qcDone=rows.filter(r=>/completed|selesai|done|qc/i.test(String(r.status||''))).length;
+      const now=Date.now();
+      const warranty=rows.filter(r=>{const d=new Date(r.warranty_until||'');return !isNaN(d)&&d.getTime()>=now}).length;
+      const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+      set('rkStatServices',services||'—');
+      set('rkStatRating',avg?avg.toFixed(1)+'/5':'—');
+      set('rkStatQc',qcDone||'—');
+      set('rkStatWarranty',warranty||'—');
+      const latest=rated.filter(r=>String(r.customer_testimonial||'').trim()).sort((a,b)=>new Date(b.updated_at||b.finished_at||0)-new Date(a.updated_at||a.finished_at||0))[0];
+      if(latest){
+        const t=document.getElementById('rkVerifiedTestimonialText');
+        const m=document.getElementById('rkVerifiedTestimonialMeta');
+        if(t)t.textContent='“'+String(latest.customer_testimonial).trim()+'”';
+        if(m)m.textContent='★★★★★'.slice(0,Math.max(1,Math.min(5,Number(latest.customer_rating)||5)))+' • Tiket servis terverifikasi';
+      }
+    }catch(e){console.warn('[RK Trust]',e)}
+  }
+  window.addEventListener('load',()=>setTimeout(loadTrustData,700));
+})();
+</script>
+
+<script id="rkServiceTransparentProLogic">
+(function(){
+  const LS='rkcell-service-pro-v1';
+  const WA='6285148495045';
+  function esc(v){return typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  function load(){try{return JSON.parse(localStorage.getItem(LS)||'{}')||{}}catch(_){return {}}}
+  function save(x){try{localStorage.setItem(LS,JSON.stringify(x))}catch(_){}}
+  function ticketStore(ticket){const all=load();return all[ticket]||{}}
+  function patch(ticket,part){const all=load();all[ticket]=Object.assign({},all[ticket]||{},part,{updatedAt:new Date().toISOString()});save(all);return all[ticket]}
+  function fmtDate(v){try{return formatTrackingDateTime(v)||v||'-'}catch(_){return v||'-'}}
+  function money(v){const n=Number(String(v??'').replace(/[^0-9.-]/g,''));return Number.isFinite(n)&&n>0?'Rp '+n.toLocaleString('id-ID'):''}
+  function classifyQC(r){
+    const raw=[...(r.qc||[]),r.note||'',r.action||'',r.complaint||''].join(' ').toLowerCase();
+    const defs=[['Layar / Touch',['lcd','layar','touch','display']],['Charging',['cas','charging','charger','vbus','usb']],['Baterai',['baterai','batre','battery']],['Kamera',['kamera','camera']],['Audio',['speaker','mic','audio','earpiece']],['Jaringan',['sinyal','sim','wifi','bluetooth','network']],['Tombol / Sensor',['tombol','finger','sensor','power key']],['Mesin / Sistem',['mainboard','mesin','cpu','emmc','ufs','software','boot']]];
+    return defs.map(([label,keys])=>{const hit=keys.some(k=>raw.includes(k));const qcHit=(r.qc||[]).some(q=>keys.some(k=>String(q).toLowerCase().includes(k)));return {label,state:qcHit?'ok':hit?'note':'na'};});
+  }
+  window.buildServiceHealthReport=function(r){
+    const items=classifyQC(r); const hasQc=(r.qc||[]).length>0;
+    return `<details class="rk-pro-suite"><summary>🩺 Service Health Report</summary><div class="rk-pro-body"><div class="muted" style="font-size:7.2pt;margin-bottom:8px">Ringkasan berdasarkan QC/catatan yang benar-benar tersedia pada tiket. Bagian tanpa data tidak dianggap sudah diuji.</div><div class="rk-health-grid">${items.map(x=>`<div class="rk-health-item"><strong>${esc(x.label)}</strong><span class="${x.state==='ok'?'rk-health-ok':x.state==='note'?'rk-health-note':'rk-health-na'}">${x.state==='ok'?'✓ Tercatat QC':x.state==='note'?'• Terkait servis':'— Belum tercatat'}</span></div>`).join('')}</div>${hasQc?`<div class="rk-pro-status ok">✓ ${r.qc.length} catatan QC terbaca dari tiket.</div>`:`<div class="rk-pro-status">Belum ada daftar QC terstruktur pada tiket ini.</div>`}</div></details>`;
+  };
+  function rememberPassport(r){
+    const key='rkcell-passport-'+String(r.device||'unknown').toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,60);let arr=[];try{arr=JSON.parse(localStorage.getItem(key)||'[]')||[]}catch(_){arr=[]}
+    const entry={ticket:r.ticket,date:r.finishDate||r.entryDate||'',action:r.action||r.complaint||'Servis',status:r.status||'',warranty:r.warranty||''};
+    arr=arr.filter(x=>x.ticket!==r.ticket);arr.unshift(entry);arr=arr.slice(0,8);try{localStorage.setItem(key,JSON.stringify(arr))}catch(_){}
+    return arr;
+  }
+  window.buildServicePassport=function(r){
+    const arr=rememberPassport(r);
+    return `<details class="rk-pro-suite"><summary>📱 Service Passport</summary><div class="rk-pro-body"><div class="muted" style="font-size:7.2pt;margin-bottom:9px">Riwayat tiket perangkat yang pernah dibuka pada browser ini. Data resmi utama tetap berasal dari tracking RK CELL.</div>${arr.map(x=>`<div class="rk-passport-line"><b>${esc(x.ticket)} • ${esc(x.status)}</b><small>${esc(fmtDate(x.date))}</small><div style="font-size:7.4pt;margin-top:3px">${esc(x.action)}</div>${x.warranty?`<small>🛡️ ${esc(x.warranty)}</small>`:''}</div>`).join('')}</div></details>`;
+  };
+  function imgBlock(ticket,type,label){const st=ticketStore(ticket);const src=st[type]||'';return `<div class="rk-ba-card"><strong>${label}</strong><label class="rk-ba-upload">📷 ${src?'Ganti Foto':'Tambah Foto'}<input type="file" accept="image/*" onchange="rkStoreServicePhoto(this,'${esc(ticket)}','${type}')"></label>${src?`<img src="${src}" alt="${label}">`:`<div class="muted" style="font-size:7pt;margin-top:8px">Belum ada foto tersimpan.</div>`}</div>`}
+  window.buildBeforeAfterEvidence=function(r){return `<details class="rk-pro-suite"><summary>📸 Bukti Sebelum & Setelah</summary><div class="rk-pro-body"><div class="rk-ba-grid">${imgBlock(r.ticket,'beforePhoto','Sebelum Servis')}${imgBlock(r.ticket,'afterPhoto','Setelah Servis')}</div><div class="rk-pro-status">Foto dikompresi dan disimpan pada browser ini. Untuk bukti lintas perangkat, hubungkan penyimpanan foto ke Supabase Storage.</div></div></details>`};
+  window.rkStoreServicePhoto=function(input,ticket,type){const f=input.files&&input.files[0];if(!f)return; if(!/^image\//.test(f.type))return; if(f.size>8*1024*1024){alert('Foto terlalu besar. Maksimal 8 MB.');return} const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const max=900,scale=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);c.getContext('2d').drawImage(im,0,0,c.width,c.height);const data=c.toDataURL('image/jpeg',.72);patch(ticket,{[type]:data});const card=input.closest('.tracking-card'); if(card&&window.lookupScannedTracking)setTimeout(()=>window.lookupScannedTracking(ticket),120)};im.src=rd.result};rd.readAsDataURL(f)};
+  window.buildDigitalApproval=function(r){
+    const st=ticketStore(r.ticket);const cost=money(r.cost);const act=r.action||'tindakan servis sesuai hasil diagnosa';const approved=st.approval?.decision;
+    return `<details class="rk-pro-suite"><summary>💰 Persetujuan Tindakan & Biaya</summary><div class="rk-pro-body"><div class="rk-approval-box"><div><strong>Tindakan:</strong> ${esc(act)}</div><div style="margin-top:4px"><strong>Biaya:</strong> ${cost?esc(cost):'Belum tercatat pada data tracking'}</div></div>${approved?`<div class="rk-pro-status ${approved==='approved'?'ok':'err'}">${approved==='approved'?'✅ Disetujui':'❌ Belum disetujui'} • ${esc(new Date(st.approval.at).toLocaleString('id-ID'))}</div>`:`<div class="rk-pro-actions"><button class="rk-pro-btn green" onclick="rkServiceApproval('${esc(r.ticket)}','approved')">✅ Setujui Tindakan</button><button class="rk-pro-btn red" onclick="rkServiceApproval('${esc(r.ticket)}','declined')">✕ Belum Setuju</button></div>`}<div class="rk-pro-status">Persetujuan lokal ini menjadi bukti interaksi pada browser. Jika biaya belum tercatat, pelanggan sebaiknya konfirmasi nominal melalui WhatsApp sebelum menyetujui.</div></div></details>`;
+  };
+  window.rkServiceApproval=function(ticket,decision){const at=new Date().toISOString();patch(ticket,{approval:{decision,at}});const msg=decision==='approved'?`Halo RK CELL, saya menyetujui tindakan servis untuk tiket ${ticket}. Mohon lanjutkan sesuai informasi yang telah disampaikan.`:`Halo RK CELL, saya belum menyetujui tindakan servis tiket ${ticket}. Mohon hubungi saya untuk penjelasan lebih lanjut.`;window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank','noopener');setTimeout(()=>window.lookupScannedTracking?.(ticket),180)};
+  window.buildWarrantyClaim=function(r){
+    const eligible=!!(r.warranty||r.warrantyEnd||r.finishDate); const st=ticketStore(r.ticket); const last=st.claim||null;
+    return `<details class="rk-pro-suite"><summary>🛡️ Klaim / Pemeriksaan Garansi</summary><div class="rk-pro-body">${eligible?`<div class="muted" style="font-size:7.2pt;margin-bottom:7px">Gunakan tiket ini untuk meminta pemeriksaan garansi. Keputusan garansi tetap mengikuti ketentuan, segel, kondisi fisik, dan hubungan keluhan dengan pekerjaan sebelumnya.</div><textarea id="rkClaim-${esc(r.ticket)}" class="rk-claim-text" placeholder="Jelaskan keluhan setelah servis…">${last?esc(last.text):''}</textarea><div class="rk-pro-actions"><button class="rk-pro-btn primary" onclick="rkWarrantyClaim('${esc(r.ticket)}')">🛡️ Ajukan Pemeriksaan</button><button class="rk-pro-btn" onclick="window.open('https://wa.me/${WA}','_blank','noopener')">💬 Tanya Garansi</button></div>${last?`<div class="rk-pro-status ok">Pengajuan terakhir: ${esc(new Date(last.at).toLocaleString('id-ID'))}</div>`:''}`:`<div class="muted">Informasi garansi belum tercatat pada tiket ini.</div>`}</div></details>`;
+  };
+  window.rkWarrantyClaim=function(ticket){const ta=document.getElementById('rkClaim-'+ticket);const text=String(ta?.value||'').trim();if(!text){alert('Tuliskan keluhan terlebih dahulu.');return} const at=new Date().toISOString();patch(ticket,{claim:{text,at}});const msg=`Halo RK CELL, saya ingin mengajukan pemeriksaan garansi.\n\nNo. Tiket: ${ticket}\nKeluhan setelah servis: ${text}\n\nMohon dibantu pemeriksaan sesuai ketentuan garansi.`;window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank','noopener');};
+  function aftercareFor(r){const t=((r.action||'')+' '+(r.complaint||'')).toLowerCase();if(/lcd|layar|touch/.test(t))return ['Hindari tekanan berlebih pada layar setelah pemasangan.','Gunakan casing yang tidak menekan sisi layar secara berlebihan.','Jika muncul garis, blank, atau touch tidak normal, dokumentasikan dan hubungi RK CELL.'];if(/baterai|batre|battery/.test(t))return ['Gunakan charger dan kabel yang kondisinya baik.','Pantau panas berlebih, drop mendadak, atau baterai mengembung.','Lakukan pengisian normal dan hindari perangkat terlalu panas.'];if(/cas|charging|charger|port/.test(t))return ['Jangan memaksa konektor jika terasa seret.','Gunakan kabel/adaptor yang terbukti normal.','Jika cas putus-putus atau port kembali longgar, segera lakukan pengecekan.'];if(/mesin|cpu|emmc|ufs|ic|mainboard/.test(t))return ['Backup data penting setelah perangkat stabil.','Pantau restart, panas, sinyal, charging, dan fungsi terkait selama masa observasi.','Hindari benturan, cairan, dan penggunaan ekstrem pada masa awal setelah perbaikan.'];return ['Gunakan perangkat secara normal sambil mengamati fungsi yang diperbaiki.','Simpan nomor tiket dan informasi garansi.','Jika gejala yang sama kembali muncul, hubungi RK CELL dengan menyertakan nomor tiket.'];}
+  window.buildAfterServiceAI=function(r){if(!/selesai|diambil|completed/i.test((r.status||'')+' '+(r.statusCode||'')))return '';const tips=aftercareFor(r);return `<details class="rk-pro-suite"><summary>🤖 AI After-Service</summary><div class="rk-pro-body"><div class="rk-aftercare"><strong>Saran setelah servis</strong><ul>${tips.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="rk-pro-status">Saran ini bersifat umum berdasarkan jenis tindakan/keluhan yang tercatat pada tiket.</div></div></details>`};
+})();
+</script>
+\n<script id="rkLiveStatsSupabaseLogic">
+(function(){
+  const $=id=>document.getElementById(id);
+  const ids={
+    total:'rkStatServices', month:'rkStatMonth', completed:'rkStatCompleted', rating:'rkStatRating',
+    today:'rkStatToday', completedMonth:'rkStatCompletedMonth', waiting:'rkStatWaiting', progress:'rkStatProgress',
+    active:'rkStatActive', quick:'rkStatQuick', cancelled:'rkStatCancelled', cannot:'rkStatCannotRepair',
+    ratingCount:'rkStatRatingCount', testimonialCount:'rkStatTestimonialCount'
+  };
+  const fmt=n=>Number.isFinite(Number(n))?Number(n).toLocaleString('id-ID'):'—';
+  function client(){
+    try{
+      if(typeof window.getTrackingSupabaseClient==='function') return window.getTrackingSupabaseClient();
+      if(window.supabaseClient?.from) return window.supabaseClient;
+    }catch(_){}
+    return null;
+  }
+  function put(id,value){const el=$(id);if(el)el.textContent=value}
+  function setLoading(on){const b=$('rkStatsRefresh');if(b)b.classList.toggle('loading',!!on)}
+  function updateUI(d){
+    put(ids.total,fmt(d.total_service));
+    put(ids.month,fmt(d.service_bulan_ini));
+    put(ids.completed,fmt(d.total_selesai));
+    const rating=Number(d.rating_rata_rata);
+    put(ids.rating,Number.isFinite(rating)&&rating>0?rating.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:2})+' ★':'—');
+    put(ids.today,fmt(d.service_hari_ini));
+    put(ids.completedMonth,fmt(d.selesai_bulan_ini));
+    put(ids.waiting,fmt(d.menunggu));
+    put(ids.progress,fmt(d.sedang_dikerjakan));
+    put(ids.active,fmt(d.service_aktif));
+    put(ids.quick,fmt(d.quick_service));
+    put(ids.cancelled,fmt(d.dibatalkan));
+    put(ids.cannot,fmt(d.tidak_dapat_diperbaiki));
+    put(ids.ratingCount,fmt(d.jumlah_rating));
+    put(ids.testimonialCount,fmt(d.jumlah_testimoni));
+    const now=new Date();
+    const up=$('rkStatsUpdated'); if(up){up.textContent='Terakhir diperbarui '+now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' WIB';up.className='rk-stats-live'}
+    const st=$('rkStatsState');if(st){st.textContent='✓ Terhubung ke Service Order Supabase • diperbarui otomatis';st.classList.remove('rk-stats-error')}
+  }
+  async function load(){
+    setLoading(true);
+    const c=client();
+    if(!c){
+      const st=$('rkStatsState');if(st){st.textContent='Statistik belum terhubung: client Supabase tidak ditemukan.';st.classList.add('rk-stats-error')}
+      setLoading(false);return;
+    }
+    try{
+      const {data,error}=await c.from('service_stats_public').select('*').single();
+      if(error)throw error;
+      if(!data)throw new Error('View statistik tidak mengembalikan data.');
+      updateUI(data);
+    }catch(err){
+      console.error('[RK CELL Stats]',err);
+      const st=$('rkStatsState');if(st){st.textContent='Statistik belum bisa dibaca. Pastikan view service_stats_public dapat diakses role anon.';st.classList.add('rk-stats-error')}
+      const up=$('rkStatsUpdated');if(up){up.textContent='Koneksi statistik gagal';up.className='rk-stats-error'}
+    }finally{setLoading(false)}
+  }
+  function init(){
+    $('rkStatsRefresh')?.addEventListener('click',load);
+    $('rkStatsDetailToggle')?.addEventListener('click',function(){
+      const d=$('rkStatsDetail');if(!d)return;const open=d.hasAttribute('hidden');
+      if(open)d.removeAttribute('hidden');else d.setAttribute('hidden','');
+      this.setAttribute('aria-expanded',open?'true':'false');
+      this.textContent=open?'Tutup statistik lengkap ▴':'Lihat statistik lengkap ▾';
+    });
+    load();
+    setInterval(()=>{if(!document.hidden)load()},60000);
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>\n</body>
 </html>
