@@ -1083,6 +1083,19 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 @media(max-width:430px){.rk-guarantee-grid{grid-template-columns:1fr}.rk-store-main small{max-width:185px}}
 </style>
 
+
+<script id="rkTopOnFreshOpen">
+(function(){
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  function topNow(){
+    try { window.scrollTo({top:0,left:0,behavior:'instant'}); }
+    catch(_){ window.scrollTo(0,0); }
+  }
+  window.addEventListener('pageshow', function(){ setTimeout(topNow, 0); });
+  window.addEventListener('load', function(){ setTimeout(topNow, 0); });
+})();
+</script>
+
 </head>
 <body>
 <!-- NAVBAR -->
@@ -6156,6 +6169,21 @@ window.addEventListener('DOMContentLoaded',()=>{
     localStorage.setItem('rkcell-store-status',JSON.stringify({label:String(label||''),note:String(note||'')}));
     renderStoreStatus();
   };
+})();
+</script>
+
+
+<script id="rkInitialViewportGuard">
+(function(){
+  function enforceTop(){
+    if(location.hash){
+      try { history.replaceState(null,'',location.pathname+location.search); } catch(_){}
+    }
+    window.scrollTo(0,0);
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(enforceTop,0),{once:true});
+  } else setTimeout(enforceTop,0);
 })();
 </script>
 
