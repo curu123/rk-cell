@@ -5,8 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>RK CELL - Service Center HP Professional &amp; Digital Warranty</title>
-<!-- Library html2pdf untuk ekspor PDF langsung dari browser -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<!-- html2pdf dimuat hanya saat pengguna benar-benar mengekspor PDF agar loading awal lebih ringan -->
 <style>
         :root {
             --bg: #070b19;
@@ -860,7 +859,6 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
   #mobileNav.open{display:grid!important;gap:8px}
 }
 </style>
-
 <style id="adminGateV22">
 .admin-gate{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2)}
 .admin-gate-title{font-weight:900;color:var(--accent-cyan);margin-bottom:8px}
@@ -878,8 +876,6 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 .admin-gate-note{font-size:7.2pt;color:var(--muted);margin-top:7px}
 @media(max-width:600px){.admin-gate-grid{grid-template-columns:1fr}}
 </style>
-
-
 <style id="aiPersonaV23Style">
 .ai-persona-line{
   margin:8px 0 4px;padding:8px 10px;border-radius:10px;
@@ -894,15 +890,38 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 .ai-persona-line.fun{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.25)}
 .ai-persona-line.fun .persona-role{color:var(--accent-green)}
 </style>
-
+<style id="rkSubcategoryMinimalV1">
+/* RK CELL — Subkategori minimal & opsional */
+.details-body>.rk-intro{margin:0 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line);color:var(--muted);font-size:8.2pt}
+.rk-subdetails{display:grid;gap:8px}
+.rk-subdetail{margin:0!important;max-width:none!important;border:1px solid var(--line)!important;border-radius:11px!important;background:var(--panel-2)!important;box-shadow:none!important;overflow:hidden}
+.rk-subdetail[open]{border-color:rgba(0,242,254,.38)!important;box-shadow:none!important}
+.rk-subdetail>summary{min-height:42px;padding:9px 12px!important;border-left:3px solid var(--accent-cyan)!important;background:rgba(255,255,255,.018)!important;font-size:8.4pt!important;font-weight:850!important}
+.rk-subdetail>summary:hover{background:rgba(0,242,254,.055)!important}
+.rk-subdetail>summary::after{width:22px!important;height:22px!important;font-size:12px!important}
+.rk-subcontent{padding:10px 12px;border-top:1px solid var(--line);background:var(--panel)}
+.rk-subcontent>.sub-header:first-child{margin-top:0}
+.rk-subcontent>.price-note:last-child{margin-bottom:0}
+@media(max-width:600px){.details-body{padding:10px!important}.rk-subcontent{padding:9px}.rk-subdetail>summary{font-size:8pt!important;min-height:40px}}
+</style><style id="rkSubFillV2">
+.rk-section-hint{margin:0 0 10px;padding:8px 10px;border-radius:10px;background:rgba(0,242,254,.055);border:1px solid var(--line);color:var(--muted);font-size:7.7pt}
+.rk-subdetail>.rk-subcontent{padding:11px 12px;color:var(--text)}
+.rk-subdetail>.rk-subcontent ul,.rk-subdetail>.rk-subcontent ol{margin:2px 0 4px}
+.rk-subdetail>.rk-subcontent li{line-height:1.45;margin-bottom:4px}
+</style><style id="rkTroubleV2">
+.rk-trouble-intro{margin:0 0 10px;color:var(--muted);font-size:8pt}.rk-trouble-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.rk-trouble-item{margin:0;max-width:none;border-radius:10px;box-shadow:none;background:var(--panel-2)}.rk-trouble-item>summary{padding:10px 12px;font-size:8.2pt;border-left:4px solid var(--accent-purple);background:rgba(168,85,247,.06)}.rk-trouble-item>summary::after{width:22px;height:22px;font-size:12px}.rk-trouble-body{padding:10px 12px;border-top:1px solid var(--line);background:var(--panel)}.rk-trouble-body ul{margin:0}.rk-trouble-body li{font-size:7.8pt;line-height:1.45;margin-bottom:5px}@media(max-width:700px){.rk-trouble-grid{grid-template-columns:1fr}}
+</style>
+<style id="glueChoiceStyles">
+.glue-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.glue-choice-card{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--panel-2);transition:.2s ease}.glue-choice-card.selected{border-color:var(--accent-cyan);box-shadow:0 0 0 2px rgba(0,242,254,.16),0 8px 22px var(--shadow);transform:translateY(-1px)}.glue-choice-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.glue-choice-head h4{margin:2px 0;font-size:10pt}.glue-choice-head small{color:var(--muted)}.glue-kicker{font-size:6.5pt;letter-spacing:1px;font-weight:900;color:var(--accent-cyan)}.glue-fit{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line)}.glue-more{margin:9px 0!important;border-radius:10px!important;box-shadow:none!important;background:transparent!important}.glue-more>summary{padding:9px 11px!important;font-size:8pt!important;border-left:3px solid var(--accent-cyan)!important}.glue-detail-body{padding:10px;font-size:8pt;color:var(--text)}.glue-detail-body p{margin:0 0 8px}.glue-select-btn{width:100%;border:0;border-radius:10px;padding:10px 12px;background:var(--primary-gradient);color:#fff;font-weight:900;cursor:pointer}.glue-recommendation{display:flex;flex-direction:column;gap:4px;margin:10px 0 12px;padding:12px;border:1px dashed var(--accent-cyan);border-radius:12px;background:rgba(0,242,254,.05)}.glue-recommendation strong{color:var(--accent-cyan)}.glue-recommendation span{color:var(--muted);font-size:8pt}@media(max-width:700px){.glue-choice-grid{grid-template-columns:1fr}.glue-choice-head{align-items:flex-start}}
+</style>
 </head>
 <body>
 <!-- NAVBAR -->
-<nav aria-label="Navigasi utama" class="pro-nav"><div class="nav-brand"><span>RK</span> CELL</div><button aria-controls="mobileNav" aria-expanded="false" class="nav-menu-toggle" id="navMenuToggle" type="button">☰ Menu</button><div class="nav-links" id="desktopNavLinks"><a aria-label="Beranda / Kalkulator" class="sync-nav-link nav-icon-link" href="#estimasi" title="Beranda / Kalkulator"><span aria-hidden="true">🏠</span></a><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Harga" type="button"><span aria-hidden="true">💰</span></button><div class="nav-group-menu"><a href="https://wa.me/6285148495045?text=Halo%20RK%20CELL%2C%20saya%20ingin%20menanyakan%20harga%20servis%20Android.%20Mohon%20bantu%20cek%20berdasarkan%20merek%2C%20tipe%20HP%2C%20dan%20jenis%20kerusakan%2Fpart." rel="noopener" target="_blank" title="Tanya Harga Android">🤖 Harga Android via WA</a><a href="#harga-iphone">🍏 Harga iPhone</a></div></div><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Layanan" type="button"><span aria-hidden="true">🛠️</span></button><div class="nav-group-menu"><a href="#lcd">📱 LCD / Layar</a><a href="#pengeleman">🧰 Pengeleman</a><a href="#baterai">🔋 Baterai</a><a href="#charger">🔌 Charger / Port Cas</a><a href="#audio">🎵 Audio / Speaker / Earpiece</a><a href="#tombol">🔘 Tombol</a><a href="#sidik-jari">👆 Sidik Jari</a><a href="#kamera">📷 Kamera</a><a href="#mikrofon">🎙️ Mikrofon</a></div></div><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Teknis Lanjutan" type="button"><span aria-hidden="true">⚡</span></button><div class="nav-group-menu"><a href="#cairan">🌊 Cairan</a><a href="#mesin">⚡ IC / Mesin</a><a href="#software">💻 Software</a><a href="#unlock">🔓 Unlock / FRP</a></div></div><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Bantuan" type="button"><span aria-hidden="true">🛡️</span></button><div class="nav-group-menu"><a href="#diagnosa">🩺 Diagnosa</a><a href="#troubleshooting-mandiri">🛠️ Cek Mandiri</a><a href="#garansi">🛡️ Garansi</a><a href="#troubleshooting">🤖 AI Konsultasi</a></div></div><a aria-label="Lokasi" class="sync-nav-link nav-icon-link" href="#lokasi" title="Lokasi"><span aria-hidden="true">📍</span></a></div><button aria-label="Ubah mode tampilan" class="theme-toggle" id="themeToggle" type="button">
+<nav aria-label="Navigasi utama" class="pro-nav"><div class="nav-brand"><span>RK</span> CELL</div><button aria-controls="mobileNav" aria-expanded="false" class="nav-menu-toggle" id="navMenuToggle" type="button">☰ Menu</button><div class="nav-links" id="desktopNavLinks"><a aria-label="Beranda / Kalkulator" class="sync-nav-link nav-icon-link" href="#estimasi" title="Beranda / Kalkulator"><span aria-hidden="true">🏠</span></a><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Harga" type="button"><span aria-hidden="true">💰</span></button><div class="nav-group-menu"><a href="https://wa.me/6285148495045?text=Halo%20RK%20CELL%2C%20saya%20ingin%20menanyakan%20harga%20servis%20Android.%20Mohon%20bantu%20cek%20berdasarkan%20merek%2C%20tipe%20HP%2C%20dan%20jenis%20kerusakan%2Fpart." rel="noopener" target="_blank" title="Tanya Harga Android">🤖 Harga Android via WA</a><a href="#harga-iphone">🍏 Harga iPhone</a></div></div><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Layanan" type="button"><span aria-hidden="true">🛠️</span></button><div class="nav-group-menu"><a href="#lcd">📱 LCD / Layar</a><a href="#pengeleman">🧰 Pengeleman</a><a href="#baterai">🔋 Baterai</a><a href="#charger">🔌 Charger / Port Cas</a><a href="#audio">🎵 Audio / Speaker / Earpiece</a><a href="#tombol">🔘 Tombol</a><a href="#sidik-jari">👆 Sidik Jari</a><a href="#kamera">📷 Kamera</a><a href="#mikrofon">🎙️ Mikrofon</a></div></div><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Teknis Lanjutan" type="button"><span aria-hidden="true">⚡</span></button><div class="nav-group-menu"><a href="#cairan">🌊 Cairan</a><a href="#mesin">⚡ IC / Mesin</a><a href="#software">💻 Software</a><a href="#unlock">🔓 Unlock / FRP</a></div></div><div class="nav-group"><button aria-expanded="false" class="nav-icon-link nav-group-btn" title="Bantuan" type="button"><span aria-hidden="true">🛡️</span></button><div class="nav-group-menu"><a href="#diagnosa">🩺 Diagnosa</a><a href="#troubleshooting">🛠️ Cek Mandiri</a><a href="#garansi">🛡️ Garansi</a><a href="#troubleshooting">🤖 AI Konsultasi</a></div></div><a aria-label="Lokasi" class="sync-nav-link nav-icon-link" href="#lokasi" title="Lokasi"><span aria-hidden="true">📍</span></a></div><button aria-label="Ubah mode tampilan" class="theme-toggle" id="themeToggle" type="button">
 <span class="theme-icon">☀️</span>
 <span class="theme-label">Terang</span>
 </button><a class="nav-wa" href="https://wa.me/6285148495045" rel="noopener" target="_blank">WhatsApp ↗</a></nav>
-<div aria-label="Menu mobile" class="mobile-nav" id="mobileNav"><a class="mobile-nav-direct" href="#estimasi">🏠 Beranda / Kalkulator</a><div class="mobile-nav-group"><button aria-expanded="false" type="button">💰 Harga<span>⌄</span></button><div class="mobile-nav-sub"><a href="https://wa.me/6285148495045?text=Halo%20RK%20CELL%2C%20saya%20ingin%20menanyakan%20harga%20servis%20Android.%20Mohon%20bantu%20cek%20berdasarkan%20merek%2C%20tipe%20HP%2C%20dan%20jenis%20kerusakan%2Fpart." rel="noopener" target="_blank" title="Tanya Harga Android">🤖 Harga Android via WA</a><a href="#harga-iphone">🍏 Harga iPhone</a></div></div><div class="mobile-nav-group"><button aria-expanded="false" type="button">🛠️ Layanan<span>⌄</span></button><div class="mobile-nav-sub"><a href="#lcd">📱 LCD / Layar</a><a href="#pengeleman">🧰 Pengeleman</a><a href="#baterai">🔋 Baterai</a><a href="#charger">🔌 Charger</a><a href="#audio">🎵 Audio / Speaker</a><a href="#tombol">🔘 Tombol</a><a href="#sidik-jari">👆 Sidik Jari</a><a href="#kamera">📷 Kamera</a><a href="#mikrofon">🎙️ Mikrofon</a></div></div><div class="mobile-nav-group"><button aria-expanded="false" type="button">⚡ Teknis Lanjutan<span>⌄</span></button><div class="mobile-nav-sub"><a href="#cairan">🌊 Cairan</a><a href="#mesin">⚡ IC / Mesin</a><a href="#software">💻 Software</a><a href="#unlock">🔓 Unlock / FRP</a></div></div><div class="mobile-nav-group"><button aria-expanded="false" type="button">🛡️ Bantuan<span>⌄</span></button><div class="mobile-nav-sub"><a href="#diagnosa">🩺 Diagnosa</a><a href="#troubleshooting-mandiri">🛠️ Cek Mandiri</a><a href="#garansi">🛡️ Garansi</a><a href="#troubleshooting">🤖 AI Konsultasi</a></div></div><a class="mobile-nav-direct" href="#lokasi">📍 Lokasi</a><a class="mobile-nav-direct" href="https://wa.me/6285148495045" rel="noopener" target="_blank" title="Chat Admin RK CELL">💬 WhatsApp</a></div>
+<div aria-label="Menu mobile" class="mobile-nav" id="mobileNav"><a class="mobile-nav-direct" href="#estimasi">🏠 Beranda / Kalkulator</a><div class="mobile-nav-group"><button aria-expanded="false" type="button">💰 Harga<span>⌄</span></button><div class="mobile-nav-sub"><a href="https://wa.me/6285148495045?text=Halo%20RK%20CELL%2C%20saya%20ingin%20menanyakan%20harga%20servis%20Android.%20Mohon%20bantu%20cek%20berdasarkan%20merek%2C%20tipe%20HP%2C%20dan%20jenis%20kerusakan%2Fpart." rel="noopener" target="_blank" title="Tanya Harga Android">🤖 Harga Android via WA</a><a href="#harga-iphone">🍏 Harga iPhone</a></div></div><div class="mobile-nav-group"><button aria-expanded="false" type="button">🛠️ Layanan<span>⌄</span></button><div class="mobile-nav-sub"><a href="#lcd">📱 LCD / Layar</a><a href="#pengeleman">🧰 Pengeleman</a><a href="#baterai">🔋 Baterai</a><a href="#charger">🔌 Charger</a><a href="#audio">🎵 Audio / Speaker</a><a href="#tombol">🔘 Tombol</a><a href="#sidik-jari">👆 Sidik Jari</a><a href="#kamera">📷 Kamera</a><a href="#mikrofon">🎙️ Mikrofon</a></div></div><div class="mobile-nav-group"><button aria-expanded="false" type="button">⚡ Teknis Lanjutan<span>⌄</span></button><div class="mobile-nav-sub"><a href="#cairan">🌊 Cairan</a><a href="#mesin">⚡ IC / Mesin</a><a href="#software">💻 Software</a><a href="#unlock">🔓 Unlock / FRP</a></div></div><div class="mobile-nav-group"><button aria-expanded="false" type="button">🛡️ Bantuan<span>⌄</span></button><div class="mobile-nav-sub"><a href="#diagnosa">🩺 Diagnosa</a><a href="#troubleshooting">🛠️ Cek Mandiri</a><a href="#garansi">🛡️ Garansi</a><a href="#troubleshooting">🤖 AI Konsultasi</a></div></div><a class="mobile-nav-direct" href="#lokasi">📍 Lokasi</a><a class="mobile-nav-direct" href="https://wa.me/6285148495045" rel="noopener" target="_blank" title="Chat Admin RK CELL">💬 WhatsApp</a></div>
 <!-- HERO SECTION -->
 <section class="pro-hero">
 <div class="hero-copy">
@@ -916,7 +935,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </div>
 <div class="hero-card">
 <div class="status"><i></i> TRACKING REAL-TIME AKTIF</div>
-<div class="hero-stat"><strong id="serviceCount">13</strong><span>Kategori Layanan</span></div>
+<div class="hero-stat"><strong id="serviceCount">17</strong><span>Kategori Layanan</span></div>
 <div class="hero-stat"><strong>NFC Card</strong><span>Garansi Digital</span></div>
 <div class="hero-stat"><strong>QR Code</strong><span>Tracking Perbaikan</span></div>
 </div>
@@ -939,6 +958,17 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div>⚡ Real-Time Web QR &amp; Digital NFC</div>
 </div>
 </div>
+<!-- AKSES CEPAT & PENCARIAN LAYANAN -->
+<section class="rk-smart-access" aria-label="Akses cepat layanan">
+  <div class="rk-smart-search">
+    <div><strong>🔎 Cari kebutuhan Anda</strong><small>Ketik keluhan seperti “layar bergaris”, “tidak bisa cas”, “baterai kembung”, atau “kamera”.</small></div>
+    <div class="rk-search-row"><input id="rkServiceSearch" type="search" placeholder="Cari masalah HP..." autocomplete="off"><button id="rkServiceSearchBtn" type="button">Cari</button></div>
+    <div id="rkSearchResult" class="rk-search-result" aria-live="polite"></div>
+  </div>
+  <div class="rk-quick-actions">
+    <a href="#estimasi">💰<span>Cek Harga</span></a><a href="#troubleshooting">🤖<span>Konsultasi AI</span></a><a href="#troubleshooting">🛠️<span>Cek Mandiri</span></a><a href="#digital">📱<span>Tracking Servis</span></a><a href="https://wa.me/6285148495045" target="_blank" rel="noopener">💬<span>Admin</span></a>
+  </div>
+</section>
 <!-- MODUL ESTIMASI BIAYA INTERAKTIF -->
 <section class="estimator-box" id="estimasi">
 <div class="eyebrow">INTERACTIVE ESTIMATOR</div>
@@ -970,6 +1000,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </select>
 </div>
 </div>
+<div id="rkEstimatorAdvice" class="rk-estimator-advice" aria-live="polite"></div>
 <div class="calc-result" id="calcResultBox">
 <div>
 <span style="font-size: 7.5pt; color: var(--muted); display: block;">ESTIMASI HARGA &amp; LAMA PENGERJAAN:</span>
@@ -986,38 +1017,58 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <!-- BAGIAN 1: DIGITAL & NFC -->
 <details class="theme-purple" id="digital" open="">
 <summary>1. INFORMASI LAYANAN DIGITAL &amp; SISTEM GARANSI NFC</summary>
-<div class="details-body">
-<table class="grid-table">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro" style="margin-top:0;color:var(--muted);">RK CELL menggabungkan nota digital, NFC, QR Tracking, informasi garansi, hasil QC, dan bantuan AI agar proses servis lebih mudah dipantau dan dipahami konsumen.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Fitur Layanan Digital &amp; NFC</summary><div class="rk-subcontent"><table class="grid-table">
 <tr>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">Sistem Nota &amp; Garansi Digital NFC</div>
-<ul class="check-list">
-<li><strong>Praktis &amp; Anti Hilang:</strong> Data garansi tersimpan aman dalam Kartu/Gantungan Kunci NFC.</li>
-<li><strong>Instan Tap:</strong> Cukup tempelkan kartu ke HP tanpa install aplikasi tambahan.</li>
-<li><strong>Terintegrasi &amp; Aman:</strong> Terenkripsi rapat dalam database sistem RK CELL.</li>
-</ul>
-</div>
-</td>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">QR Service Real-Time Tracking</div>
-<ul class="check-list">
-<li><strong>Pantau Real-Time:</strong> Lacak status pengerjaan unit langsung via web.</li>
-<li><strong>Tahapan Transparan:</strong> Diagnosa, Perbaikan, QC Testing, hingga Siap Ambil.</li>
-<li><strong>Transparansi Biaya:</strong> Tidak ada pergantian sparepart tanpa konfirmasi persetujuan.</li>
-</ul>
-</div>
-</td>
+<td style="width: 50%;"><div class="sub-box"><div class="sub-header">💳 Nota &amp; Garansi Digital NFC</div><ul class="check-list">
+<li><strong>Praktis:</strong> NFC dapat digunakan sebagai akses cepat menuju informasi servis dan garansi.</li>
+<li><strong>Tanpa Nota Kertas:</strong> Informasi penting servis lebih mudah ditemukan kembali saat dibutuhkan.</li>
+<li><strong>Tap &amp; Buka:</strong> Tempelkan NFC ke HP yang mendukung untuk membuka layanan digital terkait tanpa aplikasi khusus.</li>
+<li><strong>Terhubung Sistem RK CELL:</strong> Informasi servis mengikuti data digital yang tersedia pada sistem RK CELL.</li>
+</ul></div></td>
+<td style="width: 50%;"><div class="sub-box"><div class="sub-header">📱 QR Service &amp; Tracking</div><ul class="check-list">
+<li><strong>Scan Mudah:</strong> QR dapat dibuka melalui kamera atau Google Lens pada perangkat yang mendukung.</li>
+<li><strong>Pantau Progres:</strong> Konsumen dapat melihat status servis melalui halaman tracking.</li>
+<li><strong>Tahapan Jelas:</strong> Unit Diterima → Diagnosa → Persetujuan → Perbaikan → QC → Siap Diambil.</li>
+<li><strong>Alternatif NFC:</strong> QR tetap dapat digunakan ketika HP tidak memiliki fitur NFC.</li>
+</ul></div></td>
 </tr>
-</table>
-</div>
+<tr>
+<td style="width: 50%;"><div class="sub-box"><div class="sub-header">🛡️ Garansi Lebih Mudah Diverifikasi</div><ul class="check-list">
+<li><strong>Identitas Servis:</strong> Nomor tiket dan informasi perangkat membantu pencocokan data servis.</li>
+<li><strong>Masa Garansi:</strong> Informasi garansi yang tercatat dapat diperiksa kembali melalui sistem digital.</li>
+<li><strong>Klaim Lebih Praktis:</strong> NFC/QR membantu proses pencarian data saat konsumen mengajukan klaim.</li>
+<li><strong>Tetap Sesuai Ketentuan:</strong> Validasi klaim mengikuti masa garansi, segel, jenis pekerjaan, dan ketentuan RK CELL.</li>
+</ul></div></td>
+<td style="width: 50%;"><div class="sub-box"><div class="sub-header">🔍 QC &amp; Riwayat Informasi Servis</div><ul class="check-list">
+<li><strong>Hasil QC:</strong> Catatan QC yang tersedia pada halaman tracking dapat dilihat kembali.</li>
+<li><strong>Informasi Pengerjaan:</strong> Konsumen dapat mengetahui data pekerjaan yang memang tercatat pada sistem.</li>
+<li><strong>Lebih Transparan:</strong> Informasi digital membantu mengurangi kesalahpahaman mengenai status dan hasil pengerjaan.</li>
+<li><strong>Data Apa Adanya:</strong> Sistem hanya menampilkan informasi yang benar-benar tersedia/tercatat.</li>
+</ul></div></td>
+</tr>
+<tr>
+<td style="width: 50%;"><div class="sub-box"><div class="sub-header">🤖 AI Pembaca Tracking RK CELL</div><ul class="check-list">
+<li><strong>Ringkasan Otomatis:</strong> AI dapat membantu membaca informasi tracking yang berhasil diakses.</li>
+<li><strong>Informasi Penting:</strong> Membantu merangkum nomor tiket, status, perangkat, keluhan, tanggal, estimasi, garansi, dan QC bila tersedia.</li>
+<li><strong>Mudah Dipahami:</strong> Data teknis diringkas menjadi penjelasan yang lebih ramah untuk konsumen.</li>
+<li><strong>Tidak Mengarang:</strong> Jika informasi tidak tercantum, AI tidak menganggap data tersebut sudah ada atau sudah dilakukan.</li>
+</ul></div></td>
+<td style="width: 50%;"><div class="sub-box"><div class="sub-header">🤝 Transparansi &amp; Persetujuan Konsumen</div><ul class="check-list">
+<li><strong>Konfirmasi Sebelum Tindakan:</strong> Pergantian sparepart atau tindakan tambahan dilakukan setelah persetujuan konsumen.</li>
+<li><strong>Biaya Lebih Jelas:</strong> Perubahan biaya diinformasikan sebelum pekerjaan tambahan dilanjutkan.</li>
+<li><strong>Status Mudah Dipantau:</strong> Konsumen tidak harus selalu menghubungi admin hanya untuk mengetahui progres.</li>
+<li><strong>Tujuan Utama:</strong> Membuat proses servis lebih transparan, praktis, dan mudah dipertanggungjawabkan.</li>
+</ul></div></td>
+</tr>
+</table></div></details><details class="rk-subdetail"><summary>Catatan Sistem Digital</summary><div class="rk-subcontent"><div class="price-note"><strong>ℹ️ Catatan:</strong> NFC dan QR berfungsi sebagai akses ke informasi digital. Isi data yang dapat ditampilkan bergantung pada informasi servis yang tercatat pada sistem RK CELL dan kemampuan perangkat konsumen.</div></div></details><details class="rk-subdetail"><summary>Cara Menggunakan NFC &amp; QR</summary><div class="rk-subcontent"><ul class="check-list"><li><strong>NFC:</strong> tempelkan kartu/gantungan NFC pada area pembaca NFC HP untuk membuka informasi layanan yang terhubung.</li><li><strong>QR:</strong> pindai menggunakan kamera atau Google Lens untuk membuka halaman tracking tanpa aplikasi khusus.</li><li><strong>Alternatif:</strong> bila HP tidak mendukung NFC, pelanggan tetap dapat menggunakan QR atau link tracking.</li></ul></div></details></div></div>
 </details>
 <!-- BAGIAN 2: DIAGNOSA KERUSAKAN -->
 <details class="theme-green" id="diagnosa">
 <summary>2. PANDUAN GEJALA KERUSAKAN &amp; PEMERIKSAAN HP</summary>
-<div class="details-body">
-<table class="grid-table">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Gejala &amp; Pemeriksaan Awal</summary><div class="rk-subcontent"><table class="grid-table">
 <tr>
 <td style="width: 50%;">
 <div class="sub-header">1. Daya, Pengisian &amp; Performa</div>
@@ -1045,22 +1096,18 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </ul>
 </td>
 </tr>
-</table>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Pemeriksaan Awal yang Aman</summary><div class="rk-subcontent"><ul class="check-list"><li>Catat gejala utama, kapan mulai terjadi, dan kondisi terakhir sebelum kerusakan muncul.</li><li>Periksa charger, kabel, SIM, aksesori, dan pengaturan sederhana sebelum menyimpulkan kerusakan hardware.</li><li>Hindari bongkar sendiri bila unit masih bergaransi atau terdapat risiko baterai, cairan, dan korsleting.</li></ul></div></details><details class="rk-subdetail"><summary>Kapan Perlu Pemeriksaan Teknisi</summary><div class="rk-subcontent"><ul class="cross-list"><li>HP mati total, panas tidak normal, bau terbakar, atau baterai menggembung.</li><li>Kerusakan berulang setelah restart/reset sederhana.</li><li>Gejala mengarah ke jalur, IC, storage, CPU, atau kerusakan akibat cairan.</li></ul></div></details></div></div>
 </details>
 <!-- BAGIAN 3: KATALOG LCD -->
 <span aria-hidden="true" class="nav-anchor-only" id="harga-android"></span><details class="theme-yellow" id="lcd">
 <summary>3. KATALOG &amp; SYARAT KETENTUAN SERVICE LCD &amp; TOUCHSCREEN</summary>
-<div class="details-body">
-<p>Penggantian Layar LCD pecah, bergaris, blank, atau touchscreen macet untuk semua tipe Android &amp; iPhone.</p>
-<div class="sub-header">A. Estimasi Layanan LCD Standar</div>
-<table class="data-table">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penggantian Layar LCD pecah, bergaris, blank, atau touchscreen macet untuk semua tipe Android &amp; iPhone.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Estimasi Layanan LCD</summary><div class="rk-subcontent"><div class="sub-header">A. Estimasi Layanan LCD Standar</div></div></details><details class="rk-subdetail"><summary>Daftar Estimasi &amp; Garansi</summary><div class="rk-subcontent"><table class="data-table">
 <tr><th>Jenis Kerusakan</th><th>Estimasi Pengerjaan</th><th>Garansi Layanan</th></tr>
 <tr><td>Touchscreen Tidak Merespons / Pecah Kaca Outer</td><td>1 - 2 Jam</td><td><span class="badge badge-green">Tersedia</span></td></tr>
 <tr><td>LCD Blank / Bergaris / Flashing</td><td>30 - 60 Menit</td><td><span class="badge badge-green">Tersedia</span></td></tr>
-</table>
-<div class="sub-header" style="margin-top: 14px;">B. Pilihan Grade Kualitas LCD</div>
-<table class="data-table">
+</table></div></details><details class="rk-subdetail"><summary>Pilihan Grade LCD</summary><div class="rk-subcontent"><div class="sub-header" style="margin-top: 14px;">B. Pilihan Grade Kualitas LCD</div></div></details><details class="rk-subdetail"><summary>Perbandingan Grade &amp; Harga</summary><div class="rk-subcontent"><table class="data-table">
 <thead>
 <tr>
 <th>Grade LCD</th>
@@ -1095,8 +1142,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <td><span class="badge badge-green">6 Bulan</span></td>
 </tr>
 </tbody>
-</table>
-<table class="grid-table" style="margin-top: 8px;">
+</table></div></details><details class="rk-subdetail"><summary>Syarat &amp; Ketentuan Garansi LCD</summary><div class="rk-subcontent"><table class="grid-table" style="margin-top: 8px;">
 <tr>
 <td style="width: 50%;">
 <div class="sub-box">
@@ -1117,76 +1163,129 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </div>
 </td>
 </tr>
-</table>
-</div>
+</table></div></details></div></div>
 </details>
 <!-- BAGIAN 4: PENGELEMAN LCD -->
 <details id="pengeleman">
 <summary>4. PILIHAN METODE PENGELEMAN LCD HP</summary>
 <div class="details-body">
-<table class="grid-table">
-<tr>
-<td style="width: 50%;">
-<div class="sub-box">
-<strong class="text-yellow">1. LEM SISI (Tanpa Bongkar LCD)</strong><br/>
-<strong>Biaya:</strong> <span class="price-text">Mulai Rp 20.000</span><br/>
-<strong>Kelebihan:</strong> Pengerjaan cepat, murah, risiko rendah.<br/>
-<strong>Garansi:</strong> <span class="badge badge-red">TIDAK ADA GARANSI</span>
-</div>
-</td>
-<td style="width: 50%;">
-<div class="sub-box">
-<strong class="text-cyan">2. LEM TOTAL (Bongkar &amp; Lem Ulang Presisi)</strong><br/>
-<strong>Biaya:</strong> <span class="price-text">Mulai Rp 50.000</span><br/>
-<strong>Kelebihan:</strong> Daya rekat kuat, rapi, bebas debu &amp; air.<br/>
-<strong>Garansi:</strong> <span class="badge badge-green">GARANSI 1 BULAN</span>
-</div>
-</td>
-</tr>
-</table>
+  <div class="rk-section-hint">Pilih kondisi yang paling sesuai. Pilihan konsumen bersifat awal dan tetap dikonfirmasi teknisi setelah pemeriksaan fisik.</div>
+
+  <div class="glue-choice-grid">
+    <article class="glue-choice-card glue-light" data-glue="sisi">
+      <div class="glue-choice-head">
+        <div><span class="glue-kicker">OPSIONAL 1</span><h4>🟡 Pengeleman Sisi</h4><small>Tanpa melepas LCD sepenuhnya</small></div>
+        <span class="badge badge-yellow">Mulai Rp 20.000</span>
+      </div>
+      <div class="glue-fit"><strong>Cocok jika:</strong>
+        <ul class="check-list">
+          <li>LCD hanya terangkat sedikit di satu sisi atau sudut.</li>
+          <li>Tampilan dan touchscreen masih normal.</li>
+          <li>Frame tidak bengkok dan tidak ada tekanan dari baterai kembung.</li>
+          <li>Lem lama masih cukup baik di sebagian besar sisi.</li>
+        </ul>
+      </div>
+      <details class="glue-more">
+        <summary>Lihat rincian tindakan</summary>
+        <div class="glue-detail-body">
+          <p><strong>Proses:</strong> pemeriksaan sisi yang terangkat, pembersihan area seperlunya, pemberian lem pada bagian bermasalah, lalu penjepitan/pengeringan.</p>
+          <p><strong>Kelebihan:</strong> lebih cepat, lebih ekonomis, dan risiko pembongkaran lebih rendah.</p>
+          <p><strong>Tidak direkomendasikan jika:</strong> layar terangkat di banyak sisi, lem lama rapuh/berantakan, frame bengkok, baterai kembung, atau LCD pernah dilem berkali-kali.</p>
+          <p><strong>Garansi:</strong> <span class="badge badge-red">Tanpa garansi</span> karena hanya menangani area tertentu dan kondisi lem lama tetap memengaruhi hasil.</p>
+        </div>
+      </details>
+      <button type="button" class="glue-select-btn" onclick="selectGlueOption('sisi')">Pilih Pengeleman Sisi</button>
+    </article>
+
+    <article class="glue-choice-card glue-total" data-glue="total">
+      <div class="glue-choice-head">
+        <div><span class="glue-kicker">OPSIONAL 2</span><h4>🔵 Pengeleman Total</h4><small>Bongkar &amp; lem ulang secara presisi</small></div>
+        <span class="badge badge-green">Mulai Rp 50.000</span>
+      </div>
+      <div class="glue-fit"><strong>Cocok jika:</strong>
+        <ul class="check-list">
+          <li>LCD terangkat di beberapa sisi atau hampir seluruh keliling.</li>
+          <li>Lem lama sudah rapuh, tidak rata, atau banyak sisa lem.</li>
+          <li>Unit pernah dilem sebelumnya dan hasilnya kurang rapi/kuat.</li>
+          <li>Diperlukan pembersihan frame dan pemasangan ulang menyeluruh.</li>
+        </ul>
+      </div>
+      <details class="glue-more">
+        <summary>Lihat rincian tindakan</summary>
+        <div class="glue-detail-body">
+          <p><strong>Proses:</strong> LCD dilepas dengan hati-hati, lem lama dibersihkan, frame diperiksa dan dirapikan bila memungkinkan, lem baru diaplikasikan merata, kemudian LCD diposisikan, dipres, dan menjalani QC.</p>
+          <p><strong>Kelebihan:</strong> hasil lebih rapi dan daya rekat lebih merata dibanding lem sisi.</p>
+          <p><strong>Catatan risiko:</strong> LCD lama yang rapuh/retak, fleksibel lemah, frame bengkok, atau bekas benturan dapat meningkatkan risiko saat pembongkaran. Kondisi ini dikonfirmasi sebelum pengerjaan.</p>
+          <p><strong>Garansi:</strong> <span class="badge badge-green">1 Bulan</span> untuk hasil pengeleman sesuai ketentuan RK CELL; tidak mencakup pecah, jatuh, tekanan, cairan, baterai kembung, atau kerusakan baru.</p>
+        </div>
+      </details>
+      <button type="button" class="glue-select-btn" onclick="selectGlueOption('total')">Pilih Pengeleman Total</button>
+    </article>
+  </div>
+
+  <div class="glue-recommendation" id="glueRecommendation" aria-live="polite">
+    <strong>💡 Belum memilih metode.</strong>
+    <span>Pilih salah satu opsi di atas. Teknisi akan memverifikasi apakah pilihan tersebut aman untuk kondisi HP.</span>
+  </div>
+
+  <div class="rk-subdetails">
+    <details class="rk-subdetail"><summary>Mana yang cocok untuk HP saya?</summary><div class="rk-subcontent">
+      <ul class="check-list">
+        <li><strong>Terangkat sedikit satu sisi + fungsi normal:</strong> biasanya cukup Pengeleman Sisi.</li>
+        <li><strong>Terangkat beberapa sisi / bekas lem banyak:</strong> lebih disarankan Pengeleman Total.</li>
+        <li><strong>Layar terdorong dari dalam:</strong> wajib cek baterai kembung sebelum dilem.</li>
+        <li><strong>Frame bengkok atau LCD retak:</strong> pengeleman saja mungkin tidak menyelesaikan masalah dan perlu tindakan lain.</li>
+      </ul>
+    </div></details>
+    <details class="rk-subdetail"><summary>Perawatan Setelah Pengeleman</summary><div class="rk-subcontent">
+      <ul class="check-list">
+        <li>Jangan melepas penjepit/perekat sebelum waktu curing selesai.</li>
+        <li>Hindari menekan sisi layar berlebihan dan hindari casing terlalu ketat pada awal pemakaian.</li>
+        <li>Jauhkan perangkat dari panas dan cairan selama masa pengeringan lem.</li>
+        <li>Segera kembali jika sisi layar kembali terangkat selama masa garansi metode total.</li>
+      </ul>
+    </div></details>
+  </div>
 </div>
 </details>
 <!-- BAGIAN 5: BATERAI -->
 <details class="theme-green" id="baterai">
 <summary>5. PERBAIKAN BATERAI</summary>
-<div class="details-body">
-<p>Penanganan baterai boros, drop, cepat habis, panas, kembung, persentase tidak stabil, atau baterai tidak terdeteksi.</p>
-<table class="data-table">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan baterai boros, drop, cepat habis, panas, kembung, persentase tidak stabil, atau baterai tidak terdeteksi.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Pilihan Baterai, Estimasi &amp; Garansi</summary><div class="rk-subcontent"><table class="data-table">
 <thead><tr><th>Kategori</th><th>Tindakan / Opsi</th><th>Estimasi / Garansi</th><th>Biaya Mulai</th></tr></thead>
 <tbody>
 <tr><td><strong>Baterai Standar</strong></td><td>Kapasitas OEM standar untuk pemakaian harian</td><td>20 - 30 Menit | <span class="badge badge-yellow">Garansi Toko</span></td><td><span class="price-text">Rp 140.000</span></td></tr>
 <tr><td><strong>Baterai High Performance</strong></td><td>Kapasitas optimal dan stabil sesuai tipe perangkat</td><td>20 - 30 Menit | <span class="badge badge-green">3 Bulan</span></td><td><span class="price-text">Rp 165.000</span></td></tr>
 <tr><td><strong>Baterai Premium</strong></td><td>Kualitas premium sesuai ketersediaan dan kompatibilitas</td><td>20 - 30 Menit | <span class="badge badge-green">6 Bulan</span></td><td><span class="price-text">Rp 250.000</span></td></tr>
 </tbody>
-</table>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Gejala Baterai Bermasalah</summary><div class="rk-subcontent"><ul class="check-list"><li>Baterai cepat habis, persentase meloncat, mati pada persentase tertentu, atau sulit penuh.</li><li>Perangkat cepat panas saat pemakaian ringan atau saat pengisian.</li><li>Baterai mengembung, mendorong backdoor/LCD, atau terdeteksi tidak stabil.</li></ul></div></details><details class="rk-subdetail"><summary>Pemeriksaan &amp; QC Baterai</summary><div class="rk-subcontent"><ul class="check-list"><li>Pemeriksaan kondisi fisik, konektor, suhu, dan perilaku pengisian.</li><li>Uji pengisian serta konsumsi daya sesuai kondisi perangkat.</li><li>Setelah penggantian, dilakukan pengecekan charging, persentase, dan kestabilan dasar sebelum unit diserahkan.</li></ul></div></details></div></div>
 </details>
 <!-- BAGIAN 6: CHARGER -->
 <details class="theme-yellow" id="charger">
 <summary>6. CHARGER, PORT CAS &amp; SISTEM PENGISIAN</summary>
-<div class="details-body">
-<p>Penanganan port cas longgar, harus ditekan, tidak mengisi, pengisian lambat, putus-putus, tidak fast charging, atau konektor rusak.</p>
-<table class="data-table">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan port cas longgar, harus ditekan, tidak mengisi, pengisian lambat, putus-putus, tidak fast charging, atau konektor rusak.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Port Cas, Flexible &amp; Sistem Charging</summary><div class="rk-subcontent"><table class="data-table">
 <thead><tr><th>Kategori</th><th>Tindakan / Pemeriksaan</th><th>Estimasi</th><th>Biaya Mulai</th></tr></thead>
 <tbody>
 <tr><td><strong>Port / Konektor Cas</strong></td><td>Pembersihan, perbaikan pin, atau penggantian konektor</td><td>30 - 45 Menit</td><td><span class="price-text">Rp 60.000</span></td></tr>
 <tr><td><strong>Flexible / Sub-board Charging</strong></td><td>Pemeriksaan atau penggantian flexible/sub-board</td><td>30 - 60 Menit</td><td><span class="price-text">Menyesuaikan tipe</span></td></tr>
 <tr><td><strong>Jalur / IC Charging</strong></td><td>Diagnosa VBUS, data charging, proteksi, dan IC terkait</td><td>Perlu diagnosa</td><td><span class="price-text">Setelah pemeriksaan</span></td></tr>
 </tbody>
-</table>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Gejala Sistem Pengisian</summary><div class="rk-subcontent"><ul class="check-list"><li>Port longgar, harus ditekan, koneksi putus-putus, atau hanya bisa dicas pada posisi tertentu.</li><li>Pengisian lambat, tidak fast charging, atau arus pengisian tidak stabil.</li><li>HP tidak terdeteksi komputer/data USB meskipun masih bisa mengisi daya.</li></ul></div></details><details class="rk-subdetail"><summary>Pemeriksaan Bertahap</summary><div class="rk-subcontent"><ul class="check-list"><li>Mulai dari kabel, adaptor, kebersihan port, dan kondisi pin konektor.</li><li>Dilanjutkan ke flexible/sub-board, jalur VBUS/data, proteksi, dan IC terkait bila diperlukan.</li><li>Penggantian komponen dilakukan sesuai hasil pemeriksaan dan persetujuan pelanggan.</li></ul></div></details></div></div>
 </details>
 <!-- BAGIAN 7: AUDIO -->
 <details id="audio">
 <summary>7. AUDIO / SPEAKER / EARPIECE &amp; JALUR AUDIO</summary>
-<div class="details-body">
-<p>Penanganan gangguan audio, loudspeaker, buzzer, dan earpiece/receiver dilakukan dalam satu kategori. Pemeriksaan dilakukan bertahap mulai dari pembersihan filter/rongga, pemeriksaan korosi dan gasket, penggantian modul atau speaker/earpiece, perbaikan jalur, hingga pemeriksaan IC Audio / Power Amplifier.</p>
-<div class="sub-box">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan gangguan audio, loudspeaker, buzzer, dan earpiece/receiver dilakukan dalam satu kategori. Pemeriksaan dilakukan bertahap mulai dari pembersihan filter/rongga, pemeriksaan korosi dan gasket, penggantian modul atau speaker/earpiece, perbaikan jalur, hingga pemeriksaan IC Audio / Power Amplifier.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Pembersihan Awal</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🧹 Pembersihan Jaring Filter &amp; Rongga Speaker / Earpiece (Cleaning)</div>
 <p><strong>Kasus:</strong> Suara kecil, sember, atau teredam akibat tertumpuk debu, serbuk besi, atau kotoran telinga yang menyumbat jaring pelindung (<em>mesh filter</em>).</p>
 <p><strong>Tindakan:</strong> Membuka casing luar atau bezel, lalu membersihkan jaring filter menggunakan sikat halus dan cairan pembersih. Kotoran yang menempel dapat diangkat secara hati-hati menggunakan alat presisi tanpa merusak membran atau jaring speaker.</p>
-</div>
-<table class="data-table">
+</div></div></details><details class="rk-subdetail"><summary>Jenis Penanganan &amp; Perbaikan</summary><div class="rk-subcontent"><table class="data-table">
 <thead><tr><th>Jenis Penanganan</th><th>Kasus</th><th>Tindakan</th></tr></thead>
 <tbody>
 <tr>
@@ -1220,21 +1319,18 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <td>Melakukan pengecekan tegangan kerja IC Audio / <em>Audio Amplifier</em> pada <em>mainboard</em>. Jika hasil diagnosis mengarah ke IC, tindakan lanjutan dapat berupa <em>rework</em>, <em>reballing</em>, atau penggantian IC sesuai kondisi.</td>
 </tr>
 </tbody>
-</table>
-<div class="price-note"><strong>Catatan:</strong> Gangguan suara tidak selalu berarti speaker harus diganti. Pemeriksaan dilakukan dari filter dan rongga speaker, kontak/gasket, modul speaker, jalur PCB, hingga IC Audio agar tindakan perbaikan sesuai sumber kerusakan.</div>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Catatan Pemeriksaan</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan:</strong> Gangguan suara tidak selalu berarti speaker harus diganti. Pemeriksaan dilakukan dari filter dan rongga speaker, kontak/gasket, modul speaker, jalur PCB, hingga IC Audio agar tindakan perbaikan sesuai sumber kerusakan.</div></div></details></div></div>
 </details>
 <!-- BAGIAN 8: TOMBOL -->
 <details id="tombol">
 <summary>8. TOMBOL POWER, VOLUME &amp; SILENT</summary>
-<div class="details-body">
-<p>Penanganan tombol power, volume, dan silent switch mulai dari pembersihan, perbaikan mekanik, perbaikan jalur, penggantian fleksibel, hingga pemeriksaan jalur ke motherboard.</p>
-<div class="sub-box">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan tombol power, volume, dan silent switch mulai dari pembersihan, perbaikan mekanik, perbaikan jalur, penggantian fleksibel, hingga pemeriksaan jalur ke motherboard.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Pembersihan Awal</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🧹 Pembersihan Eksternal &amp; Internal (Cleaning)</div>
 <p><strong>Kasus:</strong> Tombol keras, macet, atau kotor akibat debu dan sisa cairan.</p>
 <p><strong>Tindakan:</strong> Membuka casing belakang, membersihkan bagian dalam tombol mekanik menggunakan cairan <em>contact cleaner</em> atau alkohol isopropil (IPA) dengan sikat halus, serta memastikan tidak ada kotoran yang mengganjal di antara tombol luar dan <em>switch</em> di dalam.</p>
-</div>
-<table class="data-table">
+</div></div></details><details class="rk-subdetail"><summary>Jenis Perbaikan Tombol</summary><div class="rk-subcontent"><table class="data-table">
 <thead>
 <tr><th>Jenis Penanganan</th><th>Kasus</th><th>Tindakan</th></tr>
 </thead>
@@ -1265,21 +1361,18 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <td>Mengecek tegangan jalur tombol menggunakan <em>multimeter</em> dan melakukan <em>tracking</em> jalur ke arah IC Power untuk memastikan tidak ada jalur utama di mesin yang putus atau mengalami <em>short</em>.</td>
 </tr>
 </tbody>
-</table>
-<div class="price-note"><strong>Catatan:</strong> Jenis tindakan ditentukan setelah pemeriksaan. Tidak semua kerusakan tombol membutuhkan penggantian fleksibel; pada kondisi tertentu cukup dilakukan cleaning, re-alignment, perbaikan jalur, atau penggantian micro switch.</div>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Catatan Pemeriksaan</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan:</strong> Jenis tindakan ditentukan setelah pemeriksaan. Tidak semua kerusakan tombol membutuhkan penggantian fleksibel; pada kondisi tertentu cukup dilakukan cleaning, re-alignment, perbaikan jalur, atau penggantian micro switch.</div></div></details></div></div>
 </details>
 <!-- BAGIAN 9: SIDIK JARI -->
 <details id="sidik-jari">
 <summary>9. SIDIK JARI / FINGERPRINT</summary>
-<div class="details-body">
-<p>Penanganan sensor sidik jari samping, belakang, maupun <em>in-display</em> dilakukan bertahap mulai dari pemeriksaan konektor, fleksibel dan modul sensor, penyelarasan posisi, kalibrasi, hingga pemeriksaan suplai dan jalur motherboard.</p>
-<div class="sub-box">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan sensor sidik jari samping, belakang, maupun <em>in-display</em> dilakukan bertahap mulai dari pemeriksaan konektor, fleksibel dan modul sensor, penyelarasan posisi, kalibrasi, hingga pemeriksaan suplai dan jalur motherboard.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Pemeriksaan Awal Sensor</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🧹 Pembersihan Jalur Kontak &amp; Pengecekan Konektor (Cleaning &amp; Inspection)</div>
 <p><strong>Kasus:</strong> Sensor tidak terbaca atau gagal mendeteksi sidik jari akibat adanya kotoran, sisa lem, atau korosi ringan pada pin konektor <em>fingerprint</em> dan soket di PCB/mesin.</p>
 <p><strong>Tindakan:</strong> Membuka perangkat, melepaskan soket <em>fingerprint</em>, membersihkan pin kuningan menggunakan alkohol isopropil (IPA) dan sikat halus, serta memastikan pengunci soket menutup dengan sempurna.</p>
-</div>
-<table class="data-table">
+</div></div></details><details class="rk-subdetail"><summary>Jenis Perbaikan Fingerprint</summary><div class="rk-subcontent"><table class="data-table">
 <thead><tr><th>Jenis Penanganan</th><th>Kasus</th><th>Tindakan</th></tr></thead>
 <tbody>
 <tr>
@@ -1308,21 +1401,18 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <td>Memeriksa suplai tegangan kerja dan jalur komunikasi data dari soket <em>fingerprint</em> menuju rangkaian terkait pada <em>mainboard</em>. Tindakan lanjutan pada komponen/IC hanya dilakukan berdasarkan hasil pengukuran dan diagnosis.</td>
 </tr>
 </tbody>
-</table>
-<div class="price-note"><strong>Catatan:</strong> Penggantian sensor sidik jari tidak selalu langsung menyelesaikan masalah. Beberapa perangkat memerlukan sensor yang kompatibel, proses pairing/kalibrasi, atau mempertahankan modul asli. Diagnosis dilakukan dari konektor dan fleksibel terlebih dahulu sebelum mengarah ke motherboard.</div>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Catatan Kompatibilitas</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan:</strong> Penggantian sensor sidik jari tidak selalu langsung menyelesaikan masalah. Beberapa perangkat memerlukan sensor yang kompatibel, proses pairing/kalibrasi, atau mempertahankan modul asli. Diagnosis dilakukan dari konektor dan fleksibel terlebih dahulu sebelum mengarah ke motherboard.</div></div></details></div></div>
 </details>
 <!-- BAGIAN 10: MIKROFON -->
 <details id="mikrofon">
 <summary>10. MIKROFON / MIC</summary>
-<div class="details-body">
-<p>Penanganan masalah mikrofon mulai dari pembersihan lubang mic, perbaikan posisi gasket, rework komponen, perbaikan jalur, penggantian modul/fleksibel, hingga pemeriksaan Audio Codec pada motherboard.</p>
-<div class="sub-box">
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan masalah mikrofon mulai dari pembersihan lubang mic, perbaikan posisi gasket, rework komponen, perbaikan jalur, penggantian modul/fleksibel, hingga pemeriksaan Audio Codec pada motherboard.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Pembersihan Awal Mic</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🧹 Pembersihan Lubang Mic &amp; Pori-pori Filter (Cleaning)</div>
 <p><strong>Kasus:</strong> Suara kecil atau tidak terdengar akibat lubang mic di casing tertutup debu, kotoran saku, atau kerak kering.</p>
 <p><strong>Tindakan:</strong> Membersihkan kotoran pada jaring pelindung (<em>mesh filter</em>) di luar casing menggunakan sikat halus dan cairan pembersih, atau membuka casing untuk membersihkan bagian dalam corong mic agar tidak terhalang.</p>
-</div>
-<table class="data-table">
+</div></div></details><details class="rk-subdetail"><summary>Jenis Perbaikan Mikrofon</summary><div class="rk-subcontent"><table class="data-table">
 <thead><tr><th>Jenis Penanganan</th><th>Kasus</th><th>Tindakan</th></tr></thead>
 <tbody>
 <tr>
@@ -1356,17 +1446,14 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <td>Melakukan pengecekan tegangan kerja mic dan pemeriksaan Audio Codec/IC pendukung pada <em>mainboard</em>. Jika hasil diagnosa mengarah ke IC, tindakan lanjutan dapat berupa <em>rework</em>, <em>reballing</em>, atau penggantian IC sesuai kondisi.</td>
 </tr>
 </tbody>
-</table>
-<div class="price-note"><strong>Catatan:</strong> Kerusakan mic tidak selalu disebabkan komponen mic. Pemeriksaan dilakukan bertahap dari lubang/filter, gasket, mic, fleksibel/sub-board, jalur PCB, tegangan kerja, hingga Audio Codec agar penggantian komponen tidak dilakukan tanpa diagnosa.</div>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Catatan Pemeriksaan</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan:</strong> Kerusakan mic tidak selalu disebabkan komponen mic. Pemeriksaan dilakukan bertahap dari lubang/filter, gasket, mic, fleksibel/sub-board, jalur PCB, tegangan kerja, hingga Audio Codec agar penggantian komponen tidak dilakukan tanpa diagnosa.</div></div></details></div></div>
 </details>
-<!-- BAGIAN 11: SPEAKER -->
-<!-- BAGIAN 12: KAMERA -->
+<!-- BAGIAN 11: KAMERA -->
 <details id="kamera">
-<summary>12. KAMERA — ANDROID &amp; iPHONE</summary>
-<div class="details-body">
-<p>Kategori kerusakan kamera dibedakan antara Android dan iPhone agar tindakan teknisi dapat disesuaikan dengan konstruksi modul, kebutuhan kalibrasi, serta karakteristik sistem perangkat.</p>
-<div class="sub-box">
+<summary>11. KAMERA — ANDROID &amp; iPHONE</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Kategori kerusakan kamera dibedakan antara Android dan iPhone agar tindakan teknisi dapat disesuaikan dengan konstruksi modul, kebutuhan kalibrasi, serta karakteristik sistem perangkat.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Kamera Android</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🤖 ANDROID CAMERA</div>
 <h4>🟢 Kerusakan Ringan</h4>
 <table class="data-table">
@@ -1405,8 +1492,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sub-box">
+</div></div></details><details class="rk-subdetail"><summary>Kamera iPhone</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🍏 iPHONE CAMERA</div>
 <h4>🟢 Kerusakan Ringan</h4>
 <table class="data-table">
@@ -1445,15 +1531,13 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </tr>
 </tbody>
 </table>
-</div>
-<div class="price-note"><strong>Catatan:</strong> Tindakan kamera ditentukan setelah pemeriksaan. Cleaning, penggantian kaca, modul, kalibrasi, transfer data komponen, maupun perbaikan mainboard bergantung pada tipe perangkat dan hasil diagnosis.</div>
-</div>
+</div></div></details><details class="rk-subdetail"><summary>Catatan Pemeriksaan Kamera</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan:</strong> Tindakan kamera ditentukan setelah pemeriksaan. Cleaning, penggantian kaca, modul, kalibrasi, transfer data komponen, maupun perbaikan mainboard bergantung pada tipe perangkat dan hasil diagnosis.</div></div></details></div></div>
 </details>
-<!-- BAGIAN 13: PERBAIKAN MESIN / IC -->
+<!-- BAGIAN 12: PERBAIKAN MESIN / IC -->
 <details class="theme-red" id="mesin">
-<summary>8. REPAIR MESIN, MATI TOTAL, KONSLET &amp; CAIRAN (HARDWARE SPECIALIST)</summary>
-<div class="details-body">
-<div class="sub-box">
+<summary>12. REPAIR MESIN, MATI TOTAL, KONSLET &amp; CAIRAN (HARDWARE SPECIALIST)</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Android — IC / CPU / RAM / Storage</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🤖 ANDROID — IC POWER, CPU, RAM &amp; eMMC/UFS</div>
 <h4>🟢 Kerusakan Ringan / Menengah — Perbaikan Jalur &amp; Penanganan Pendukung</h4>
 <table class="data-table">
@@ -1492,8 +1576,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sub-box">
+</div></div></details><details class="rk-subdetail"><summary>iPhone — IC / CPU / RAM / NAND</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🍏 iPHONE — IC POWER, CPU, RAM &amp; NAND FLASH</div>
 <h4>🟢 Kerusakan Ringan / Menengah — Jalur &amp; Penanganan Pendukung</h4>
 <table class="data-table">
@@ -1537,32 +1620,25 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </tr>
 </tbody>
 </table>
-</div>
-<div class="price-note"><strong>Catatan diagnosis IC:</strong> Gejala seperti mati total, bootloop, mode USB tertentu, panic log, atau error restore tidak otomatis membuktikan satu IC tertentu rusak. Diagnosis chip-level harus berdasarkan pola arus, pengukuran rail, log, komunikasi perangkat, pemeriksaan storage, dan hasil pengujian board sebelum reflow, reballing, atau penggantian IC dilakukan.</div>
-<p>Penanganan akurat menggunakan analisa konsumsi arus Power Supply &amp; USB Analyzer untuk HP Mati Total, Korslet, Reball/Ganti IC Power, IC CPU, eMMC/UFS, .</p>
-<table class="data-table">
+</div></div></details><details class="rk-subdetail"><summary>Catatan Diagnosis</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan diagnosis IC:</strong> Gejala seperti mati total, bootloop, mode USB tertentu, panic log, atau error restore tidak otomatis membuktikan satu IC tertentu rusak. Diagnosis chip-level harus berdasarkan pola arus, pengukuran rail, log, komunikasi perangkat, pemeriksaan storage, dan hasil pengujian board sebelum reflow, reballing, atau penggantian IC dilakukan.</div></div></details><details class="rk-subdetail"><summary>Penjelasan Analisa Mesin</summary><div class="rk-subcontent"><p>Penanganan akurat menggunakan analisa konsumsi arus Power Supply &amp; USB Analyzer untuk HP Mati Total, Korslet, Reball/Ganti IC Power, IC CPU, eMMC/UFS, .</p></div></details><details class="rk-subdetail"><summary>Gejala, Diagnosa &amp; Garansi</summary><div class="rk-subcontent"><table class="data-table">
 <tr><th>Gejala Arus / Kerusakan</th><th>Diagnosa Hardware</th><th>Garansi</th></tr>
 <tr><td>Short / Konslet VBUS/VBAT (Arus gantung/0A)</td><td>Analisis Thermal &amp; Replacement Komponen Short</td><td><span class="badge badge-green">Tersedia</span></td></tr>
 <tr><td>Stuck Bootloop / IC Memory Corrupt</td><td>Reball / Replacement eMMC / UFS Chip</td><td><span class="badge badge-blue">Kondisional</span></td></tr>
-</table>
-
-</div>
+</table></div></details></div></div>
 </details>
-<!---
-<!-- BAGIAN 14: KERUSAKAN AKIBAT CAIRAN ---->
+<!-- BAGIAN 13: KERUSAKAN AKIBAT CAIRAN -->
 <details class="theme-red" id="cairan">
-<summary>14. 🌊 KERUSAKAN AKIBAT CAIRAN (LIQUID DAMAGE)</summary>
-<div class="details-body">
-<p>Penanganan perangkat terkena air atau cairan dipisahkan dari kerusakan IC/mesin biasa karena membutuhkan tindakan cepat, pembersihan korosi, pemeriksaan menyeluruh, dan penjelasan risiko khusus kepada pelanggan.</p>
-<div class="sub-box">
+<summary>13. 🌊 KERUSAKAN AKIBAT CAIRAN (LIQUID DAMAGE)</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Penanganan perangkat terkena air atau cairan dipisahkan dari kerusakan IC/mesin biasa karena membutuhkan tindakan cepat, pembersihan korosi, pemeriksaan menyeluruh, dan penjelasan risiko khusus kepada pelanggan.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Tindakan Pencegahan</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🛡️ 1. Tindakan Pencegahan (Prevention)</div>
 <table class="data-table"><thead><tr><th>Tahap</th><th>Tindakan</th></tr></thead><tbody>
 <tr><td><strong>Edukasi Pengguna</strong></td><td>Jangan mencoba menyalakan atau mengecas perangkat yang baru terkena cairan. Metode merendam ponsel ke dalam <strong>beras</strong> tidak disarankan karena tidak membersihkan kontaminasi di dalam perangkat dan partikel dapat masuk ke celah perangkat.</td></tr>
 <tr><td><strong>Tindakan Mandiri Darurat</strong></td><td>Jika perangkat masih hidup, lakukan <strong>power off</strong> secara normal jika memungkinkan, lepaskan kartu SIM dan casing pelindung, serta hindari mencoba menyalakannya berulang kali.</td></tr>
 <tr><td><strong>Quick Action Meja Servis</strong></td><td>Segera bongkar perangkat dan <strong>cabut konektor baterai</strong> untuk memutus sumber daya sebelum pemeriksaan serta pembersihan dilanjutkan.</td></tr>
 </tbody></table>
-</div>
-<div class="sub-box">
+</div></div></details><details class="rk-subdetail"><summary>Pengecekan &amp; Diagnostik Teknisi</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">🔍 2. Prosedur Pengecekan &amp; Diagnostik Teknisi (Checking)</div>
 <table class="data-table"><thead><tr><th>Pemeriksaan</th><th>Prosedur</th></tr></thead><tbody>
 <tr><td><strong>LDI / Liquid Damage Indicator</strong></td><td>Memeriksa indikator cairan jika tersedia. Perubahan warna digunakan sebagai salah satu petunjuk paparan cairan dan tetap dikombinasikan dengan pemeriksaan fisik.</td></tr>
@@ -1571,8 +1647,7 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <tr><td><strong>Ultrasonic / Board Cleaning</strong></td><td>Melepas modul yang tidak sesuai untuk proses pembersihan, kemudian membersihkan mainboard menggunakan metode dan cairan pembersih elektronik yang sesuai. <em>Ultrasonic cleaning</em> digunakan bila konstruksi board dan kondisi komponen memungkinkan.</td></tr>
 <tr><td><strong>Pengeringan &amp; Continuity Check</strong></td><td>Mengeringkan board secara terkontrol, lalu mengukur kontinuitas, diode mode, resistansi, dan tegangan pada jalur yang dicurigai mengalami korosi atau putus.</td></tr>
 </tbody></table>
-</div>
-<div class="sub-box">
+</div></div></details><details class="rk-subdetail"><summary>Risiko &amp; Tantangan</summary><div class="rk-subcontent"><div class="sub-box">
 <div class="sub-header">⚠️ 3. Dampak, Risiko &amp; Tantangan Teknisi</div>
 <table class="data-table"><thead><tr><th>Risiko</th><th>Penjelasan</th></tr></thead><tbody>
 <tr><td><strong>Risiko Kegagalan Tinggi</strong></td><td>Kerusakan cairan dapat bersifat progresif. Korosi atau kerusakan jalur yang belum terlihat dapat menimbulkan gangguan susulan meskipun perangkat sempat kembali hidup.</td></tr>
@@ -1580,18 +1655,14 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <tr><td><strong>Risiko Garansi</strong></td><td><em>Liquid damage</em> rentan menimbulkan kerusakan susulan sehingga ketentuan garansi perlu dijelaskan secara khusus dan dapat berbeda dari servis komponen normal.</td></tr>
 <tr><td><strong>Keselamatan Teknisi</strong></td><td>Gunakan ventilasi dan APD yang sesuai saat memakai IPA atau bahan pembersih elektronik. Hindari paparan uap serta partikel korosi secara berlebihan.</td></tr>
 </tbody></table>
-</div>
-<div class="price-note"><strong>Catatan:</strong> Perangkat yang berhasil menyala kembali belum tentu sepenuhnya bebas dari dampak cairan. Prioritas awal adalah memutus daya, membersihkan kontaminasi, memeriksa korosi/short, dan menilai jalur atau komponen yang terdampak. Estimasi biaya dan tingkat keberhasilan ditentukan setelah inspeksi.</div>
-</div>
+</div></div></details><details class="rk-subdetail"><summary>Catatan Penanganan Cairan</summary><div class="rk-subcontent"><div class="price-note"><strong>Catatan:</strong> Perangkat yang berhasil menyala kembali belum tentu sepenuhnya bebas dari dampak cairan. Prioritas awal adalah memutus daya, membersihkan kontaminasi, memeriksa korosi/short, dan menilai jalur atau komponen yang terdampak. Estimasi biaya dan tingkat keberhasilan ditentukan setelah inspeksi.</div></div></details></div></div>
 </details>
-<!-- 
-<!-- 
-<!-- BAGIAN 9: SOFTWARE LANJUTAN -->
+<!-- BAGIAN 14: SOFTWARE LANJUTAN -->
 <details class="theme-purple" id="software">
-<summary>9. SERVIS SOFTWARE LANJUTAN (IMEI, NVRAM, UNBRICK &amp; SENSOR)</summary>
-<div class="details-body">
-<p>Perbaikan sinyal hilang / IMEI NVRAM &amp; NVDATA Corrupt, Unbrick, Hardbrick recovery, serta kalibrasi sensor.</p>
-<table class="grid-table">
+<summary>14. SERVIS SOFTWARE LANJUTAN (IMEI, NVRAM, UNBRICK &amp; SENSOR)</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Perbaikan sinyal hilang / IMEI NVRAM &amp; NVDATA Corrupt, Unbrick, Hardbrick recovery, serta kalibrasi sensor.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Sinyal, IMEI, NVRAM, Unbrick &amp; Sensor</summary><div class="rk-subcontent"><table class="grid-table">
 <tr>
 <td style="width: 50%;">
 <div class="sub-box">
@@ -1614,15 +1685,14 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </div>
 </td>
 </tr>
-</table>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Jenis Gangguan Software</summary><div class="rk-subcontent"><ul class="check-list"><li>Bootloop, stuck logo, error update, aplikasi sistem bermasalah, atau sistem gagal boot.</li><li>Gangguan sinyal terkait konfigurasi NVRAM/NVDATA/IMEI yang sah sesuai kondisi perangkat.</li><li>Unbrick, flashing, pemulihan sensor, atau perbaikan konfigurasi setelah kerusakan software.</li></ul></div></details><details class="rk-subdetail"><summary>Data &amp; Persiapan Sebelum Proses</summary><div class="rk-subcontent"><ul class="check-list"><li>Backup data penting bila perangkat masih dapat diakses.</li><li>Pastikan akun dan kata sandi resmi milik pengguna tersedia bila dibutuhkan setelah reset/flash.</li><li>Sebagian tindakan software dapat menghapus data; pelanggan akan diberi informasi sebelum proses yang berisiko menghapus data.</li></ul></div></details></div></div>
 </details>
-<!-- BAGIAN 10: UNLOCK & FRP -->
+<!-- BAGIAN 15: UNLOCK & FRP -->
 <details class="theme-yellow" id="unlock">
-<summary>10. UNLOCK AKUN, FRP &amp; KUNCI LAYAR (LUPA POLA/SANDI)</summary>
-<div class="details-body">
-<p>Perbaikan sistem lupa pola, sandi, bypass FRP Akun Google, MiCloud, dan iCloud.</p>
-<div class="sub-box" style="margin-top:8px;">
+<summary>15. UNLOCK AKUN, FRP &amp; KUNCI LAYAR (LUPA POLA/SANDI)</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Perbaikan sistem lupa pola, sandi, bypass FRP Akun Google, MiCloud, dan iCloud.</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Legalitas, Kepemilikan &amp; Ketentuan Unlock</summary><div class="rk-subcontent"><div class="sub-box" style="margin-top:8px;">
 <div class="sub-header">Ketentuan Legalitas Kepemilikan &amp; Verifikasi Sah</div>
 <ul class="check-list">
 <li>Wajib unit milik pribadi yang sah (Bukan barang temuan, hasil curian, atau kejahatan).</li>
@@ -1639,91 +1709,13 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
                         ⚠️ Surat perjanjian tersebut menyatakan bahwa pemilik bersedia menanggung &amp; menerima seluruh risiko hukum jika di kemudian hari HP yang diperbaiki terbukti bukan milik pribadi.
                     </p>
 </div>
-</div>
-</div>
+</div></div></details><details class="rk-subdetail"><summary>Yang Perlu Disiapkan Pelanggan</summary><div class="rk-subcontent"><ul class="check-list"><li>Bukti kepemilikan unit yang wajar bila proses menyangkut kunci akun/perangkat.</li><li>Informasi akun resmi pemilik bila masih tersedia.</li><li>Persetujuan terhadap kemungkinan reset atau kehilangan data jika tindakan teknis memang memerlukannya.</li></ul></div></details><details class="rk-subdetail"><summary>Batasan Layanan Unlock</summary><div class="rk-subcontent"><ul class="cross-list"><li>RK CELL tidak membantu membuka perangkat yang dicurigai bukan milik pelanggan.</li><li>Tidak menjamin data dapat dipertahankan pada semua metode pemulihan.</li><li>Proses mengikuti tipe perangkat, versi keamanan, dan hasil verifikasi kepemilikan.</li></ul></div></details></div></div>
 </details>
-<!-- BAGIAN KHUSUS: TROUBLE SHOOTING MANDIRI -->
-<details class="theme-purple" id="troubleshooting-mandiri" open="">
-<summary>🛠️ TROUBLE SHOOTING MANDIRI — CEK HP SENDIRI</summary>
-<div class="details-body">
-<p><strong>Gunakan panduan ini sebelum membawa HP ke RK CELL.</strong> Ikuti langkah dari atas ke bawah. Jika masalah tetap ada, hentikan percobaan dan bawa perangkat untuk pemeriksaan teknisi.</p>
-<div class="self-help-grid">
-<div class="self-help-card">
-<div class="sub-header">📱 Layar / Touchscreen Tidak Berfungsi</div>
-<ol>
-<li>Bersihkan layar dengan kain microfiber.</li>
-<li>Lepas sementara tempered glass/screen guard.</li>
-<li>Lepas casing yang mungkin menekan sisi layar.</li>
-<li>Coba restart paksa 10–15 detik.</li>
-<li>Jika tetap tidak berfungsi, kemungkinan perlu pemeriksaan LCD/touchscreen.</li>
-</ol>
-</div>
-<div class="self-help-card">
-<div class="sub-header">❄️ HP Hang / Freeze / Tidak Merespons</div>
-<ol>
-<li>Tunggu beberapa detik.</li>
-<li>Coba restart normal.</li>
-<li>Jika tidak merespons, lakukan force restart.</li>
-<li>Setelah hidup, cek apakah masalah kembali muncul.</li>
-</ol>
-</div>
-<div class="self-help-card">
-<div class="sub-header">🔌 Tidak Bisa Charging</div>
-<ol>
-<li>Coba kabel dan adaptor charger lain yang dipastikan normal.</li>
-<li>Coba stopkontak lain.</li>
-<li>Periksa port charging dari debu/kotoran.</li>
-<li>Bersihkan port dengan sangat hati-hati dan kondisi kering.</li>
-<li>Jika tetap tidak mengisi, jangan dipaksa; lakukan pemeriksaan teknisi.</li>
-</ol>
-</div>
-<div class="self-help-card">
-<div class="sub-header">🔊 Suara Tidak Keluar</div>
-<ol>
-<li>Naikkan volume.</li>
-<li>Matikan mode Silent/Do Not Disturb.</li>
-<li>Putuskan koneksi Bluetooth/headset.</li>
-<li>Restart HP.</li>
-<li>Jika tetap tidak ada suara, periksa speaker/audio di teknisi.</li>
-</ol>
-</div>
-<div class="self-help-card">
-<div class="sub-header">📷 Kamera Error</div>
-<ol>
-<li>Tutup paksa aplikasi kamera.</li>
-<li>Hapus cache aplikasi kamera jika tersedia.</li>
-<li>Periksa izin kamera.</li>
-<li>Pastikan penyimpanan tidak penuh.</li>
-<li>Restart HP dan coba kamera kembali.</li>
-</ol>
-</div>
-<div class="self-help-card danger">
-<div class="sub-header">💧 HP Terkena Air / Cairan</div>
-<ol>
-<li><strong>Segera matikan HP.</strong></li>
-<li>Jangan menekan tombol berulang-ulang atau mencoba mengisi daya.</li>
-<li>Lepas SIM dan aksesori jika memungkinkan.</li>
-<li>Keringkan bagian luar dengan kain lembut.</li>
-<li>Jangan gunakan hair dryer, oven, panas ekstrem, atau beras.</li>
-<li>Segera bawa ke RK CELL untuk pemeriksaan dan pembersihan internal.</li>
-</ol>
-</div>
-</div>
-<div class="self-help-action">
-<strong>⚠️ Berhenti mencoba sendiri jika:</strong>
-                HP panas berlebihan, berbau terbakar, baterai menggembung, muncul asap, terkena cairan cukup banyak, atau perangkat mati total.
-                <br/><br/>
-<button class="btn-primary" onclick="document.querySelector('#troubleshooting')?.scrollIntoView({behavior:'smooth'});">
-                    Lihat Panduan Troubleshooting Lengkap
-                </button>
-</div>
-</div>
-</details>
-<!-- BAGIAN 11: ALUR GARANSI -->
+<!-- BAGIAN 16: ALUR GARANSI -->
 <details id="garansi">
-<summary>11. ALUR KLAIM GARANSI &amp; KETENTUAN SERVICE</summary>
-<div class="details-body">
-<table class="grid-table">
+<summary>16. ALUR KLAIM GARANSI &amp; KETENTUAN SERVICE</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Syarat Klaim &amp; Penyebab Garansi Gugur</summary><div class="rk-subcontent"><table class="grid-table">
 <tr>
 <td style="width: 50%;">
 <div class="sub-box">
@@ -1744,88 +1736,14 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </div>
 </td>
 </tr>
-</table>
-</div>
+</table></div></details><details class="rk-subdetail"><summary>Alur Klaim Garansi</summary><div class="rk-subcontent"><ol><li>Tunjukkan NFC/QR/nota servis dan nomor tiket.</li><li>Teknisi memeriksa masa garansi, segel, serta hubungan keluhan baru dengan pekerjaan sebelumnya.</li><li>Jika memenuhi syarat, unit masuk pemeriksaan garansi dan pelanggan diberi informasi hasilnya.</li></ol></div></details><details class="rk-subdetail"><summary>Cakupan &amp; Batas Garansi</summary><div class="rk-subcontent"><ul class="check-list"><li>Garansi mengikuti komponen atau pekerjaan yang tercantum pada nota servis.</li><li>Masa garansi mengikuti jenis layanan/sparepart yang dipilih.</li></ul><ul class="cross-list"><li>Kerusakan baru, benturan, cairan, segel rusak, atau pembongkaran pihak lain dapat menggugurkan garansi.</li></ul></div></details></div></div>
 </details>
-<!-- BAGIAN 12: PANDUAN MANDIRI & TROUBLESHOOTING AWAL -->
+<!-- BAGIAN 17: PANDUAN MANDIRI & TROUBLESHOOTING AWAL -->
 <details class="theme-purple" id="troubleshooting">
-<summary id="troubleshooting-title" onclick="goToTroubleshooting()">12. PANDUAN PENANGANAN MANDIRI &amp; TROUBLESHOOTING AWAL (DIAGNOSA MANDIRI)</summary>
-<div class="details-body">
-<p>Sebelum membawa perangkat Anda ke Service Center, berikut adalah langkah pertolongan pertama &amp; penanganan mandiri yang dapat Anda lakukan untuk berbagai masalah HP:</p>
-<table class="grid-table">
-<tr>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">📱 1. Layar HP Tidak Berfungsi / Sentuhan Macet</div>
-<ul class="check-list">
-<li><strong>Bersihkan Layar:</strong> Lap layar menggunakan kain microfiber yang lembut untuk menghilangkan kotoran, air, atau minyak yang menempel.</li>
-<li><strong>Lepas Pelindung Layar:</strong> Buka tempered glass atau screen guard yang mungkin sudah kotor, rusak, atau tidak sensitif lagi.</li>
-<li><strong>Restart Paksa (Force Restart):</strong> Tekan dan tahan tombol Power bersamaan dengan tombol Volume Bawah atau Volume Atas selama 10–15 detik hingga HP mati dan menyala kembali.</li>
-<li><strong>Lepas Aksesori/Casing:</strong> Pastikan tidak ada casing atau aksesori tambahan yang menekan bagian tepi layar secara tidak sengaja.</li>
-</ul>
-</div>
-</td>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">❄️ 2. HP Hang / Freeze / Tidak Merespons</div>
-<ul class="check-list">
-<li><strong>Tunggu Sejenak:</strong> Biarkan HP selama beberapa detik barangkali sistem sedang memproses tugas yang berat.</li>
-<li><strong>Lakukan Restart Normal:</strong> Tekan dan tahan tombol Power beberapa detik hingga muncul pilihan untuk mematikan atau memuat ulang, lalu pilih mulai ulang.</li>
-<li><strong>Paksa Mulai Ulang (Force Restart):</strong> Jika layar mati/tidak merespon, tekan dan tahan tombol Power + Volume Bawah/Atas selama 10–15 detik hingga logo merek HP muncul.</li>
-</ul>
-</div>
-</td>
-</tr>
-<tr>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">🔌 3. Gagal Charging / Pengisian Daya Problem</div>
-<ul class="check-list">
-<li><strong>Periksa Kabel &amp; Adaptor Charger:</strong> Cek apakah kabel USB terkelupas, putus, atau longgar. Coba gunakan kabel/adaptor lain yang normal, serta pindah stopkontak.</li>
-<li><strong>Bersihkan Port Pengisian Daya:</strong> Periksa lubang port USB di HP dari debu/kotoran saku. Bersihkan perlahan dengan tusuk gigi atau sikat lembut yang kering.</li>
-<li><strong>Restart HP:</strong> Matikan lalu nyalakan kembali HP untuk menyegarkan sistem dari kemungkinan bug sementara.</li>
-</ul>
-</div>
-</td>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">🔊 4. Masalah Audio / Suara Tidak Keluar</div>
-<ul class="check-list">
-<li><strong>Cek Tombol Volume:</strong> Tekan tombol Volume Up di sisi HP untuk memastikan posisi suara tidak pada tingkat nol.</li>
-<li><strong>Matikan Mode Senyap:</strong> Pastikan HP tidak dalam mode Silent (hening) atau Do Not Disturb (DND) di panel notifikasi.</li>
-<li><strong>Putuskan Bluetooth:</strong> Pastikan tidak ada perangkat audio eksternal (speaker/headset Bluetooth) yang tersambung.</li>
-<li><strong>Restart HP:</strong> Mulai ulang perangkat untuk menyegarkan sistem audio.</li>
-</ul>
-</div>
-</td>
-</tr>
-<tr>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">📷 5. Kamera HP Error / Bermasalah</div>
-<ul class="check-list">
-<li><strong>Tutup Paksa (Force Stop):</strong> Masuk ke Pengaturan &gt; Aplikasi &gt; [Aplikasi Kamera], lalu pilih Paksa Henti.</li>
-<li><strong>Hapus Cache:</strong> Pada menu pengaturan aplikasi kamera yang sama, pilih Penyimpanan lalu ketuk Hapus Cache.</li>
-<li><strong>Periksa Izin Akses:</strong> Pastikan aplikasi kamera mendapat izin penuh untuk menggunakan kamera.</li>
-<li><strong>Cek Penyimpanan:</strong> Pastikan memori internal HP tidak penuh karena dapat mengganggu fungsi penyimpanan foto.</li>
-</ul>
-</div>
-</td>
-<td style="width: 50%;">
-<div class="sub-box">
-<div class="sub-header">💧 6. Langkah Penyelamatan HP Kena Air / Cairan</div>
-<ul class="cross-list">
-<li><strong>Segera Angkat &amp; Matikan HP:</strong> Ambil HP dari air lalu matikan langsung. Dilarang menekan tombol berulang atau mengecek layar.</li>
-<li><strong>Lepas Komponen Luar:</strong> Buka penutup belakang, keluarkan baterai (jika removable), kartu SIM, dan kartu memori.</li>
-<li><strong>Keringkan Permukaan Luar:</strong> Gunakan kain lembut, handuk, atau tisu untuk mengelap sisa air di bodi HP.</li>
-<li><strong>Posisikan Lubang Audio ke Bawah:</strong> Hadapkan speaker/lubang suara ke bawah agar air mengalir keluar secara alami.</li>
-<li><strong>DILARANG Pakai Panas / Beras:</strong> Jangan gunakan hair dryer, oven, atau dijemur terik matahari karena merusak komponen. Hindari beras karena butirannya bisa masuk &amp; memicu korosi.</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
+<summary id="troubleshooting-title" onclick="goToTroubleshooting()">17. PANDUAN PENANGANAN MANDIRI &amp; TROUBLESHOOTING AWAL (DIAGNOSA MANDIRI)</summary>
+<div class="details-body"><div class="rk-section-hint">Pilih subkategori di bawah untuk melihat informasi yang dibutuhkan.</div>
+<p class="rk-intro">Sebelum membawa perangkat Anda ke Service Center, berikut adalah langkah pertolongan pertama &amp; penanganan mandiri yang dapat Anda lakukan untuk berbagai masalah HP:</p>
+<div class="rk-subdetails"><details class="rk-subdetail"><summary>Pilih Jenis Masalah (12 Kategori)</summary><div class="rk-subcontent"><p class="rk-trouble-intro">Pilih jenis keluhan yang paling sesuai. Buka hanya bagian yang dibutuhkan agar panduan tetap ringkas.</p><div class="rk-trouble-grid"><details class="rk-trouble-item"><summary>📱 1. Layar / Touchscreen</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Bersihkan layar:</strong> Gunakan kain microfiber kering dan pastikan tidak ada air/minyak di permukaan.</li><li><strong>Lepas tempered glass:</strong> Pelindung yang retak, tebal, atau terangkat bisa mengganggu sentuhan.</li><li><strong>Force restart:</strong> Coba kombinasi Power + Volume selama 10–15 detik sesuai tipe HP.</li><li><strong>Waspadai:</strong> Garis, blank, white spot, ghost touch, atau sentuhan sebagian biasanya perlu pemeriksaan LCD/flexible.</li></ul></div></details><details class="rk-trouble-item"><summary>🔋 2. Baterai Boros / Drop / Kembung</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Cek pemakaian baterai:</strong> Lihat aplikasi yang paling banyak mengonsumsi daya.</li><li><strong>Kurangi beban sementara:</strong> Matikan hotspot, GPS, game berat, dan aplikasi latar belakang.</li><li><strong>Amati gejala:</strong> Persentase meloncat, mati di persen tinggi, cepat panas, atau drop mendadak.</li><li><strong>Jangan dipakai:</strong> Jika baterai menggembung atau bodi terangkat, hentikan pengisian dan bawa ke teknisi.</li></ul></div></details><details class="rk-trouble-item"><summary>🔌 3. Charging / Port Cas / Fast Charging</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Uji charger lain:</strong> Gunakan kabel dan adaptor yang diketahui normal dan sesuai spesifikasi.</li><li><strong>Periksa port:</strong> Pastikan tidak longgar, berkarat, basah, atau penuh debu. Hindari benda logam.</li><li><strong>Cek gejala:</strong> Harus ditekan, putus-putus, lambat, tidak fast charging, atau baterai tidak bertambah.</li><li><strong>Jika panas:</strong> Hentikan pengisian bila konektor/board terasa sangat panas atau muncul bau terbakar.</li></ul></div></details><details class="rk-trouble-item"><summary>❄️ 4. Hang / Freeze / Restart / Bootloop</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Tunggu beberapa detik:</strong> Sistem mungkin sedang memproses tugas berat.</li><li><strong>Restart normal:</strong> Jika masih merespons, mulai ulang dari menu daya.</li><li><strong>Force restart:</strong> Gunakan kombinasi tombol sesuai merek bila perangkat tidak merespons.</li><li><strong>Jika berulang:</strong> Restart terus-menerus, stuck logo, atau bootloop dapat terkait software, storage, baterai, atau jalur power dan perlu diagnosa.</li></ul></div></details><details class="rk-trouble-item"><summary>🔊 5. Speaker / Earpiece / Mikrofon</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Cek volume &amp; mode:</strong> Pastikan tidak Silent/DND dan output audio tidak dialihkan ke Bluetooth.</li><li><strong>Uji fungsi:</strong> Coba musik, panggilan, voice note, dan perekam suara untuk membedakan speaker, earpiece, dan mic.</li><li><strong>Bersihkan ringan:</strong> Bersihkan grill dari debu menggunakan kuas lembut yang kering.</li><li><strong>Jika suara pecah/mati:</strong> Bisa terkait modul audio, flexible, jalur, atau IC audio.</li></ul></div></details><details class="rk-trouble-item"><summary>📷 6. Kamera / Flash</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Paksa berhenti aplikasi:</strong> Tutup kamera lalu buka kembali.</li><li><strong>Hapus cache:</strong> Bersihkan cache aplikasi kamera tanpa menghapus data penting.</li><li><strong>Cek izin &amp; penyimpanan:</strong> Pastikan izin kamera aktif dan memori tidak penuh.</li><li><strong>Gejala hardware:</strong> Kamera bergetar, blur terus, hitam, tidak fokus, atau flash tidak aktif perlu pemeriksaan modul/jalur.</li></ul></div></details><details class="rk-trouble-item"><summary>📶 7. Sinyal / SIM / IMEI</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Mode pesawat:</strong> Aktifkan 10–15 detik lalu matikan kembali.</li><li><strong>Coba kartu SIM lain:</strong> Untuk membedakan masalah operator dengan perangkat.</li><li><strong>Cek SIM:</strong> Pastikan kartu terpasang benar dan tidak kotor/rusak.</li><li><strong>Jika No Service/IMEI bermasalah:</strong> Jangan melakukan flashing acak; pemeriksaan bisa melibatkan SIM reader, antena, RF, baseband, NVRAM/NVDATA, atau status IMEI.</li></ul></div></details><details class="rk-trouble-item"><summary>📡 8. Wi‑Fi / Bluetooth</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Matikan-nyalakan koneksi:</strong> Toggle Wi‑Fi/Bluetooth lalu restart HP dan router bila perlu.</li><li><strong>Lupakan jaringan:</strong> Sambungkan ulang Wi‑Fi dengan password yang benar.</li><li><strong>Bandingkan perangkat lain:</strong> Pastikan masalah bukan dari router atau jarak.</li><li><strong>Jika sangat lemah/mati total:</strong> Bisa terkait antena, coaxial, konektor, modul, atau IC Wi‑Fi/Bluetooth.</li></ul></div></details><details class="rk-trouble-item"><summary>🔘 9. Tombol / Fingerprint / Face Unlock</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Lepas casing:</strong> Pastikan casing tidak menekan tombol.</li><li><strong>Bersihkan area sensor:</strong> Jaga fingerprint/kamera depan tetap bersih dan kering.</li><li><strong>Daftarkan ulang biometrik:</strong> Hapus lalu tambahkan ulang fingerprint/face bila menu masih tersedia.</li><li><strong>Jika tombol macet/sensor hilang:</strong> Perlu pemeriksaan flexible, konektor, sensor, jalur, atau komponen terkait.</li></ul></div></details><details class="rk-trouble-item"><summary>💾 10. Software / Memori / Aplikasi</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Cek ruang penyimpanan:</strong> Sisakan ruang kosong agar sistem tidak terlalu berat.</li><li><strong>Hapus cache aplikasi bermasalah:</strong> Hindari reset data jika belum ada backup.</li><li><strong>Update seperlunya:</strong> Gunakan pembaruan resmi dan baterai cukup sebelum proses.</li><li><strong>Backup dahulu:</strong> Sebelum reset, flashing, atau tindakan yang berisiko menghapus data.</li></ul></div></details><details class="rk-trouble-item"><summary>💧 11. Kena Air / Cairan</summary><div class="rk-trouble-body"><ul class="cross-list"><li><strong>Matikan segera:</strong> Jangan dipaksa menyala atau dicas untuk mengetes.</li><li><strong>Lepas aksesori luar:</strong> SIM, kartu memori, dan baterai hanya jika memang removable dan aman dilepas.</li><li><strong>Keringkan bagian luar:</strong> Gunakan kain lembut; jangan gunakan panas ekstrem.</li><li><strong>Jangan pakai beras:</strong> Beras tidak membersihkan residu cairan dan tidak menghentikan korosi internal.</li><li><strong>Segera periksa:</strong> Cairan dapat menimbulkan korosi atau short walau HP awalnya masih menyala.</li></ul></div></details><details class="rk-trouble-item"><summary>⚡ 12. Mati Total / Panas / Indikasi Mesin</summary><div class="rk-trouble-body"><ul class="cross-list"><li><strong>Jangan tekan power berulang:</strong> Terutama jika HP panas, habis kena air, atau ada bau terbakar.</li><li><strong>Coba charger normal sekali:</strong> Jika tidak ada respons, hentikan percobaan berulang.</li><li><strong>Jangan suntik tegangan:</strong> Penanganan PSU/injeksi jalur hanya untuk teknisi dengan alat ukur dan pemahaman skema.</li><li><strong>Perlu diagnosa board:</strong> Kasus dapat melibatkan short, PMIC, charging IC, storage, CPU/RAM, jalur power, atau komponen lain.</li></ul></div></details></div></div></details><details class="rk-subdetail"><summary>Batas Aman Penanganan Mandiri</summary><div class="rk-subcontent"><ul class="check-list"><li>Batasi pada langkah sederhana seperti restart, pengecekan kabel/adaptor, pembersihan ringan, dan pemeriksaan pengaturan.</li><li>Jangan membuka baterai, motherboard, atau menyuntik tegangan tanpa alat dan pengetahuan teknis.</li></ul></div></details><details class="rk-subdetail"><summary>Hentikan &amp; Bawa ke Teknisi Jika</summary><div class="rk-subcontent"><ul class="cross-list"><li>HP panas berlebihan, berbau terbakar, muncul asap, atau baterai menggembung.</li><li>Perangkat terkena cairan, mati total, atau terjadi korsleting.</li><li>Masalah tetap berulang setelah langkah aman dilakukan.</li></ul></div></details></div></div>
 </details>
 <section class="map-container" id="lokasi">
 <div class="map-header">
@@ -2820,9 +2738,9 @@ const ISSUE_CATEGORIES = {
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
-                html2pdf().from(summaryNode).set(opt).save().then(() => {
+                window.ensureHtml2Pdf().then(() => html2pdf().from(summaryNode).set(opt).save()).then(() => {
                     window.open(waLink, '_blank');
-                });
+                }).catch(() => window.open(waLink, '_blank'));
             } else {
                 window.open(waLink, '_blank');
             }
@@ -4518,7 +4436,6 @@ function goToTroubleshooting(){const t=document.getElementById('troubleshooting'
   window.openNavTargetV18=openTargetFromHash;
 })();
 </script>
-
 <script id="zxingLazyLoaderV21">
 (function(){
   let loadingPromise=null;
@@ -4537,8 +4454,6 @@ function goToTroubleshooting(){const t=document.getElementById('troubleshooting'
   };
 })();
 </script>
-
-
 <script id="mobileGroupedNavV21">
 (function(){
   document.querySelectorAll('.mobile-nav-group>button').forEach(btn=>{
@@ -4555,40 +4470,36 @@ function goToTroubleshooting(){const t=document.getElementById('troubleshooting'
   });
 })();
 </script>
-
-
 <div id="adminDataModal" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.68);padding:16px;align-items:center;justify-content:center">
-  <div class="admin-gate" style="width:min(520px,100%);max-height:90vh;overflow:auto">
-    <div class="admin-gate-title">💬 Lengkapi Data Sebelum Chat Admin</div>
-    <div class="admin-gate-grid">
-      <label>Nama*
-        <input id="adminCustName" type="text" placeholder="Nama pelanggan">
-      </label>
-      <label>No. WhatsApp*
-        <input id="adminCustWa" type="tel" placeholder="08xxxxxxxxxx">
-      </label>
-      <label>Merek HP*
-        <input id="adminCustBrand" type="text" placeholder="Contoh: Vivo">
-      </label>
-      <label>Tipe HP*
-        <input id="adminCustModel" type="text" placeholder="Contoh: Y20 / A54 / iPhone 11">
-      </label>
-      <label class="admin-gate-full">Keluhan / Kerusakan*
+<div class="admin-gate" style="width:min(520px,100%);max-height:90vh;overflow:auto">
+<div class="admin-gate-title">💬 Lengkapi Data Sebelum Chat Admin</div>
+<div class="admin-gate-grid">
+<label>Nama*
+        <input id="adminCustName" placeholder="Nama pelanggan" type="text"/>
+</label>
+<label>No. WhatsApp*
+        <input id="adminCustWa" placeholder="08xxxxxxxxxx" type="tel"/>
+</label>
+<label>Merek HP*
+        <input id="adminCustBrand" placeholder="Contoh: Vivo" type="text"/>
+</label>
+<label>Tipe HP*
+        <input id="adminCustModel" placeholder="Contoh: Y20 / A54 / iPhone 11" type="text"/>
+</label>
+<label class="admin-gate-full">Keluhan / Kerusakan*
         <textarea id="adminCustIssue" placeholder="Contoh: tidak bisa cas, harus ditekan, kadang putus-putus"></textarea>
-      </label>
-      <label class="admin-gate-full">Info Tambahan
+</label>
+<label class="admin-gate-full">Info Tambahan
         <textarea id="adminCustExtra" placeholder="Contoh: pernah jatuh, kena air, sudah pernah ganti part, dll."></textarea>
-      </label>
-    </div>
-    <div class="admin-gate-note">* Wajib diisi agar admin bisa langsung memahami unit dan mempercepat estimasi/pengerjaan.</div>
-    <div class="admin-gate-actions">
-      <button type="button" id="adminGateCancel">Batal</button>
-      <button type="button" class="admin-gate-submit" id="adminGateSubmit">Lanjut ke WhatsApp</button>
-    </div>
-  </div>
+</label>
 </div>
-
-
+<div class="admin-gate-note">* Wajib diisi agar admin bisa langsung memahami unit dan mempercepat estimasi/pengerjaan.</div>
+<div class="admin-gate-actions">
+<button id="adminGateCancel" type="button">Batal</button>
+<button class="admin-gate-submit" id="adminGateSubmit" type="button">Lanjut ke WhatsApp</button>
+</div>
+</div>
+</div>
 <script id="adminDataGateV22">
 (function(){
   const modal=document.getElementById('adminDataModal');
@@ -4658,6 +4569,58 @@ function goToTroubleshooting(){const t=document.getElementById('troubleshooting'
   });
 
   window.openAdminDataGate=openGate;
+})();
+</script>
+
+<script id="glueChoiceLogic">
+function selectGlueOption(type){
+  const cards=document.querySelectorAll('.glue-choice-card');
+  cards.forEach(c=>c.classList.toggle('selected',c.dataset.glue===type));
+  const box=document.getElementById('glueRecommendation');
+  if(!box)return;
+  const data={
+    sisi:{title:'🟡 Pilihan Anda: Pengeleman Sisi',text:'Cocok sebagai pilihan awal bila LCD hanya terangkat sedikit pada satu sisi, fungsi layar masih normal, frame tidak bengkok, dan tidak ada indikasi baterai kembung. Teknisi akan memeriksa ulang sebelum pengerjaan.'},
+    total:{title:'🔵 Pilihan Anda: Pengeleman Total',text:'Cocok sebagai pilihan awal bila LCD terangkat di beberapa sisi, lem lama sudah lemah/berantakan, atau diperlukan pembersihan dan pemasangan ulang menyeluruh. Teknisi akan memeriksa risiko pembongkaran sebelum pengerjaan.'}
+  };
+  const d=data[type];
+  box.innerHTML='<strong>'+d.title+'</strong><span>'+d.text+'</span><a class="primary-cta" style="margin-top:7px;align-self:flex-start" target="_blank" rel="noopener" href="https://wa.me/6285148495045?text='+encodeURIComponent('Halo RK CELL, saya memilih '+(type==='sisi'?'Pengeleman Sisi':'Pengeleman Total')+'. Mohon dicek apakah sesuai dengan kondisi HP saya.')+'">💬 Konfirmasi Pilihan via WhatsApp</a>';
+  try{localStorage.setItem('rkcell-glue-choice',type);}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',function(){try{const v=localStorage.getItem('rkcell-glue-choice');if(v==='sisi'||v==='total')selectGlueOption(v);}catch(e){}});
+</script>
+
+<style id="rkOptimizationV25Style">
+.rk-smart-access{max-width:1100px;margin:0 auto 14px;display:grid;grid-template-columns:1.35fr .9fr;gap:10px}.rk-smart-search,.rk-quick-actions{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:12px}.rk-smart-search>div:first-child{display:flex;flex-direction:column;gap:2px}.rk-smart-search small{color:var(--muted)}.rk-search-row{display:flex;gap:7px;margin-top:9px}.rk-search-row input{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:10px;outline:none}.rk-search-row input:focus{border-color:var(--accent-cyan)}.rk-search-row button{border:0;border-radius:10px;padding:0 16px;font-weight:800;background:var(--primary-gradient);color:white}.rk-search-result{display:none;margin-top:8px;padding:8px 10px;border-radius:10px;background:rgba(0,242,254,.06);border:1px solid rgba(0,242,254,.18)}.rk-search-result.show{display:block}.rk-search-result button{margin-top:6px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:8px;padding:7px 10px;font-weight:800}.rk-quick-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:stretch}.rk-quick-actions a{text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:11px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:4px;padding:8px 4px;font-size:13pt}.rk-quick-actions a span{font-size:6.8pt;font-weight:800}.rk-risk-line{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}.rk-risk-badge,.rk-related-link{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;font-size:7pt;font-weight:850}.rk-risk-safe{background:rgba(16,185,129,.12);color:var(--accent-green);border:1px solid rgba(16,185,129,.28)}.rk-risk-check{background:rgba(245,158,11,.12);color:var(--accent-amber);border:1px solid rgba(245,158,11,.28)}.rk-risk-stop{background:rgba(239,68,68,.12);color:var(--accent-red);border:1px solid rgba(239,68,68,.28)}.rk-related-link{background:var(--panel-2);color:var(--accent-cyan);border:1px solid var(--line);text-decoration:none}.rk-estimator-advice{display:none;margin:8px 0;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:rgba(245,158,11,.07);font-size:7.8pt}.rk-estimator-advice.show{display:block}@media(max-width:720px){.rk-smart-access{grid-template-columns:1fr;margin:0 10px 12px}.rk-quick-actions{grid-template-columns:repeat(5,1fr);padding:7px;gap:4px}.rk-quick-actions a{padding:7px 2px;font-size:12pt}.rk-quick-actions a span{font-size:6pt}.rk-smart-search{padding:10px}.rk-search-row button{padding:0 12px}.pro-hero{margin-top:4px}}
+</style>
+<script id="rkOptimizationV25">
+(function(){
+ window.ensureHtml2Pdf=function(){if(window.html2pdf)return Promise.resolve(window.html2pdf);if(window.__rkPdfPromise)return window.__rkPdfPromise;window.__rkPdfPromise=new Promise((resolve,reject)=>{const x=document.createElement('script');x.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';x.async=true;x.onload=()=>resolve(window.html2pdf);x.onerror=reject;document.head.appendChild(x)});return window.__rkPdfPromise};
+ const routes=[
+  {keys:['layar','lcd','touch','garis','blank','ghost'],id:'lcd',label:'LCD / Layar'},
+  {keys:['lem','ngangkat','terangkat','pengeleman'],id:'pengeleman',label:'Pengeleman LCD'},
+  {keys:['baterai','batre','boros','kembung','drop'],id:'baterai',label:'Baterai'},
+  {keys:['cas','charger','charging','port','fast charging'],id:'charger',label:'Charger / Port Cas'},
+  {keys:['speaker','earpiece','suara','audio'],id:'audio',label:'Audio / Speaker'},
+  {keys:['mic','mikrofon'],id:'mikrofon',label:'Mikrofon'},
+  {keys:['kamera','camera','flash'],id:'kamera',label:'Kamera'},
+  {keys:['tombol','power','volume','silent'],id:'tombol',label:'Tombol'},
+  {keys:['fingerprint','sidik jari'],id:'sidik-jari',label:'Sidik Jari'},
+  {keys:['air','cairan','basah'],id:'cairan',label:'Kerusakan Cairan'},
+  {keys:['mati total','matot','konslet','mesin','ic','cpu'],id:'mesin',label:'Repair Mesin'},
+  {keys:['bootloop','software','imei','nvram','unbrick'],id:'software',label:'Software'},
+  {keys:['frp','lupa pola','sandi','unlock'],id:'unlock',label:'Unlock / FRP'},
+  {keys:['garansi','klaim'],id:'garansi',label:'Garansi'}
+ ];
+ function openId(id){const el=document.getElementById(id);if(!el)return;if(el.tagName==='DETAILS')el.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}
+ const input=document.getElementById('rkServiceSearch'),btn=document.getElementById('rkServiceSearchBtn'),out=document.getElementById('rkSearchResult');
+ function search(){const q=(input?.value||'').toLowerCase().trim();if(!out)return;if(!q){out.className='rk-search-result show';out.textContent='Ketik keluhan terlebih dahulu.';return}const hit=routes.find(r=>r.keys.some(k=>q.includes(k)));out.className='rk-search-result show';if(hit){out.innerHTML='<strong>Rekomendasi: '+hit.label+'</strong><br><span>Bagian yang paling sesuai ditemukan.</span><br><button type="button">Buka '+hit.label+'</button>';out.querySelector('button').onclick=()=>openId(hit.id)}else{out.innerHTML='<strong>Belum menemukan kategori yang tepat.</strong><br><span>Coba kata yang lebih sederhana atau gunakan Konsultasi AI.</span><br><button type="button">Buka Konsultasi AI</button>';out.querySelector('button').onclick=()=>openId('troubleshooting')}}
+ btn?.addEventListener('click',search);input?.addEventListener('keydown',e=>{if(e.key==='Enter')search()});
+ // Tambahkan indikator risiko dan tautan layanan pada 12 panduan mandiri.
+ document.querySelectorAll('.rk-trouble-item').forEach(item=>{const title=(item.querySelector('summary')?.textContent||'').toLowerCase();const body=item.querySelector('.rk-trouble-body');if(!body||body.querySelector('.rk-risk-line'))return;let risk='check',riskText='🟡 Perlu Pemeriksaan',target='troubleshooting',label='Konsultasi AI';if(/air|cairan|mati total|panas/.test(title)){risk='stop';riskText='🔴 Jangan Dilanjutkan Sendiri'}else if(/software|hang|wifi|sinyal|kamera|audio|speaker|layar/.test(title)){risk='safe';riskText='🟢 Langkah Awal Aman'}const map=[[/layar/,'lcd','Layanan LCD'],[/baterai/,'baterai','Layanan Baterai'],[/charging|port/,'charger','Layanan Charging'],[/speaker|mikrofon/,'audio','Layanan Audio'],[/kamera/,'kamera','Layanan Kamera'],[/software|hang/,'software','Layanan Software'],[/air|cairan/,'cairan','Penanganan Cairan'],[/mati total|panas/,'mesin','Diagnosa Mesin'],[/tombol|fingerprint/,'tombol','Layanan Tombol']];for(const m of map){if(m[0].test(title)){target=m[1];label=m[2];break}}const line=document.createElement('div');line.className='rk-risk-line';line.innerHTML='<span class="rk-risk-badge rk-risk-'+risk+'">'+riskText+'</span><a class="rk-related-link" href="#'+target+'">→ '+label+'</a>';body.prepend(line)});
+ // Estimator: beri konteks khusus pada dua opsi pengeleman.
+ const est=document.getElementById('estService'),adv=document.getElementById('rkEstimatorAdvice');function estAdvice(){if(!est||!adv)return;const v=est.value;if(v==='lem_sisi'){adv.className='rk-estimator-advice show';adv.innerHTML='<strong>🟡 Lem Sisi:</strong> cocok bila LCD hanya terangkat sedikit pada satu sisi, fungsi layar normal, frame tidak bengkok, dan tidak ada baterai kembung. <a href="#pengeleman">Lihat syarat lengkap →</a>'}else if(v==='lem_total'){adv.className='rk-estimator-advice show';adv.innerHTML='<strong>🔵 Lem Total:</strong> disarankan bila LCD terangkat di beberapa sisi, lem lama rapuh/tidak rata, atau perlu bongkar dan pemasangan ulang menyeluruh. <a href="#pengeleman">Lihat syarat lengkap →</a>'}else{adv.className='rk-estimator-advice';adv.textContent=''}}est?.addEventListener('change',estAdvice);estAdvice();
+ // Jumlah kategori utama selalu mengikuti struktur aktual.
+ const count=document.getElementById('serviceCount');if(count){count.textContent=String(document.querySelectorAll('body > details[id], main > details[id]').length||document.querySelectorAll('details[id]').length)}
 })();
 </script>
 
