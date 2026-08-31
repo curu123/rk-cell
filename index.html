@@ -916,6 +916,16 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <style id="glueChoiceStyles">
 .glue-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.glue-choice-card{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--panel-2);transition:.2s ease}.glue-choice-card.selected{border-color:var(--accent-cyan);box-shadow:0 0 0 2px rgba(0,242,254,.16),0 8px 22px var(--shadow);transform:translateY(-1px)}.glue-choice-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.glue-choice-head h4{margin:2px 0;font-size:10pt}.glue-choice-head small{color:var(--muted)}.glue-kicker{font-size:6.5pt;letter-spacing:1px;font-weight:900;color:var(--accent-cyan)}.glue-fit{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line)}.glue-more{margin:9px 0!important;border-radius:10px!important;box-shadow:none!important;background:transparent!important}.glue-more>summary{padding:9px 11px!important;font-size:8pt!important;border-left:3px solid var(--accent-cyan)!important}.glue-detail-body{padding:10px;font-size:8pt;color:var(--text)}.glue-detail-body p{margin:0 0 8px}.glue-select-btn{width:100%;border:0;border-radius:10px;padding:10px 12px;background:var(--primary-gradient);color:#fff;font-weight:900;cursor:pointer}.glue-recommendation{display:flex;flex-direction:column;gap:4px;margin:10px 0 12px;padding:12px;border:1px dashed var(--accent-cyan);border-radius:12px;background:rgba(0,242,254,.05)}.glue-recommendation strong{color:var(--accent-cyan)}.glue-recommendation span{color:var(--muted);font-size:8pt}@media(max-width:700px){.glue-choice-grid{grid-template-columns:1fr}.glue-choice-head{align-items:flex-start}}
 </style>
+
+<style id="aiDiagnosticV4Styles">
+.ai-advice-card ol{margin:6px 0 0 18px;padding:0}
+.ai-advice-card ol li{margin:5px 0;color:var(--text)}
+@media(max-width:520px){
+  .ai-message .chip-container{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .ai-message .chip-btn{justify-content:center;text-align:center;min-height:38px}
+}
+</style>
+
 </head>
 <body>
 <!-- NAVBAR -->
@@ -2498,7 +2508,10 @@ const ISSUE_CATEGORIES = {
             chronology: '',
             duration: '',
             verificationProof: '',
-            trackingCode: ''
+            trackingCode: '',
+            diagnosticAnswers: [],
+            diagnosticQueue: [],
+            diagnosticIndex: 0
         };
 
         function addMsg(html, isUser = false, persist = true, analyzeUser = true) {
@@ -2544,7 +2557,10 @@ const ISSUE_CATEGORIES = {
                     chronology: saved.chronology || '',
                     duration: saved.duration || '',
                     verificationProof: saved.verificationProof || '',
-                    trackingCode: saved.trackingCode || ''
+                    trackingCode: saved.trackingCode || '',
+                    diagnosticAnswers: Array.isArray(saved.diagnosticAnswers) ? saved.diagnosticAnswers : [],
+                    diagnosticQueue: Array.isArray(saved.diagnosticQueue) ? saved.diagnosticQueue : [],
+                    diagnosticIndex: Number.isInteger(saved.diagnosticIndex) ? saved.diagnosticIndex : 0
                 };
                 return true;
             } catch (e) { return false; }
@@ -2577,11 +2593,12 @@ const ISSUE_CATEGORIES = {
             localStorage.removeItem(AI_STATE_STORAGE_KEY);
             state = {
                 step: 'INIT', customerName: '', deviceModel: '', detectedCategory: null, detectedCategories: [],
-                chronology: '', duration: '', verificationProof: '', trackingCode: ''
+                chronology: '', duration: '', verificationProof: '', trackingCode: '',
+                diagnosticAnswers: [], diagnosticQueue: [], diagnosticIndex: 0
             };
             setVoiceStatus('', isMuted ? 'Suara AI dimatikan' : 'Percakapan baru • siap menerima suara');
             showTyping(() => {
-                addMsg(`Halo! Selamat datang di <strong>RK CELL</strong> ✦<br><br> Saya siap membantu konsultasi service HP, estimasi perbaikan, atau <strong>cek status service dengan scan barcode</strong>. 😊<br><br>Boleh tahu nama panggilan Kakak siapa?`);
+                addMsg(`Halo! Selamat datang di <strong>RK CELL</strong> ✦<br><br> Saya siap membantu konsultasi service HP, estimasi perbaikan, atau <strong>cek status service dengan scan barcode</strong>. 😊<br><br>Santai saja, saya kadang serius, kadang bercanda, kadang sedikit menggombal—biar konsultasinya nggak sekaku HP yang nge-freeze 😆.<br><br>Boleh tahu nama panggilan Kakak siapa?`);
                 state.step = 'ASK_NAME';
                 saveAIState();
             }, 180);
@@ -3131,6 +3148,351 @@ const ISSUE_CATEGORIES = {
             input?.focus();
         };
 
+
+
+        // === PERSONA AI RK CELL: GOMBAL + CANDA KONTEKSTUAL ===
+        // Humor dipakai sebagai selingan, bukan menggantikan informasi teknis.
+        const RK_FLIRTY_LINES = {
+            lcd: [
+                'Layarnya boleh nggak peka, tapi saya tetap peka sama keluhan Kak 😄.',
+                'Touch-nya kehilangan rasa ya Kak? Tenang, jangan sampai kita ikut kehilangan perasaan 😆.',
+                'Kalau layar cuma respons di sebagian area, cintanya jangan ikut setengah-setengah ya Kak 😄.'
+            ],
+            charger: [
+                'HP-nya susah menerima energi ya Kak? Mirip saya kalau belum dapat kabar dari Kak 😆.',
+                'Kita cek pelan-pelan. Jangan sampai charger sudah berjuang keras tapi baterainya masih bilang “kita teman saja” 😂.',
+                'Kalau harus digoyang dulu baru ngecas, port-nya mulai minta perhatian lebih nih 😄.'
+            ],
+            baterai: [
+                'Baterainya cepat habis? Semoga bukan karena terlalu banyak mikirin Kak 😄.',
+                'Kalau persennya suka turun mendadak, ini baterai apa perasaan ditinggal pas sayang-sayangnya 😆.',
+                'Kalau sampai kembung, yang ini nggak boleh digombalin lagi Kak—harus kita prioritaskan keamanannya.'
+            ],
+            fuse_baterai_restart: [
+                'Restart terus? HP-nya kayak lagi mencoba memulai hidup baru berkali-kali 😆.',
+                'Kita cari pemicunya dulu, jangan sampai CPU dituduh padahal baterai yang lagi drama 😄.'
+            ],
+            audio: [
+                'Suaranya hilang? Waduh, jangan sampai HP-nya ikut speechless lihat Kak 😄.',
+                'Kalau speaker serak, mungkin kebanyakan nyanyi lagu galau semalaman 😆.'
+            ],
+            mikrofon: [
+                'Mic-nya nggak kedengaran? Tenang Kak, saya masih mau dengar ceritanya 😄.',
+                'Kalau mic diam total, dia mungkin sedang menjalani silent treatment 😆.'
+            ],
+            kamera: [
+                'Kameranya blur? Mungkin fokusnya pindah ke Kak 😄.',
+                'Kalau kamera hitam, jangan khawatir—kita cari dulu apakah modulnya ngambek atau jalurnya yang malu-malu 😆.'
+            ],
+            sinyal: [
+                'Sinyalnya hilang? Semoga hubungan Kak dengan orang tersayang nggak ikut “No Service” ya 😄.',
+                'Kita cari sinyalnya dulu. Jangan sampai HP-nya lebih susah dihubungi daripada gebetan 😂.'
+            ],
+            wifi: [
+                'Wi‑Fi susah nyambung? Hubungan yang sehat memang butuh koneksi stabil, termasuk HP Kak 😄.',
+                'Kalau Wi‑Fi putus-nyambung, dia lagi PHP-in router nih 😆.'
+            ],
+            tombol: [
+                'Tombolnya keras? Mungkin dia butuh pendekatan yang lembut, bukan ditekan perasaannya 😄.',
+                'Jangan ditekan terlalu keras Kak, tombol juga punya batas kesabaran 😆.'
+            ],
+            'sidik-jari': [
+                'Fingerprint nggak mengenali Kak? Waduh, padahal saya baru sebentar saja sudah kenal 😄.',
+                'Sensor sidik jarinya mungkin lupa, tapi tenang kita bantu ingatkan lagi 😆.'
+            ],
+            cairan: [
+                'Yang ini kita serius sedikit ya Kak—HP habis kena cairan jangan dicas dulu. Nanti setelah aman baru saya lanjut bercandanya 😄.'
+            ],
+            mesin: [
+                'Mati total memang bikin deg-degan, tapi jangan langsung tuduh CPU ya Kak—dia berhak mendapat pembelaan 😄.',
+                'Kita interogasi pola arusnya dulu. Di RK CELL, komponen juga harus punya bukti sebelum jadi tersangka 😆.'
+            ],
+            frame: [
+                'Frame-nya bengkok? HP-nya habis menjalani hidup yang keras ya Kak 😄.',
+                'Kita cek dulu, jangan sampai casing yang bengkok tapi baterai diam-diam ikut mendorong dari dalam.'
+            ],
+            unlock: [
+                'Lupa pola? Tenang, saya jadi detektif dulu 🕵️. Tapi kalau lupa saya, itu baru kasus berat 😆.'
+            ],
+            troubleshooting: [
+                'Ceritakan gejalanya Kak, saya siap jadi detektif HP—bedanya saya nggak pakai kaca pembesar 😄.',
+                'Kita cari biang keroknya satu-satu. Jangan sampai baut yang nggak bersalah ikut jadi tersangka 😂.'
+            ]
+        };
+
+        function rkPersonaLine(category, chronology='') {
+            const id = inferQuestionBankId ? inferQuestionBankId(category, chronology) : (category?.id || 'troubleshooting');
+            const lines = RK_FLIRTY_LINES[id] || RK_FLIRTY_LINES.troubleshooting;
+            // Variasi deterministik berdasarkan panjang percakapan agar tidak mengulang kalimat yang sama terus.
+            const seed = ((state.diagnosticIndex || 0) + (state.diagnosticAnswers?.length || 0) + String(chronology||'').length) % lines.length;
+            return lines[seed];
+        }
+
+        function rkPersonaInterlude(category, chronology='') {
+            // Pada cairan/kembung/panas/mati total tetap humor ringan dan tidak mengaburkan peringatan keselamatan.
+            return `<div style="margin:6px 0;padding:7px 9px;border-radius:9px;background:rgba(34,211,238,.055);font-style:italic;color:var(--accent-cyan)">💬 ${escapeHtml(rkPersonaLine(category, chronology))}</div>`;
+        }
+
+        // === AI DIAGNOSTIK BERTAHAP V4 ===
+        // Tujuan: menggali proses/gejala pelanggan sebelum memberi kemungkinan kerusakan.
+        const DIAGNOSTIC_QUESTION_BANK = {
+            lcd: [
+                {q:'Bagian sentuh yang tidak merespons itu <strong>seluruh layar</strong> atau hanya <strong>sebagian area</strong>?', chips:['Seluruh layar','Sebagian area','Kadang normal kadang tidak']},
+                {q:'Tampilan gambarnya sendiri bagaimana: normal, bergaris/berkedip, blank, atau muncul sentuhan sendiri (ghost touch)?', chips:['Gambar normal','Bergaris / berkedip','Blank / gelap','Ghost touch']},
+                {q:'Sebelum masalah muncul, HP sempat jatuh/tertekan, terkena air, atau habis ganti LCD?', chips:['Tidak ada kejadian','Pernah jatuh / tertekan','Terkena air','Habis ganti LCD']}
+            ],
+            baterai: [
+                {q:'Dari 100% sampai perlu dicas lagi biasanya bertahan berapa lama pada pemakaian normal?', chips:['< 3 jam','3–6 jam','6–10 jam','> 10 jam']},
+                {q:'Apakah persentase baterai turun secara bertahap atau suka meloncat, tiba-tiba mati, atau restart di persentase tertentu?', chips:['Turun normal tapi cepat','Persen meloncat','Tiba-tiba mati','Restart sendiri']},
+                {q:'Saat dipakai atau dicas, apakah HP terasa panas berlebih atau baterai/casing terlihat mengembung?', chips:['Tidak','Panas saat dipakai','Panas saat dicas','Terlihat kembung']}
+            ],
+            charger: [
+                {q:'Kalau dari baterai rendah sampai penuh, kira-kira membutuhkan waktu berapa lama?', chips:['< 1,5 jam','1,5–2,5 jam','3–5 jam','> 5 jam / tidak penuh']},
+                {q:'Saat charger dipasang, apakah indikator fast charging muncul dan arus/persentase tetap bertambah?', chips:['Fast charging normal','Fast charging hilang','Persen lambat naik','Tidak bertambah']},
+                {q:'Port cas perlu ditekan/digoyang agar masuk, atau koneksi stabil tanpa disentuh?', chips:['Stabil','Harus ditekan','Harus digoyang','Putus-putus']},
+                {q:'Sudah dicoba kabel dan adaptor lain yang dipastikan normal? Bagaimana hasilnya?', chips:['Belum coba','Sudah, tetap sama','Adaptor lain lebih cepat','Kabel lain memperbaiki']}
+            ],
+            fuse_baterai_restart: [
+                {q:'Restart biasanya terjadi saat baterai berapa persen, saat idle, atau saat menjalankan aplikasi berat?', chips:['Persen tertentu','Saat idle','Saat aplikasi berat','Acak']},
+                {q:'Setelah restart, apakah persentase baterai berubah drastis atau tetap sama?', chips:['Tetap sama','Turun drastis','Naik/tidak wajar','Tidak sempat melihat']},
+                {q:'Apakah pernah muncul setelah baterai habis total, ganti baterai, jatuh, atau kena air?', chips:['Tidak','Setelah baterai habis','Setelah ganti baterai','Jatuh / kena air']}
+            ],
+            audio: [
+                {q:'Suara bermasalah di bagian mana: speaker bawah, earpiece saat telepon, atau seluruh suara?', chips:['Speaker bawah','Earpiece telepon','Semua suara','Kadang hilang']},
+                {q:'Apakah suara kecil/serak, benar-benar tidak keluar, atau muncul mode headset padahal headset tidak dipasang?', chips:['Kecil / serak','Mati total','Mode headset','Putus-putus']},
+                {q:'Masalah terjadi di semua aplikasi atau hanya aplikasi/panggilan tertentu?', chips:['Semua aplikasi','Hanya telepon','Hanya aplikasi tertentu','Belum diuji']}
+            ],
+            mikrofon: [
+                {q:'Mikrofon tidak bekerja saat telepon biasa, rekaman suara, video, atau semuanya?', chips:['Telepon saja','Rekaman saja','Video saja','Semuanya']},
+                {q:'Suara terdengar kecil/berisik atau sama sekali tidak terdengar?', chips:['Kecil','Berisik','Tidak terdengar','Kadang normal']},
+                {q:'Sudah dicoba rekam suara tanpa casing dan dibersihkan lubang mic secara aman?', chips:['Belum','Sudah, tetap sama','Setelah casing dilepas normal','Setelah dibersihkan normal']}
+            ],
+            kamera: [
+                {q:'Kamera mana yang bermasalah: depan, belakang utama, ultrawide/macro, atau semua kamera?', chips:['Depan','Belakang utama','Kamera tambahan','Semua']},
+                {q:'Gejalanya kamera tidak terbuka, gambar hitam, blur/getar, fokus gagal, atau aplikasi menutup sendiri?', chips:['Tidak terbuka','Gambar hitam','Blur / getar','Fokus gagal','Aplikasi crash']},
+                {q:'Flash ikut tidak bekerja atau masih normal?', chips:['Flash normal','Flash tidak bekerja','Flash redup','Belum diuji']}
+            ],
+            sinyal: [
+                {q:'SIM terdeteksi tetapi tidak ada sinyal, atau kartu SIM sama sekali tidak terbaca?', chips:['SIM terbaca, no signal','SIM tidak terbaca','Sinyal naik turun','Hanya emergency']},
+                {q:'IMEI dan baseband masih tampil di pengaturan?', chips:['IMEI & baseband ada','IMEI hilang','Baseband unknown','Belum dicek']},
+                {q:'Sudah dicoba SIM lain dan lokasi lain? Apakah hasilnya sama?', chips:['Belum','SIM lain sama','SIM lain normal','Lokasi lain normal']}
+            ],
+            wifi: [
+                {q:'Wi‑Fi bisa diaktifkan tetapi sinyal lemah, sering putus, atau tombol Wi‑Fi tidak bisa aktif sama sekali?', chips:['Sinyal lemah','Sering putus','Tidak bisa aktif','Tidak menemukan jaringan']},
+                {q:'Bluetooth juga ikut bermasalah atau hanya Wi‑Fi?', chips:['Hanya Wi‑Fi','Wi‑Fi + Bluetooth','Hanya Bluetooth','Belum diuji']},
+                {q:'Masalah terjadi di semua router/jaringan atau hanya satu Wi‑Fi?', chips:['Semua jaringan','Satu jaringan saja','Belum coba jaringan lain']}
+            ],
+            tombol: [
+                {q:'Tombol mana yang bermasalah: power, volume atas/bawah, atau silent switch?', chips:['Power','Volume','Silent switch','Lebih dari satu']},
+                {q:'Tombol terasa keras/macet secara fisik atau terasa normal tetapi tidak ada respons?', chips:['Keras / macet','Terasa normal tapi mati','Harus ditekan kuat','Kadang berfungsi']},
+                {q:'Pernah jatuh, kena air, atau habis dibongkar sebelum tombol bermasalah?', chips:['Tidak','Pernah jatuh','Kena air','Habis dibongkar']}
+            ],
+            'sidik-jari': [
+                {q:'Fingerprint tidak mendeteksi jari sama sekali, lambat, atau menu fingerprint hilang dari pengaturan?', chips:['Tidak mendeteksi','Lambat / sering gagal','Menu hilang','Error setelah servis']},
+                {q:'Sensor berada di layar, tombol samping, atau belakang?', chips:['Dalam layar','Tombol samping','Belakang','Tidak tahu']},
+                {q:'Masalah muncul setelah ganti LCD, ganti tombol/flex, jatuh, atau tanpa kejadian khusus?', chips:['Tanpa kejadian','Setelah ganti LCD','Setelah servis tombol','Jatuh / kena air']}
+            ],
+            cairan: [
+                {q:'HP terkena cairan apa dan kira-kira seberapa banyak/berapa lama?', chips:['Percikan sedikit','Kehujanan','Terendam','Cairan selain air']},
+                {q:'Setelah terkena cairan, HP masih sempat dinyalakan atau dicas?', chips:['Tidak dinyalakan/dicas','Sempat dinyalakan','Sempat dicas','Masih menyala sekarang']},
+                {q:'Sekarang gejalanya apa: mati total, panas, layar/audio/sinyal bermasalah, atau masih normal?', chips:['Mati total','Panas','Fungsi tertentu rusak','Masih normal']}
+            ],
+            mesin: [
+                {q:'Saat tombol power ditekan ada tanda kehidupan seperti getar, logo, suara, lampu, atau benar-benar tidak ada respons?', chips:['Tidak ada respons','Ada getar','Muncul logo lalu mati','Ada suara tapi layar gelap']},
+                {q:'Saat dicas apakah muncul indikator, terasa panas, atau tetap tidak bereaksi?', chips:['Ada indikator','Tidak ada indikator','Panas saat dicas','Arus masuk tapi tidak nyala']},
+                {q:'Sebelum mati, HP sempat jatuh, kena air, panas berlebih, restart/bootloop, atau mati mendadak?', chips:['Mati mendadak','Sebelumnya restart','Jatuh','Kena air','Panas berlebih']}
+            ],
+            frame: [
+                {q:'Frame/tulang HP bengkok, retak/patah, backdoor tidak rapat, atau LCD terangkat?', chips:['Bengkok','Retak / patah','Backdoor tidak rapat','LCD terangkat']},
+                {q:'Apakah ada baterai kembung atau benturan/jatuh yang menyebabkan perubahan bentuk?', chips:['Tidak tahu','Baterai kembung','Habis jatuh / terbentur','Tidak ada']},
+                {q:'Fungsi tombol, LCD/touch, kamera dan charging masih normal?', chips:['Semua normal','Touch/LCD terganggu','Tombol terganggu','Charging/kamera terganggu']}
+            ],
+            unlock: [
+                {q:'Jenis kuncinya apa: pola/PIN layar, FRP Google, Mi Account, atau akun lain?', chips:['Pola / PIN','FRP Google','Mi Account','Akun lain']},
+                {q:'Apakah data di dalam HP masih penting dan harus dipertahankan bila memungkinkan?', chips:['Data sangat penting','Boleh reset','Tidak yakin']}
+            ],
+            troubleshooting: [
+                {q:'Keluhan paling dominan saat ini apa dan kapan terakhir HP masih bekerja normal?', chips:['Layar','Baterai/charging','Sinyal/WiFi','Audio/kamera','Mati/restart']}
+            ]
+        };
+
+        function inferQuestionBankId(category, chronology='') {
+            const id = category?.id || '';
+            const t = String(chronology || '').toLowerCase();
+            if (id === 'lcd' || /sentuh|touch|layar|lcd|ghost|garis|blank/.test(t)) return 'lcd';
+            if (id === 'baterai' || /baterai|batre|boros|kembung|drop/.test(t)) return 'baterai';
+            if (id === 'charger' || /cas|charge|charging|fast charging|port/.test(t)) return 'charger';
+            if (id === 'fuse_baterai_restart' || /restart|reboot/.test(t)) return 'fuse_baterai_restart';
+            return id;
+        }
+
+        function startDiagnosticInterview() {
+            const bankId = inferQuestionBankId(state.detectedCategory, state.chronology);
+            const qs = DIAGNOSTIC_QUESTION_BANK[bankId] || DIAGNOSTIC_QUESTION_BANK.troubleshooting;
+            state.diagnosticQueue = qs;
+            state.diagnosticAnswers = [];
+            state.diagnosticIndex = 0;
+            state.step = 'DIAGNOSTIC_INTERVIEW';
+            saveAIState();
+            askNextDiagnosticQuestion();
+        }
+
+        function diagnosticChipHtml(chips=[]) {
+            if (!chips.length) return '';
+            return `<div class="chip-container">${chips.map(c =>
+                `<button class="chip-btn" onclick="answerDiagnosticChoice('${String(c).replace(/'/g,"\\'")}')">${escapeHtml(c)}</button>`
+            ).join('')}</div>`;
+        }
+
+        function askNextDiagnosticQuestion() {
+            const q = state.diagnosticQueue?.[state.diagnosticIndex];
+            if (!q) {
+                state.step = 'ASK_DURATION';
+                saveAIState();
+                showTyping(() => addMsg(`Terima kasih Kak, sekarang saya sudah punya lebih banyak petunjuk. ${rkPersonaInterlude(state.detectedCategory, state.chronology)}<strong>Sejak kapan</strong> kendala ini mulai dirasakan? (misalnya hari ini, 3 hari, 2 minggu)`));
+                return;
+            }
+            const num = state.diagnosticIndex + 1;
+            const total = state.diagnosticQueue.length;
+            showTyping(() => addMsg(
+                `<strong>🔎 Pemeriksaan Gejala ${num}/${total}</strong>` +
+                rkPersonaInterlude(state.detectedCategory, state.chronology + ' ' + (state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')) +
+                `<br>${q.q}` +
+                diagnosticChipHtml(q.chips) +
+                `<small class="muted">Boleh pilih jawaban cepat atau ceritakan dengan kalimat sendiri.</small>`
+            ));
+        }
+
+        window.answerDiagnosticChoice = function(value) {
+            addMsg(escapeHtml(value), true, true, false);
+            processFlow(String(value));
+        };
+
+        function buildDiagnosticPrediction(category, chronology, answers, duration, deviceModel) {
+            const id = inferQuestionBankId(category, chronology);
+            const t = `${chronology || ''} ${(answers||[]).map(a=>a.answer).join(' ')} ${duration||''}`.toLowerCase();
+            let likely = [], checks = [], safe = [], avoid = [];
+
+            const add = (arr, x) => { if (x && !arr.includes(x)) arr.push(x); };
+
+            if (id === 'lcd') {
+                if (/seluruh layar|tidak mendeteksi|gak bisa sentuh|tidak bisa.*sentuh/.test(t)) {
+                    add(likely,'Touchscreen/digitizer atau jalur touch pada modul LCD');
+                    add(checks,'Uji touch seluruh area dan cek konektor/flex LCD');
+                }
+                if (/sebagian area/.test(t)) add(likely,'Kerusakan lokal digitizer/panel touch');
+                if (/ghost touch/.test(t)) add(likely,'Digitizer bermasalah, tekanan frame, charger/noise, atau konektor LCD');
+                if (/garis|berkedip|blank|gelap/.test(t)) add(likely,'Panel display/LCD atau suplai/jalur display');
+                if (/habis ganti lcd/.test(t)) add(likely,'Kompatibilitas/kualitas LCD, konektor, pemasangan, atau jalur touch');
+                if (/jatuh|tertekan/.test(t)) add(likely,'Kerusakan fisik panel/flex atau konektor akibat benturan');
+                if (/air/.test(t)) add(likely,'Korosi/kebocoran pada konektor atau jalur touch/display');
+                safe=['Restart sekali jika HP masih normal dan data aman.','Lepas tempered glass bila diduga menekan layar.','Catat area layar yang tidak merespons.'];
+                avoid=['Jangan menekan/memelintir layar.','Jangan langsung mengganti LCD tanpa test panel dan konektor.'];
+            } else if (id === 'charger') {
+                if (/> 5 jam|tidak penuh|persen lambat|tidak bertambah/.test(t)) add(likely,'Sistem charging lambat: adaptor/kabel, port, baterai, jalur charging, atau IC charging');
+                if (/harus ditekan|harus digoyang|putus-putus/.test(t)) add(likely,'Port charging aus/kotor, solder retak, flex/sub-board atau konektor');
+                if (/fast charging hilang/.test(t)) add(likely,'Negosiasi fast-charge/data line, kabel/adaptor, port, atau IC charging');
+                if (/adaptor lain lebih cepat|kabel lain memperbaiki/.test(t)) add(likely,'Aksesori charger/kabel sebagai penyebab utama');
+                checks=['Bandingkan dengan charger/kabel yang teruji normal.','Cek kebersihan dan kekencangan port.','Ukur arus/tegangan serta temperatur saat charging.','Evaluasi kesehatan baterai bila waktu penuh terlalu lama.'];
+                safe=['Gunakan adaptor dan kabel yang sesuai spesifikasi.','Hentikan charging bila HP sangat panas.'];
+                avoid=['Jangan mengorek port dengan benda logam.','Jangan memaksa konektor pada sudut tertentu.'];
+            } else if (id === 'baterai') {
+                if (/< 3 jam|3–6 jam|cepat/.test(t)) add(likely,'Kapasitas baterai menurun atau konsumsi daya perangkat tinggi');
+                if (/persen meloncat|tiba-tiba mati/.test(t)) add(likely,'Baterai drop/impedansi tinggi, koneksi baterai, atau pembacaan fuel gauge');
+                if (/restart sendiri/.test(t)) add(likely,'Drop tegangan baterai, konektor/fuse baterai, atau rangkaian power');
+                if (/kembung/.test(t)) add(likely,'Baterai mengalami pengembangan fisik dan perlu diganti');
+                if (/panas saat dicas/.test(t)) add(likely,'Baterai, charger, atau rangkaian charging perlu pemeriksaan temperatur/arus');
+                checks=['Cek kondisi fisik baterai.','Bandingkan voltage drop dan konsumsi arus.','Periksa konektor/flex/fuse baterai bila restart atau persen tidak stabil.'];
+                safe=['Backup data bila perangkat masih bisa dipakai.'];
+                avoid=['Jangan menekan/menusuk baterai kembung.','Jangan terus menggunakan baterai yang panas/kembung.'];
+            } else if (id === 'fuse_baterai_restart') {
+                add(likely,'Baterai drop, konektor/fuse baterai, rangkaian power, atau software tergantung pola restart');
+                if (/persen tertentu|turun drastis/.test(t)) add(likely,'Drop tegangan baterai/fuel gauge lebih kuat dicurigai');
+                if (/aplikasi berat/.test(t)) add(likely,'Drop saat beban tinggi: baterai atau rail power');
+                checks=['Catat persentase dan kondisi saat restart.','Cek log restart bila tersedia.','Uji baterai dan jalur B+/BSI/fuse sebelum menyimpulkan PMIC/CPU.'];
+                safe=['Backup data bila memungkinkan.'];
+                avoid=['Jangan langsung reball CPU tanpa verifikasi rail dan baterai.'];
+            } else if (id === 'audio') {
+                add(likely,'Speaker/earpiece, mesh/filter, contact, flex, jalur audio atau codec/PA sesuai area yang gagal');
+                if (/mode headset/.test(t)) add(likely,'Deteksi headset/port atau jalur audio detect');
+                checks=['Bandingkan telepon, media, alarm, dan headset/Bluetooth.','Cek mesh, speaker/earpiece dan spring contact sebelum IC.'];
+                safe=['Restart dan matikan Bluetooth untuk pengujian.'];
+            } else if (id === 'mikrofon') {
+                add(likely,'Lubang/mesh mic, modul mic, flex/sub-board, jalur mic atau audio codec');
+                if (/telepon saja/.test(t)) add(likely,'Kemungkinan mic tertentu/secondary mic atau jalur aplikasi telephony');
+                checks=['Bandingkan rekaman suara, video, speakerphone dan telepon biasa.','Cek izin aplikasi serta kebersihan lubang mic.'];
+                safe=['Uji rekaman suara tanpa casing.'];
+            } else if (id === 'kamera') {
+                add(likely,'Modul kamera, konektor/flex, supply kamera atau software kamera');
+                if (/semua/.test(t)) add(likely,'Supply/jalur bersama, software, atau board lebih mungkin dibanding satu modul');
+                if (/blur|getar|fokus/.test(t)) add(likely,'Mekanisme fokus/OIS atau modul kamera');
+                if (/flash tidak/.test(t)) add(likely,'Flash/driver atau sistem menonaktifkan flash karena kamera/suhu');
+                checks=['Uji setiap lensa satu per satu.','Cek kamera di aplikasi lain setelah restart.','Periksa konektor dan tegangan kamera sebelum ganti modul.'];
+            } else if (id === 'sinyal') {
+                add(likely,'SIM/reader, antena/coax, RF, baseband/NVRAM atau konfigurasi jaringan');
+                if (/sim tidak terbaca/.test(t)) add(likely,'SIM reader/konektor atau jalur SIM');
+                if (/imei hilang|baseband unknown/.test(t)) add(likely,'Baseband/NVRAM/NVDATA atau jalur/IC terkait');
+                if (/sim lain normal/.test(t)) add(likely,'Kartu SIM/operator lebih mungkin');
+                checks=['Cek IMEI/baseband.','Uji SIM lain dan lokasi lain.','Cek antena/coax dan konektor sebelum IC RF.'];
+                avoid=['Jangan melakukan perubahan IMEI ilegal atau flashing sembarangan.'];
+            } else if (id === 'wifi') {
+                add(likely,'Antena/kontak/coax Wi‑Fi, software, atau IC Wi‑Fi/Bluetooth');
+                if (/wifi \\+ bluetooth/.test(t)) add(likely,'Bagian bersama Wi‑Fi/Bluetooth atau supply/IC lebih mungkin');
+                if (/satu jaringan/.test(t)) add(likely,'Router/konfigurasi jaringan lebih mungkin daripada hardware HP');
+                checks=['Uji di jaringan lain.','Bandingkan Bluetooth.','Cek antena/kontak sebelum IC.'];
+            } else if (id === 'tombol') {
+                add(likely,'Mekanik tombol, flex/micro-switch, bracket, jalur tombol atau input PMIC');
+                if (/keras|macet|harus ditekan kuat/.test(t)) add(likely,'Masalah mekanik/flex lebih mungkin');
+                checks=['Cek rasa mekanik tombol dan flex.','Ukur jalur key sebelum menyimpulkan IC power.'];
+            } else if (id === 'sidik-jari') {
+                add(likely,'Sensor/flex fingerprint, konektor, kalibrasi/kompatibilitas atau jalur');
+                if (/menu hilang/.test(t)) add(likely,'Sensor tidak terdeteksi, flex/konektor, atau software');
+                if (/setelah ganti lcd/.test(t)) add(likely,'Kompatibilitas/kalibrasi fingerprint layar atau pemasangan LCD');
+                checks=['Cek apakah sensor terdeteksi sistem.','Verifikasi flex/konektor dan kompatibilitas part.'];
+            } else if (id === 'cairan') {
+                add(likely,'Korosi, short, kebocoran jalur atau kerusakan modul akibat cairan');
+                if (/sempat dicas|sempat dinyalakan/.test(t)) add(likely,'Risiko short/kerusakan lanjutan meningkat karena sempat diberi daya');
+                checks=['Putus daya, inspeksi korosi, cek short dan jalur terdampak.'];
+                safe=['Matikan HP dan jangan dicas.'];
+                avoid=['Jangan gunakan hair dryer/panas tinggi.','Jangan menyalakan berulang kali.'];
+            } else if (id === 'mesin') {
+                add(likely,'Power path/baterai, PMIC, short rail, storage/CPU atau display tergantung tanda kehidupan');
+                if (/ada suara tapi layar gelap|ada getar/.test(t)) add(likely,'Perangkat mungkin boot; display/backlight perlu dipisahkan dari kasus mati total');
+                if (/logo lalu mati|sebelumnya restart/.test(t)) add(likely,'Power/baterai, storage, software atau CPU/RAM perlu dibedakan melalui pola arus/log');
+                if (/panas saat dicas/.test(t)) add(likely,'Short/leak pada rail tertentu perlu dicari');
+                checks=['Cek baterai dan jalur power dasar.','Amati pola arus PSU.','Cek USB detection/log serta rail sebelum tindakan BGA.'];
+                avoid=['Jangan langsung memanaskan/reball CPU tanpa hasil ukur yang mendukung.'];
+            } else if (id === 'frame') {
+                add(likely,'Frame/housing mengalami deformasi; perlu memastikan penyebabnya benturan atau baterai kembung');
+                if (/baterai kembung/.test(t)) add(likely,'Baterai kembung harus ditangani sebelum pengeleman/frame');
+                checks=['Cek kerataan frame, baterai, LCD/touch, tombol dan kamera.'];
+                avoid=['Jangan memaksa meluruskan frame dengan baterai masih terpasang.'];
+            } else if (id === 'unlock') {
+                add(likely,'Jenis kunci perlu diverifikasi dan tindakan mengikuti bukti kepemilikan serta risiko data');
+                checks=['Verifikasi kepemilikan sah.','Tentukan apakah data harus dipertahankan atau reset diperbolehkan.'];
+            } else {
+                add(likely,'Penyebab belum cukup spesifik; diperlukan pemisahan gejala hardware/software');
+                checks=['Catat kapan gejala terjadi, pemicu, riwayat jatuh/air/servis, dan fungsi lain yang ikut bermasalah.'];
+            }
+
+            if (!likely.length) likely=['Perlu pemeriksaan lanjutan; data gejala belum cukup untuk mempersempit penyebab.'];
+            return {likely, checks, safe, avoid};
+        }
+
+        function renderDiagnosticPrediction() {
+            const p = buildDiagnosticPrediction(state.detectedCategory, state.chronology, state.diagnosticAnswers, state.duration, state.deviceModel);
+            const confidence = state.diagnosticAnswers.length >= 3 ? 'Sedang' : 'Awal';
+            return `<div class="tracking-card ai-advice-card" style="border-color:var(--accent-purple)">
+                <strong>🧠 Prediksi Awal AI RK CELL</strong>
+                ${rkPersonaInterlude(state.detectedCategory, state.chronology + ' ' + (state.diagnosticAnswers||[]).map(a=>a.answer).join(' '))}
+                <div class="service-analysis-section"><b>🎯 Kemungkinan utama • tingkat keyakinan ${confidence}</b><ol>${p.likely.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ol></div>
+                ${p.checks.length ? `<div class="service-analysis-section"><b>🔬 Pemeriksaan yang disarankan</b><ul>${p.checks.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}
+                ${p.safe.length ? `<div class="service-analysis-section"><b>✅ Yang boleh dilakukan pelanggan</b><ul>${p.safe.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}
+                ${p.avoid.length ? `<div class="service-analysis-section"><b>⚠️ Yang sebaiknya dihindari</b><ul>${p.avoid.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}
+                <div class="muted" style="font-size:7.2pt;margin-top:7px">Prediksi ini berdasarkan cerita pelanggan, bukan pengganti pengukuran teknisi. AI sengaja tidak langsung memvonis IC/CPU sebelum faktor part, konektor, software, dan hasil ukur dipisahkan.</div>
+            </div>`;
+        }
+
         function processFlow(userText, overrideCategory = null) {
             let parsed = parseUserInputSmart(userText);
             if (overrideCategory && ISSUE_CATEGORIES[overrideCategory]) {
@@ -3142,6 +3504,9 @@ const ISSUE_CATEGORIES = {
             if (parsed.foundCategory && state.detectedCategory && parsed.foundCategory.id !== state.detectedCategory.id && state.step !== 'ASK_NAME') {
                 state.detectedCategory = parsed.foundCategory;
                 state.verificationProof = '';
+                state.diagnosticAnswers = [];
+                state.diagnosticQueue = [];
+                state.diagnosticIndex = 0;
                 
                 showTyping(() => {
                     let switchMsg = `💡 <em>Oh, topik perbaikan diubah ke <strong>${parsed.foundCategory.label}</strong> ya Kak? Siap, AI sudah menyesuaikan!</em><br><br>`;
@@ -3289,10 +3654,25 @@ const ISSUE_CATEGORIES = {
 
             if (state.step === 'ASK_CHRONOLOGY') {
                 state.chronology = userText;
-                state.step = 'ASK_DURATION';
-                showTyping(() => {
-                    addMsg(`Baik, kronologi tercatat. Sejak kapan kendala ini mulai dirasakan Kak? (Misal: Baru hari ini, sudah 3 hari, atau minggu lalu)`);
-                });
+                startDiagnosticInterview();
+                return;
+            }
+
+            if (state.step === 'DIAGNOSTIC_INTERVIEW') {
+                const q = state.diagnosticQueue?.[state.diagnosticIndex];
+                if (q) {
+                    state.diagnosticAnswers.push({
+                        question: String(q.q || '').replace(/<[^>]+>/g,''),
+                        answer: userText
+                    });
+                    state.diagnosticIndex += 1;
+                    saveAIState();
+                    askNextDiagnosticQuestion();
+                } else {
+                    state.step = 'ASK_DURATION';
+                    saveAIState();
+                    showTyping(() => addMsg(`Sejak kapan kendala ini mulai dirasakan Kak?`));
+                }
                 return;
             }
 
@@ -3311,13 +3691,15 @@ const ISSUE_CATEGORIES = {
                         `• Kategori: <span class="badge badge-blue">${catLabel}</span><br>` +
                          (state.detectedCategories?.length > 1 ? `• Kemungkinan terkait: <strong>${state.detectedCategories.map(c=>c.label).join(' + ')}</strong><br>` : '') +
                         `• Kronologi: ${state.chronology}<br>` +
-                        `• Durasi Kendala: ${state.duration}<br>`;
+                        `• Durasi Kendala: ${state.duration}<br>` +
+                        (state.diagnosticAnswers?.length ? `• Detail Gejala:<br>${state.diagnosticAnswers.map((a,i)=>`&nbsp;&nbsp;${i+1}. ${escapeHtml(a.question)} → <strong>${escapeHtml(a.answer)}</strong><br>`).join('')}` : '');
                     
                     if (state.verificationProof) {
                         summaryHtml += `• Verifikasi Hukum: <span class="badge badge-green">${state.verificationProof}</span><br>`;
                     }
                     summaryHtml += `</div>`;
-                    summaryHtml += `<br>` + buildCustomerAdvice(state.detectedCategory, state.chronology, state.duration, state.deviceModel);
+                    summaryHtml += `<br>` + renderDiagnosticPrediction();
+                    summaryHtml += `<br>` + buildCustomerAdvice(state.detectedCategory, state.chronology + ' ' + (state.diagnosticAnswers||[]).map(a=>a.answer).join(' '), state.duration, state.deviceModel);
 
                     summaryHtml += `<br>Silakan klik tombol di bawah untuk mengunduh rekap dalam bentuk PDF sekaligus mengirimkannya ke WhatsApp teknisi!`;
                     
@@ -3325,6 +3707,7 @@ const ISSUE_CATEGORIES = {
                                  `Perangkat: ${state.deviceModel || 'Belum disebutkan'}\n` +
                                  `Keluhan: ${catLabel}\n` +
                                  `Kronologi: ${state.chronology}\n` +
+                                 `Detail gejala: ${(state.diagnosticAnswers||[]).map((a,i)=>`${i+1}) ${a.question}: ${a.answer}`).join(' | ') || '-'}\n` +
                                  `Durasi: ${state.duration}`;
                     if(state.verificationProof) waText += `\nVerifikasi: ${state.verificationProof}`;
                     waText += `\n\n(Nota PDF telah diunduh dari sistem web)`;
@@ -3357,6 +3740,9 @@ const ISSUE_CATEGORIES = {
                 state.chronology = '';
                 state.duration = '';
                 state.verificationProof = '';
+                state.diagnosticAnswers = [];
+                state.diagnosticQueue = [];
+                state.diagnosticIndex = 0;
                 saveAIState();
                 processFlow(label, categoryKey);
                 return;
@@ -3471,7 +3857,7 @@ const ISSUE_CATEGORIES = {
                 customer:String(r.members?.name||''),
                 device:String([r.device_brand,r.device_model].filter(Boolean).join(' ')),
                 type:String(r.device_type||''), complaint:String(r.complaint||''),
-                status:String(statusMap[r.status]||r.status||'Belum ada status'), statusCode:String(r.status||''),
+                status:String(r.final_receipt_printed_at ? 'Selesai — HP Sudah Diambil' : (statusMap[r.status]||r.status||'Belum ada status')), statusCode:String(r.status||''),
                 progress:({waiting:15,diagnosis:35,in_progress:65,pending:60,awaiting_confirmation:60,completed:100,cancelled:0,cannot_repair:0})[r.status]??null,
                 action:String(r.repair_summary||''), cost:'',
                 entryDate:String(r.created_at||''), finishDate:String(r.completed_at||r.final_completed_at||''),
@@ -3517,6 +3903,25 @@ const ISSUE_CATEGORIES = {
         function buildTrackingAISummary(r) {
             const status = r.status || 'belum diketahui';
             const dev = r.device || 'perangkat';
+
+            if (r.pickedUp) {
+                let sentence = `${dev} telah selesai diperbaiki dan sudah diambil oleh pelanggan.`;
+                if (r.pickedUpAt) {
+                    const d = new Date(r.pickedUpAt);
+                    const when = isNaN(d) ? r.pickedUpAt : d.toLocaleString('id-ID',{
+                        day:'2-digit',month:'long',year:'numeric',
+                        hour:'2-digit',minute:'2-digit',timeZone:'Asia/Jakarta'
+                    });
+                    sentence += ` Pengambilan tercatat pada ${when}.`;
+                }
+                if (r.action) sentence += ` Tindakan servis: ${r.action}.`;
+                if (r.qc.length) sentence += ` Hasil QC akhir tersedia dengan ${r.qc.length} catatan pemeriksaan.`;
+                if (r.warrantyEnd) sentence += ` Garansi tercatat sampai ${r.warrantyEnd}.`;
+                else if (r.warranty) sentence += ` Ketentuan garansi: ${r.warranty}.`;
+                sentence += ' Status ini menandakan unit sudah tidak berada di konter.';
+                return sentence;
+            }
+
             let sentence = `${dev} saat ini berstatus ${status}.`;
             if (r.action) sentence += ` Tindakan tercatat: ${r.action}.`;
             if (r.progress !== null) sentence += ` Progres tercatat ${r.progress}%.`;
@@ -3525,7 +3930,7 @@ const ISSUE_CATEGORIES = {
             else if (r.warranty) sentence += ` Garansi: ${r.warranty}.`;
             if (/menunggu.*(persetujuan|konfirmasi)/i.test(status)) sentence += ' Proses berikutnya menunggu persetujuan pelanggan.';
             if (/qc|quality control/i.test(status)) sentence += ' Unit sedang berada pada tahap pemeriksaan akhir sebelum dinyatakan selesai.';
-            if (/selesai|siap ambil/i.test(status)) sentence += ' Silakan periksa informasi pengambilan atau hubungi admin bila diperlukan.';
+            if (/selesai|siap ambil/i.test(status)) sentence += ' Unit sudah selesai dan menunggu proses pengambilan pelanggan.';
             return sentence;
         }
 
@@ -3536,11 +3941,34 @@ const ISSUE_CATEGORIES = {
             const cost = r.cost !== '' ? `<div class="service-analysis-row"><b>Biaya</b><span>${escapeHtml(formatRupiahTracking(r.cost))}</span></div>` : '';
             const dates = `${r.entryDate ? `<div class="service-analysis-row"><b>Tgl Masuk</b><span>${escapeHtml(r.entryDate)}</span></div>`:''}${r.finishEstimate ? `<div class="service-analysis-row"><b>Estimasi Selesai</b><span>${escapeHtml(r.finishEstimate)}</span></div>`:''}${r.finishDate ? `<div class="service-analysis-row"><b>Tgl Selesai</b><span>${escapeHtml(r.finishDate)}</span></div>`:''}`;
             const warranty = r.warranty || r.warrantyEnd ? `<div class="service-analysis-row"><b>Garansi</b><span>${escapeHtml(r.warranty || '')}${r.warranty && r.warrantyEnd ? ' • ' : ''}${r.warrantyEnd ? 's/d ' + escapeHtml(r.warrantyEnd) : ''}</span></div>` : '';
-            return `<div class="tracking-card service-ai-analysis" style="border-color:var(--accent-green);background:rgba(16,185,129,.055)">
+            const pickup = r.pickedUp ? (() => {
+                let when = r.pickedUpAt || '';
+                if (when) {
+                    const d = new Date(when);
+                    if (!isNaN(d)) when = d.toLocaleString('id-ID',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'Asia/Jakarta'});
+                }
+                return `<div class="service-analysis-row" style="background:rgba(168,85,247,.08)"><b>📦 Pengambilan</b><span><strong>HP SUDAH DIAMBIL</strong>${when ? `<br><small>${escapeHtml(when)}</small>` : ''}</span></div>`;
+            })() : '';
+
+            // Testimoni hanya ditampilkan secara visual.
+            // class="ai-no-voice" dipakai oleh speakText agar bagian ini tidak dibacakan AI Voice.
+            const testimonial = (r.testimonial || r.rating != null) ? (() => {
+                const rating = Math.max(0, Math.min(5, Number(r.rating) || 0));
+                const stars = rating ? `${'★'.repeat(Math.round(rating))}${'☆'.repeat(5-Math.round(rating))}` : '';
+                return `<div class="service-analysis-section ai-no-voice" data-no-voice="true" style="margin-top:10px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.18)">
+                    <b>💬 Testimoni Pelanggan</b>
+                    ${stars ? `<div style="font-size:13pt;letter-spacing:2px;margin:6px 0 4px" aria-label="Rating ${rating} dari 5">${stars} <small style="font-size:7.5pt;color:var(--muted)">${rating}/5</small></div>` : ''}
+                    ${r.testimonial ? `<p style="margin:5px 0 0;font-style:italic">“${escapeHtml(r.testimonial)}”</p>` : '<p class="muted" style="margin:5px 0 0">Pelanggan telah memberikan penilaian.</p>'}
+                    <div style="font-size:7pt;color:var(--muted);margin-top:6px">Ditampilkan dari data tracking • tidak dibacakan AI Voice</div>
+                </div>`;
+            })() : '';
+
+            return `<div class="tracking-card service-ai-analysis" style="border-color:${r.pickedUp ? 'var(--accent-purple)' : 'var(--accent-green)'};background:${r.pickedUp ? 'rgba(168,85,247,.055)' : 'rgba(16,185,129,.055)'}">
                 <strong>🔗 Tracking Terhubung — RK CELL</strong>
                 <div class="service-analysis-grid">
                     <div class="service-analysis-row"><b>No. Tiket</b><span>${escapeHtml(r.ticket)}</span></div>
                     <div class="service-analysis-row"><b>Status</b><span><strong>${escapeHtml(r.status)}</strong></span></div>
+                    ${pickup}
                     ${r.customer ? `<div class="service-analysis-row"><b>Pelanggan</b><span>${escapeHtml(r.customer)}</span></div>`:''}
                     <div class="service-analysis-row"><b>Perangkat</b><span>${escapeHtml(r.device || 'Belum dicatat')}</span></div>
                     ${r.type ? `<div class="service-analysis-row"><b>Tipe</b><span>${escapeHtml(r.type)}</span></div>`:''}
@@ -3550,6 +3978,7 @@ const ISSUE_CATEGORIES = {
                 </div>
                 ${progress}${qc}
                 <div class="service-analysis-section"><b>🤖 Penjelasan AI</b><p>${escapeHtml(buildTrackingAISummary(r))}</p></div>
+                ${testimonial}
                 ${r.note ? `<div class="service-analysis-section"><b>📝 Catatan</b><p>${escapeHtml(r.note)}</p></div>`:''}
                 ${r.updatedAt ? `<div class="muted" style="margin-top:7px;font-size:7pt">Pembaruan data: ${escapeHtml(r.updatedAt)}</div>`:''}
             </div>`;
@@ -4041,7 +4470,7 @@ const ISSUE_CATEGORIES = {
         });
 
         // Pulihkan percakapan bila ada; kalau belum ada, mulai dengan salam.
-        const FIRST_GREETING_HTML = `Halo! Selamat datang di <strong>RK CELL</strong> ✦<br><br>Saya siap membantu konsultasi service HP, estimasi perbaikan, atau <strong>cek status service dengan scan barcode</strong>. 😊<br><br>Boleh tahu nama panggilan Kakak siapa?`;
+        const FIRST_GREETING_HTML = `Halo! Selamat datang di <strong>RK CELL</strong> ✦<br><br>Saya siap membantu konsultasi service HP, estimasi perbaikan, atau <strong>cek status service dengan scan barcode</strong>. 😊<br><br>Santai saja, saya kadang serius, kadang bercanda, kadang sedikit menggombal—biar konsultasinya nggak sekaku HP yang nge-freeze 😆.<br><br>Boleh tahu nama panggilan Kakak siapa?`;
 
         function speakWelcomeGreeting() {
             if (isMuted || !('speechSynthesis' in window)) return;
