@@ -6,7 +6,6 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>RK CELL - Service Center HP Professional &amp; Digital Warranty</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
 <!-- html2pdf dimuat hanya saat pengguna benar-benar mengekspor PDF agar loading awal lebih ringan -->
 <style>
         :root {
@@ -1049,6 +1048,41 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <style id="rkLiveStatsSupabaseStyle">
 .rk-stats-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}.rk-stats-head b{display:block}.rk-stats-head small{display:block;color:var(--muted);font-size:6.8pt;margin-top:2px}.rk-stats-refresh{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2);color:var(--accent-cyan);font-weight:900;cursor:pointer}.rk-stats-refresh.loading{animation:rkStatsSpin .8s linear infinite}.rk-stats-detail-toggle{width:100%;margin-top:9px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);color:var(--text);font-size:7.2pt;font-weight:850;cursor:pointer}.rk-stats-detail{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.rk-stats-detail[hidden]{display:none}.rk-stats-detail>div{display:flex;justify-content:space-between;gap:8px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.02);font-size:7pt}.rk-stats-detail span{color:var(--muted)}.rk-stats-detail b{color:var(--text)}.rk-stats-error{color:var(--accent-red)!important}.rk-stats-live{color:var(--accent-green)!important}@keyframes rkStatsSpin{to{transform:rotate(360deg)}}@media(max-width:600px){.rk-stats-detail{grid-template-columns:1fr}.rk-stat strong{font-size:13pt}}
 </style>
+
+<style id="rkCompactHomeV1">
+.rk-trust-proof-compact{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#kenapa-rkcell .section-label{margin-top:12px!important;margin-bottom:8px!important}
+#kenapa-rkcell .rk-trust-cta{margin-top:10px;padding:12px}
+@media(max-width:600px){
+ .rk-trust-proof-compact{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px}
+ .rk-trust-proof-compact .rk-proof-item{padding:9px 7px;text-align:center}
+ .rk-trust-proof-compact .rk-proof-icon{font-size:17px;margin-bottom:3px}
+ .rk-trust-proof-compact .rk-proof-item b{font-size:7.4pt}
+ .rk-trust-proof-compact .rk-proof-item small{font-size:6.4pt;line-height:1.3}
+ #kenapa-rkcell .rk-trust-cta p{display:none}
+ #kenapa-rkcell .rk-trust-cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+ #kenapa-rkcell .rk-trust-cta h3{font-size:9pt;margin:0}
+ #kenapa-rkcell .rk-trust-cta button{width:auto;padding:8px 10px;font-size:7.4pt}
+ #bukti-pelanggan .section-label{margin-top:12px!important}
+}
+</style>
+
+<style id="rkCustomerAppUpgrade">
+.rk-customer-hub{max-width:1180px;margin:12px auto;padding:0 18px;display:grid;gap:9px}
+.rk-store-strip,.rk-guarantee,.rk-last-service{border:1px solid var(--border);background:var(--card);border-radius:15px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+.rk-store-strip{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rk-store-main{display:flex;align-items:center;gap:9px;min-width:0}.rk-store-main b{font-size:8.2pt;display:block}.rk-store-main small{display:block;color:var(--muted);font-size:7pt;margin-top:2px}
+.rk-store-dot{width:10px;height:10px;border-radius:50%;background:var(--accent-green);box-shadow:0 0 0 4px rgba(38,208,124,.12);flex:0 0 auto}
+.rk-store-strip>a{white-space:nowrap;text-decoration:none;font-size:7.2pt;font-weight:800;color:var(--accent-cyan);border:1px solid var(--border);padding:7px 9px;border-radius:10px}
+.rk-guarantee{overflow:hidden}.rk-guarantee summary{cursor:pointer;list-style:none;padding:11px 12px;font-size:8pt;font-weight:800;display:flex;justify-content:space-between;gap:8px}.rk-guarantee summary::-webkit-details-marker{display:none}.rk-guarantee summary span{font-size:7pt;color:var(--muted)}
+.rk-guarantee-grid{padding:0 12px 12px;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.rk-guarantee-grid>div{font-size:7.3pt;padding:9px;border:1px solid var(--border);border-radius:11px}.rk-guarantee-grid b{display:block;margin:2px 0}.rk-guarantee-grid small{display:block;color:var(--muted);line-height:1.45}
+.rk-last-service{padding:11px 12px}.rk-last-service-title{display:flex;gap:8px;align-items:center}.rk-last-service-title b{display:block;font-size:8pt}.rk-last-service-title small{display:block;color:var(--muted);font-size:6.8pt;margin-top:2px}
+.rk-last-service-row{margin-top:9px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--border);padding-top:9px}.rk-last-service-row b{display:block;font-size:7.7pt}.rk-last-service-row small{display:block;color:var(--muted);font-size:6.9pt;margin-top:2px}.rk-last-service-row button{border:0;border-radius:10px;padding:8px 10px;font-weight:800;font-size:7pt;cursor:pointer;background:var(--accent-cyan);color:#071014}
+.rk-context-cta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 2px}.rk-context-cta button,.rk-context-cta a{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;padding:8px 10px;font-size:7pt;font-weight:800;text-decoration:none;cursor:pointer}.rk-context-cta .rk-context-primary{background:var(--accent-cyan);color:#071014;border-color:transparent}
+@media(max-width:700px){.rk-customer-hub{padding:0 10px;margin:9px auto}.rk-store-strip{padding:9px 10px}.rk-store-main small{max-width:230px}.rk-guarantee-grid{grid-template-columns:1fr 1fr}.rk-guarantee:not([open]){max-height:43px}.rk-last-service-row{align-items:flex-start}.rk-last-service-row button{white-space:nowrap}}
+@media(max-width:430px){.rk-guarantee-grid{grid-template-columns:1fr}.rk-store-main small{max-width:185px}}
+</style>
+
 </head>
 <body>
 <!-- NAVBAR -->
@@ -1075,36 +1109,16 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <div class="hero-stat"><strong>QR Code</strong><span>Tracking Perbaikan</span></div>
 </div>
 </section>
-<!-- QUICK FEATURES -->
-<section class="quick-grid">
-<div class="quick-card"><span>🛡️</span><div><strong>Garansi Jelas</strong><small>Ketentuan transparan di awal</small></div></div>
-<div class="quick-card"><span>📱</span><div><strong>Tracking Digital</strong><small>Pantau progres via web</small></div></div>
-<div class="quick-card"><span>💳</span><div><strong>Nota NFC</strong><small>Riwayat servis serba praktis</small></div></div>
-<div class="quick-card"><span>⚡</span><div><strong>Servis Express</strong><small>Tersedia untuk jenis perbaikan tertentu</small></div></div>
-</section>
-
 <section class="rk-trust-shell" id="kenapa-rkcell">
-  <div class="section-label" style="margin-left:0;margin-right:0"><span>KENAPA RK CELL</span><strong>Bukti layanan, bukan sekadar janji.</strong></div>
-  <div class="rk-trust-proof">
-    <div class="rk-proof-item"><div class="rk-proof-icon">🛡️</div><b>Garansi Digital</b><small>Riwayat dan masa garansi dapat dicek kembali dari data servis.</small></div>
-    <div class="rk-proof-item"><div class="rk-proof-icon">📱</div><b>Tracking Servis</b><small>Pelanggan dapat memantau tahapan pengerjaan menggunakan nomor tiket.</small></div>
-    <div class="rk-proof-item"><div class="rk-proof-icon">🔍</div><b>Diagnosa Sebelum Tindakan</b><small>Keluhan dipisahkan dari kemungkinan penyebab sebelum menentukan perbaikan lanjutan.</small></div>
-    <div class="rk-proof-item"><div class="rk-proof-icon">💰</div><b>Biaya Dikomunikasikan</b><small>Tindakan dan estimasi biaya dijelaskan sebelum pekerjaan lanjutan dilakukan.</small></div>
-    <div class="rk-proof-item"><div class="rk-proof-icon">✅</div><b>QC Sebelum Diserahkan</b><small>Fungsi terkait diperiksa kembali setelah pengerjaan sebelum unit diserahkan.</small></div>
+  <div class="section-label" style="margin-left:0;margin-right:0"><span>KENAPA RK CELL</span><strong>Servis transparan, mudah dipantau.</strong></div>
+  <div class="rk-trust-proof rk-trust-proof-compact">
+    <div class="rk-proof-item"><div class="rk-proof-icon">📱</div><b>Tracking Transparan</b><small>Pantau status, estimasi dan progres dari nomor tiket.</small></div>
+    <div class="rk-proof-item"><div class="rk-proof-icon">✅</div><b>Diagnosa + QC</b><small>Pemeriksaan sebelum tindakan dan pengecekan setelah servis.</small></div>
+    <div class="rk-proof-item"><div class="rk-proof-icon">🛡️</div><b>Garansi Digital</b><small>Riwayat dan ketentuan servis dapat dicek kembali.</small></div>
   </div>
   <div class="rk-trust-cta">
     <div><h3>Jangan hanya percaya kata kami. Cek sendiri proses servis Anda.</h3><p>Masukkan nomor invoice/tiket dan lihat status, estimasi, progress, QC, serta riwayat servis yang tersedia.</p></div>
     <button type="button" onclick="document.getElementById('aiLauncher')?.click();setTimeout(()=>document.getElementById('invoiceTrackToggle')?.click?.(),250)">🔎 Cek Tracking</button>
-  </div>
-</section>
-<section class="rk-trust-shell" id="standar-servis">
-  <div class="section-label" style="margin-left:0;margin-right:0"><span>STANDAR SERVIS RK CELL</span><strong>Alur kerja yang mudah dipahami pelanggan.</strong></div>
-  <div class="rk-standard-grid">
-    <div class="rk-standard-step"><span class="num">01</span><b>Terima & Cek Kondisi</b><small>Kondisi awal, keluhan, dan fungsi penting dicatat sebelum pengerjaan.</small></div>
-    <div class="rk-standard-step"><span class="num">02</span><b>Diagnosa</b><small>Pemeriksaan dilakukan untuk mempersempit sumber masalah sebelum tindakan.</small></div>
-    <div class="rk-standard-step"><span class="num">03</span><b>Konfirmasi</b><small>Tindakan, opsi part, risiko, dan estimasi biaya dikomunikasikan bila diperlukan.</small></div>
-    <div class="rk-standard-step"><span class="num">04</span><b>Perbaikan</b><small>Pengerjaan dilakukan sesuai hasil pemeriksaan dan persetujuan yang tercatat.</small></div>
-    <div class="rk-standard-step"><span class="num">05</span><b>QC + Garansi</b><small>Fungsi terkait diperiksa kembali dan informasi garansi dicatat sebelum selesai.</small></div>
   </div>
 </section>
 <section class="rk-trust-shell" id="bukti-pelanggan">
@@ -1144,17 +1158,32 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
     </div>
   </div>
 </section>
-<!-- BRAND HEADER BANNER -->
-<div class="header-banner">
-<div class="brand-title">RK <span>CELL</span></div>
-<div class="brand-tagline">Cepat • Hemat • Andal | Servis HP &amp; Aksesori Profesional</div>
-<div class="contact-row">
-<div>📍 Belakang POS Curup / Jl. Veteran</div>
-<div>📱 WA: <strong>0851-4849-5045</strong></div>
-<div>🎵 TikTok: @rkcellservice</div>
-<div>⚡ Real-Time Web QR &amp; Digital NFC</div>
-</div>
-</div>
+
+<section class="rk-customer-hub" id="rkCustomerHub" aria-label="Status dan layanan pelanggan RK CELL">
+  <div class="rk-store-strip">
+    <div class="rk-store-main">
+      <span class="rk-store-dot" aria-hidden="true"></span>
+      <div><b id="rkStoreStatus">Status Toko Hari Ini</b><small id="rkStoreStatusNote">Status operasional dapat dikonfirmasi langsung ke admin.</small></div>
+    </div>
+    <a href="https://wa.me/6285148495045?text=Halo%20RK%20CELL%2C%20apakah%20toko%20sedang%20buka%20dan%20bagaimana%20kondisi%20antrean%20saat%20ini%3F" target="_blank" rel="noopener">Konfirmasi ↗</a>
+  </div>
+
+  <details class="rk-guarantee">
+    <summary>🛡️ Jaminan Transparansi RK CELL <span>Lihat ▾</span></summary>
+    <div class="rk-guarantee-grid">
+      <div>✓ <b>Konfirmasi dahulu</b><small>Tindakan tambahan dan perubahan biaya dikomunikasikan sebelum dilanjutkan.</small></div>
+      <div>✓ <b>Pilihan dijelaskan</b><small>Opsi part/tindakan disesuaikan dengan hasil pemeriksaan dan kebutuhan perangkat.</small></div>
+      <div>✓ <b>QC tercatat</b><small>Pemeriksaan akhir mengikuti data QC yang tersedia pada tiket servis.</small></div>
+      <div>✓ <b>Garansi sesuai pekerjaan</b><small>Ketentuan garansi mengikuti pekerjaan yang tercantum pada tiket/nota.</small></div>
+    </div>
+  </details>
+
+  <div class="rk-last-service" id="rkLastService" hidden>
+    <div class="rk-last-service-title"><span>🕘</span><div><b>Servis Terakhir di Perangkat Ini</b><small>Shortcut lokal dari tiket yang pernah dibuka di browser ini.</small></div></div>
+    <div id="rkLastServiceBody"></div>
+  </div>
+</section>
+
 <!-- AKSES CEPAT & PENCARIAN LAYANAN -->
 <section class="rk-smart-access" aria-label="Akses cepat layanan">
   <div class="rk-smart-search">
@@ -5975,12 +6004,18 @@ window.addEventListener('DOMContentLoaded',()=>{
     ratingCount:'rkStatRatingCount', testimonialCount:'rkStatTestimonialCount'
   };
   const fmt=n=>Number.isFinite(Number(n))?Number(n).toLocaleString('id-ID'):'—';
+  let statsClient=null;
   function client(){
     try{
-      if(typeof window.getTrackingSupabaseClient==='function') return window.getTrackingSupabaseClient();
-      if(window.supabaseClient?.from) return window.supabaseClient;
-    }catch(_){}
-    return null;
+      if(statsClient) return statsClient;
+      if(!window.supabase?.createClient) return null;
+      statsClient=window.supabase.createClient(
+        'https://qobrmwqrawkixdjevcji.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvYnJtd3FyYXdraXhkamV2Y2ppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzU4NjYsImV4cCI6MjA4OTkxMTg2Nn0.NZTsT_Aola1cGOr1H_ey7OvPZJUWOy8G6-tmSDWPox0',
+        {auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}}
+      );
+      return statsClient;
+    }catch(err){console.error('[RK CELL Stats Client]',err);return null}
   }
   function put(id,value){const el=$(id);if(el)el.textContent=value}
   function setLoading(on){const b=$('rkStatsRefresh');if(b)b.classList.toggle('loading',!!on)}
@@ -6018,7 +6053,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       updateUI(data);
     }catch(err){
       console.error('[RK CELL Stats]',err);
-      const st=$('rkStatsState');if(st){st.textContent='Statistik belum bisa dibaca. Pastikan view service_stats_public dapat diakses role anon.';st.classList.add('rk-stats-error')}
+      const st=$('rkStatsState');if(st){st.textContent='Statistik belum bisa dibaca dari Supabase. Cek izin SELECT view service_stats_public untuk role anon.';st.classList.add('rk-stats-error')}
       const up=$('rkStatsUpdated');if(up){up.textContent='Koneksi statistik gagal';up.className='rk-stats-error'}
     }finally{setLoading(false)}
   }
@@ -6036,5 +6071,93 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
-</script>\n</body>
+</script>\n
+<script id="rkCustomerAppLogic">
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  // Status intentionally does not guess opening hours. It can be changed locally by an admin later.
+  function renderStoreStatus(){
+    let s={label:'Status Toko Hari Ini',note:'Status operasional dapat dikonfirmasi langsung ke admin.'};
+    try{
+      const saved=JSON.parse(localStorage.getItem('rkcell-store-status')||'null');
+      if(saved && saved.label) s=saved;
+    }catch(_){}
+    if($('rkStoreStatus')) $('rkStoreStatus').textContent=s.label;
+    if($('rkStoreStatusNote')) $('rkStoreStatusNote').textContent=s.note||'';
+  }
+
+  function passportEntries(){
+    const all=[];
+    try{
+      for(let i=0;i<localStorage.length;i++){
+        const key=localStorage.key(i)||'';
+        if(!key.startsWith('rkcell-passport-')) continue;
+        const arr=JSON.parse(localStorage.getItem(key)||'[]');
+        if(Array.isArray(arr)) arr.forEach(x=>{ if(x && x.ticket) all.push(x); });
+      }
+    }catch(_){}
+    return all.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+  }
+  function renderLastService(){
+    const box=$('rkLastService'), body=$('rkLastServiceBody'); if(!box||!body)return;
+    const x=passportEntries()[0];
+    if(!x){box.hidden=true;return}
+    box.hidden=false;
+    const when=x.date?new Date(x.date).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'';
+    body.innerHTML=`<div class="rk-last-service-row"><div><b>${esc(x.ticket)} • ${esc(x.status||'Status tersimpan')}</b><small>${esc(x.action||'Riwayat servis')} ${when?'• '+esc(when):''}</small></div><button type="button" data-ticket="${esc(x.ticket)}">Buka Tracking</button></div>`;
+    body.querySelector('button')?.addEventListener('click',function(){
+      const ticket=this.dataset.ticket||'';
+      $('aiLauncher')?.click();
+      setTimeout(()=>{
+        const inp=$('invoiceTrackInput')||$('invoiceTrackingInput');
+        if(inp){inp.value=ticket.replace(/^SRV-/i,'');inp.dispatchEvent(new Event('input',{bubbles:true}))}
+        const toggle=$('invoiceTrackToggle'); if(toggle && toggle.getAttribute('aria-expanded')!=='true') toggle.click();
+        const btn=$('invoiceTrackSubmit')||$('invoiceTrackingBtn');
+        if(btn) btn.click();
+      },350);
+    });
+  }
+
+  const ctas={
+    lcd:['Cek Estimasi LCD','Saya ingin konsultasi LCD/layar.'],
+    baterai:['Konsultasi Baterai','Saya ingin konsultasi baterai.'],
+    charger:['Cek Charging','Saya ingin konsultasi port cas/charging.'],
+    audio:['Konsultasi Audio','Saya ingin konsultasi speaker/audio.'],
+    tombol:['Konsultasi Tombol','Saya ingin konsultasi tombol HP.'],
+    'sidik-jari':['Cek Fingerprint','Saya ingin konsultasi fingerprint/sidik jari.'],
+    kamera:['Konsultasi Kamera','Saya ingin konsultasi kamera HP.'],
+    mikrofon:['Konsultasi Mikrofon','Saya ingin konsultasi mikrofon HP.'],
+    cairan:['Penanganan Cairan','HP saya terkena cairan dan ingin konsultasi.'],
+    mesin:['Diagnosa Mesin','Saya ingin konsultasi kerusakan mesin/mainboard.'],
+    software:['Konsultasi Software','Saya ingin konsultasi masalah software HP.']
+  };
+  function addContextCtas(){
+    Object.entries(ctas).forEach(([id,v])=>{
+      const sec=$(id); if(!sec || sec.querySelector('.rk-context-cta'))return;
+      const target=sec.querySelector('.rk-subdetails')||sec.querySelector('.details-content')||sec;
+      const wrap=document.createElement('div'); wrap.className='rk-context-cta';
+      const wa='https://wa.me/6285148495045?text='+encodeURIComponent('Halo RK CELL, '+v[1]+' Mohon bantu arahkan pemeriksaan dan estimasinya.');
+      wrap.innerHTML=`<button type="button" class="rk-context-primary">🤖 ${esc(v[0])}</button><a href="${wa}" target="_blank" rel="noopener">💬 Tanya Admin</a>`;
+      wrap.querySelector('button')?.addEventListener('click',()=>{
+        $('aiLauncher')?.click();
+        setTimeout(()=>{
+          const input=$('aiInput')||document.querySelector('#aiPanel input[type="text"],#aiPanel textarea');
+          if(input){input.value=v[1];input.dispatchEvent(new Event('input',{bubbles:true}));input.focus()}
+        },300);
+      });
+      target.appendChild(wrap);
+    });
+  }
+  function init(){renderStoreStatus();renderLastService();addContextCtas()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  window.rkSetStoreStatus=function(label,note){
+    localStorage.setItem('rkcell-store-status',JSON.stringify({label:String(label||''),note:String(note||'')}));
+    renderStoreStatus();
+  };
+})();
+</script>
+
+</body>
 </html>
