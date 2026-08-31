@@ -958,10 +958,18 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </style>
 
 
-<style id="trackingInvoiceLookupV3">
+<style id="trackingInvoiceLookupV4">
 .tracking-invoice-lookup{padding:9px 12px 10px;background:var(--panel-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.tracking-invoice-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;font-size:7.7pt;font-weight:900;color:var(--accent-cyan)}
-.tracking-invoice-title small{font-size:6.7pt;color:var(--muted);font-weight:700}
+.tracking-invoice-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:7.7pt;font-weight:900;color:var(--accent-cyan)}
+.tracking-invoice-heading{display:flex;align-items:center;gap:7px;min-width:0}
+.tracking-invoice-heading small{font-size:6.7pt;color:var(--muted);font-weight:700;white-space:nowrap}
+.tracking-invoice-toggle{flex:0 0 auto;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--text);padding:6px 9px;font-size:7pt;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.tracking-invoice-toggle:hover{border-color:var(--accent-cyan);color:var(--accent-cyan)}
+.tracking-invoice-toggle .arrow{display:inline-block;transition:transform .2s ease}
+.tracking-invoice-lookup.collapsed .tracking-invoice-toggle .arrow{transform:rotate(-90deg)}
+.tracking-invoice-body{display:block;margin-top:7px}
+.tracking-invoice-lookup.collapsed{padding-top:7px;padding-bottom:7px}
+.tracking-invoice-lookup.collapsed .tracking-invoice-body{display:none}
 .tracking-invoice-form{display:grid;grid-template-columns:1fr auto;gap:7px}
 .tracking-invoice-form input{min-width:0;width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font:inherit;outline:none}
 .tracking-invoice-form input:focus{border-color:var(--accent-cyan);box-shadow:0 0 0 2px rgba(0,242,254,.08)}
@@ -969,7 +977,15 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 .tracking-invoice-form button:disabled{opacity:.55;cursor:not-allowed}
 .tracking-invoice-help{margin-top:5px;font-size:6.8pt;color:var(--muted)}
 .tracking-invoice-help b{color:var(--accent-green)}
-@media(max-width:420px){.tracking-invoice-form{grid-template-columns:1fr}.tracking-invoice-form button{width:100%}}
+@media(max-width:520px){
+  .tracking-invoice-lookup{padding:7px 10px}
+  .tracking-invoice-title{font-size:7.4pt}
+  .tracking-invoice-heading small{display:none}
+  .tracking-invoice-toggle{padding:5px 8px;font-size:6.8pt}
+  .tracking-invoice-form{grid-template-columns:1fr}
+  .tracking-invoice-form button{width:100%}
+  .tracking-invoice-help{font-size:6.5pt}
+}
 </style>
 <style id="trackingProgressWaV2">
 .tracking-progress-panel{margin-top:10px;padding:11px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)}
@@ -985,6 +1001,13 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 @media(max-width:650px){.tracking-steps{grid-template-columns:repeat(3,1fr)}.tracking-step{font-size:6.8pt}}
 </style>
 
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+
+<style id="rkInternalNavigationStyles">
+.rk-nav-card{overflow:hidden}.rk-nav-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:0}.rk-nav-toggle{border:1px solid var(--accent-cyan);background:rgba(0,242,254,.08);color:var(--text);border-radius:10px;padding:8px 11px;font-weight:900;cursor:pointer;white-space:nowrap}.rk-nav-body{margin-top:14px}.rk-nav-body.collapsed{display:none}.rk-nav-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.rk-nav-status{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);color:var(--muted);font-size:8pt;margin-bottom:10px}.rk-nav-status.ok{border-color:var(--accent-green);color:var(--accent-green);background:rgba(16,185,129,.07)}.rk-nav-status.warn{border-color:var(--accent-amber);color:var(--accent-amber);background:rgba(245,158,11,.07)}.rk-nav-status.error{border-color:var(--accent-red);color:var(--accent-red);background:rgba(239,68,68,.07)}.rk-nav-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.rk-nav-summary>div{padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--panel-2);text-align:center}.rk-nav-summary small{display:block;color:var(--muted);font-size:7pt;margin-bottom:3px}.rk-nav-summary strong{font-size:10pt;color:var(--text)}.rk-leaflet-map{height:340px!important;background:#dbeafe}.rk-nav-next{margin-top:10px;padding:12px;border:1px solid var(--accent-cyan);border-radius:11px;background:rgba(0,242,254,.07);font-weight:800;line-height:1.45}.rk-nav-steps-box{margin-top:10px!important}.rk-nav-steps{margin:8px 0 0 22px;padding:0}.rk-nav-steps li{padding:5px 2px;color:var(--text)}.rk-nav-note{margin-top:10px;color:var(--muted);font-size:7.3pt}.rk-nav-body .leaflet-container{font-family:inherit}.rk-nav-body .leaflet-control-attribution{font-size:9px}.rk-user-dot,.rk-store-dot{display:grid;place-items:center;border-radius:50%;font-size:17px;box-shadow:0 2px 10px rgba(0,0,0,.25)}.rk-user-dot{width:34px;height:34px;background:#fff;border:3px solid #0ea5e9}.rk-store-dot{width:38px;height:38px;background:#fff;border:3px solid #10b981}
+@media(max-width:600px){.rk-nav-head{align-items:flex-start}.rk-nav-body{margin-top:10px}.rk-nav-summary{grid-template-columns:repeat(3,1fr);gap:5px}.rk-nav-summary>div{padding:8px 4px}.rk-leaflet-map{height:280px!important}.rk-nav-actions{display:grid;grid-template-columns:1fr 1fr}.rk-nav-actions .primary-cta,.rk-nav-actions .secondary-cta{padding:9px 8px;font-size:7.5pt}.rk-nav-card{margin-left:10px!important;margin-right:10px!important}.rk-nav-body.mobile-default-collapsed{display:none}}
+</style>
 </head>
 <body>
 <!-- NAVBAR -->
@@ -1816,14 +1839,33 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 <p class="rk-intro">Sebelum membawa perangkat Anda ke Service Center, berikut adalah langkah pertolongan pertama &amp; penanganan mandiri yang dapat Anda lakukan untuk berbagai masalah HP:</p>
 <div class="rk-subdetails"><details class="rk-subdetail"><summary>Pilih Jenis Masalah (12 Kategori)</summary><div class="rk-subcontent"><p class="rk-trouble-intro">Pilih jenis keluhan yang paling sesuai. Buka hanya bagian yang dibutuhkan agar panduan tetap ringkas.</p><div class="rk-trouble-grid"><details class="rk-trouble-item"><summary>📱 1. Layar / Touchscreen</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Bersihkan layar:</strong> Gunakan kain microfiber kering dan pastikan tidak ada air/minyak di permukaan.</li><li><strong>Lepas tempered glass:</strong> Pelindung yang retak, tebal, atau terangkat bisa mengganggu sentuhan.</li><li><strong>Force restart:</strong> Coba kombinasi Power + Volume selama 10–15 detik sesuai tipe HP.</li><li><strong>Waspadai:</strong> Garis, blank, white spot, ghost touch, atau sentuhan sebagian biasanya perlu pemeriksaan LCD/flexible.</li></ul></div></details><details class="rk-trouble-item"><summary>🔋 2. Baterai Boros / Drop / Kembung</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Cek pemakaian baterai:</strong> Lihat aplikasi yang paling banyak mengonsumsi daya.</li><li><strong>Kurangi beban sementara:</strong> Matikan hotspot, GPS, game berat, dan aplikasi latar belakang.</li><li><strong>Amati gejala:</strong> Persentase meloncat, mati di persen tinggi, cepat panas, atau drop mendadak.</li><li><strong>Jangan dipakai:</strong> Jika baterai menggembung atau bodi terangkat, hentikan pengisian dan bawa ke teknisi.</li></ul></div></details><details class="rk-trouble-item"><summary>🔌 3. Charging / Port Cas / Fast Charging</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Uji charger lain:</strong> Gunakan kabel dan adaptor yang diketahui normal dan sesuai spesifikasi.</li><li><strong>Periksa port:</strong> Pastikan tidak longgar, berkarat, basah, atau penuh debu. Hindari benda logam.</li><li><strong>Cek gejala:</strong> Harus ditekan, putus-putus, lambat, tidak fast charging, atau baterai tidak bertambah.</li><li><strong>Jika panas:</strong> Hentikan pengisian bila konektor/board terasa sangat panas atau muncul bau terbakar.</li></ul></div></details><details class="rk-trouble-item"><summary>❄️ 4. Hang / Freeze / Restart / Bootloop</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Tunggu beberapa detik:</strong> Sistem mungkin sedang memproses tugas berat.</li><li><strong>Restart normal:</strong> Jika masih merespons, mulai ulang dari menu daya.</li><li><strong>Force restart:</strong> Gunakan kombinasi tombol sesuai merek bila perangkat tidak merespons.</li><li><strong>Jika berulang:</strong> Restart terus-menerus, stuck logo, atau bootloop dapat terkait software, storage, baterai, atau jalur power dan perlu diagnosa.</li></ul></div></details><details class="rk-trouble-item"><summary>🔊 5. Speaker / Earpiece / Mikrofon</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Cek volume &amp; mode:</strong> Pastikan tidak Silent/DND dan output audio tidak dialihkan ke Bluetooth.</li><li><strong>Uji fungsi:</strong> Coba musik, panggilan, voice note, dan perekam suara untuk membedakan speaker, earpiece, dan mic.</li><li><strong>Bersihkan ringan:</strong> Bersihkan grill dari debu menggunakan kuas lembut yang kering.</li><li><strong>Jika suara pecah/mati:</strong> Bisa terkait modul audio, flexible, jalur, atau IC audio.</li></ul></div></details><details class="rk-trouble-item"><summary>📷 6. Kamera / Flash</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Paksa berhenti aplikasi:</strong> Tutup kamera lalu buka kembali.</li><li><strong>Hapus cache:</strong> Bersihkan cache aplikasi kamera tanpa menghapus data penting.</li><li><strong>Cek izin &amp; penyimpanan:</strong> Pastikan izin kamera aktif dan memori tidak penuh.</li><li><strong>Gejala hardware:</strong> Kamera bergetar, blur terus, hitam, tidak fokus, atau flash tidak aktif perlu pemeriksaan modul/jalur.</li></ul></div></details><details class="rk-trouble-item"><summary>📶 7. Sinyal / SIM / IMEI</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Mode pesawat:</strong> Aktifkan 10–15 detik lalu matikan kembali.</li><li><strong>Coba kartu SIM lain:</strong> Untuk membedakan masalah operator dengan perangkat.</li><li><strong>Cek SIM:</strong> Pastikan kartu terpasang benar dan tidak kotor/rusak.</li><li><strong>Jika No Service/IMEI bermasalah:</strong> Jangan melakukan flashing acak; pemeriksaan bisa melibatkan SIM reader, antena, RF, baseband, NVRAM/NVDATA, atau status IMEI.</li></ul></div></details><details class="rk-trouble-item"><summary>📡 8. Wi‑Fi / Bluetooth</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Matikan-nyalakan koneksi:</strong> Toggle Wi‑Fi/Bluetooth lalu restart HP dan router bila perlu.</li><li><strong>Lupakan jaringan:</strong> Sambungkan ulang Wi‑Fi dengan password yang benar.</li><li><strong>Bandingkan perangkat lain:</strong> Pastikan masalah bukan dari router atau jarak.</li><li><strong>Jika sangat lemah/mati total:</strong> Bisa terkait antena, coaxial, konektor, modul, atau IC Wi‑Fi/Bluetooth.</li></ul></div></details><details class="rk-trouble-item"><summary>🔘 9. Tombol / Fingerprint / Face Unlock</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Lepas casing:</strong> Pastikan casing tidak menekan tombol.</li><li><strong>Bersihkan area sensor:</strong> Jaga fingerprint/kamera depan tetap bersih dan kering.</li><li><strong>Daftarkan ulang biometrik:</strong> Hapus lalu tambahkan ulang fingerprint/face bila menu masih tersedia.</li><li><strong>Jika tombol macet/sensor hilang:</strong> Perlu pemeriksaan flexible, konektor, sensor, jalur, atau komponen terkait.</li></ul></div></details><details class="rk-trouble-item"><summary>💾 10. Software / Memori / Aplikasi</summary><div class="rk-trouble-body"><ul class="check-list"><li><strong>Cek ruang penyimpanan:</strong> Sisakan ruang kosong agar sistem tidak terlalu berat.</li><li><strong>Hapus cache aplikasi bermasalah:</strong> Hindari reset data jika belum ada backup.</li><li><strong>Update seperlunya:</strong> Gunakan pembaruan resmi dan baterai cukup sebelum proses.</li><li><strong>Backup dahulu:</strong> Sebelum reset, flashing, atau tindakan yang berisiko menghapus data.</li></ul></div></details><details class="rk-trouble-item"><summary>💧 11. Kena Air / Cairan</summary><div class="rk-trouble-body"><ul class="cross-list"><li><strong>Matikan segera:</strong> Jangan dipaksa menyala atau dicas untuk mengetes.</li><li><strong>Lepas aksesori luar:</strong> SIM, kartu memori, dan baterai hanya jika memang removable dan aman dilepas.</li><li><strong>Keringkan bagian luar:</strong> Gunakan kain lembut; jangan gunakan panas ekstrem.</li><li><strong>Jangan pakai beras:</strong> Beras tidak membersihkan residu cairan dan tidak menghentikan korosi internal.</li><li><strong>Segera periksa:</strong> Cairan dapat menimbulkan korosi atau short walau HP awalnya masih menyala.</li></ul></div></details><details class="rk-trouble-item"><summary>⚡ 12. Mati Total / Panas / Indikasi Mesin</summary><div class="rk-trouble-body"><ul class="cross-list"><li><strong>Jangan tekan power berulang:</strong> Terutama jika HP panas, habis kena air, atau ada bau terbakar.</li><li><strong>Coba charger normal sekali:</strong> Jika tidak ada respons, hentikan percobaan berulang.</li><li><strong>Jangan suntik tegangan:</strong> Penanganan PSU/injeksi jalur hanya untuk teknisi dengan alat ukur dan pemahaman skema.</li><li><strong>Perlu diagnosa board:</strong> Kasus dapat melibatkan short, PMIC, charging IC, storage, CPU/RAM, jalur power, atau komponen lain.</li></ul></div></details></div></div></details><details class="rk-subdetail"><summary>Batas Aman Penanganan Mandiri</summary><div class="rk-subcontent"><ul class="check-list"><li>Batasi pada langkah sederhana seperti restart, pengecekan kabel/adaptor, pembersihan ringan, dan pemeriksaan pengaturan.</li><li>Jangan membuka baterai, motherboard, atau menyuntik tegangan tanpa alat dan pengetahuan teknis.</li></ul></div></details><details class="rk-subdetail"><summary>Hentikan &amp; Bawa ke Teknisi Jika</summary><div class="rk-subcontent"><ul class="cross-list"><li>HP panas berlebihan, berbau terbakar, muncul asap, atau baterai menggembung.</li><li>Perangkat terkena cairan, mati total, atau terjadi korsleting.</li><li>Masalah tetap berulang setelah langkah aman dilakukan.</li></ul></div></details></div></div>
 </details>
-<section class="map-container" id="lokasi">
-<div class="map-header">
-<span class="eyebrow">LOKASI TOKO &amp; PETUNJUK ARAH</span>
-<h3>📍 RK CELL Curup</h3>
-<p>Jalan Veteran Belakang POS Curup. Silakan gunakan peta interaktif di bawah ini untuk rute terbaik menuju toko kami.</p>
+<section class="map-container rk-nav-card" id="lokasi">
+<div class="map-header rk-nav-head">
+<div>
+<span class="eyebrow">NAVIGASI LANGSUNG DI WEB</span>
+<h3>🧭 Arah ke RK CELL Curup</h3>
+<p>Jalan Veteran Belakang POS Curup. Gunakan GPS HP untuk melihat rute tanpa membuka Google Maps.</p>
 </div>
-<div class="map-wrapper">
-<iframe allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d248.90748028926177!2d102.52485494462947!3d-3.4661562914766963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1787755073159!5m2!1sid!2sid"></iframe>
+<button class="rk-nav-toggle" id="rkNavToggle" type="button" aria-expanded="false">Buka ▸</button>
+</div>
+<div class="rk-nav-body" id="rkNavBody">
+<div class="rk-nav-actions">
+<button class="primary-cta" id="rkNavStart" type="button">📍 Gunakan Lokasi Saya</button>
+<button class="secondary-cta" id="rkNavRefresh" type="button" disabled>🔄 Perbarui Rute</button>
+</div>
+<div class="rk-nav-status" id="rkNavStatus">Aktifkan lokasi untuk menghitung rute menuju RK CELL.</div>
+<div class="rk-nav-summary" id="rkNavSummary" hidden>
+<div><small>Jarak</small><strong id="rkNavDistance">—</strong></div>
+<div><small>Estimasi</small><strong id="rkNavDuration">—</strong></div>
+<div><small>GPS</small><strong id="rkNavAccuracy">—</strong></div>
+</div>
+<div class="map-wrapper rk-leaflet-map" id="rkNavMap"></div>
+<div class="rk-nav-next" id="rkNavNext" hidden></div>
+<details class="rk-nav-steps-box" id="rkNavStepsBox">
+<summary>🛣️ Lihat petunjuk belokan</summary>
+<ol id="rkNavSteps" class="rk-nav-steps"></ol>
+</details>
+<div class="rk-nav-note">ℹ️ Rute dihitung dari posisi GPS perangkat. Akurasi dapat berbeda tergantung sinyal GPS dan kondisi jalan.</div>
 </div>
 </section>
 <!-- CONTACT FOOTER PANEL -->
@@ -1891,13 +1933,18 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 </div>
 </div>
 
-<div class="tracking-invoice-lookup ai-no-voice" data-no-voice="true">
-  <div class="tracking-invoice-title"><span>🎫 Cek Tracking dengan Invoice</span><small>Tanpa scan QR</small></div>
-  <form class="tracking-invoice-form" id="trackingInvoiceForm">
-    <input id="trackingInvoiceInput" inputmode="text" autocomplete="off" maxlength="24" placeholder="Contoh: 20260827-0002 atau SRV-20260827-0002" aria-label="Kode invoice servis"/>
-    <button id="trackingInvoiceSubmit" type="submit">🔎 Cek</button>
-  </form>
-  <div class="tracking-invoice-help">Cukup masukkan <b>20260827-0002</b>. AI otomatis membuat <b>SRV-20260827-0002</b> dan membaca tracking.</div>
+<div class="tracking-invoice-lookup ai-no-voice" id="trackingInvoiceLookup" data-no-voice="true">
+  <div class="tracking-invoice-title">
+    <div class="tracking-invoice-heading"><span>🎫 Cek Tracking dengan Invoice</span><small>Tanpa scan QR</small></div>
+    <button class="tracking-invoice-toggle" id="trackingInvoiceToggle" type="button" aria-expanded="true" aria-controls="trackingInvoiceBody"><span class="arrow">⌄</span><span id="trackingInvoiceToggleText">Minimize</span></button>
+  </div>
+  <div class="tracking-invoice-body" id="trackingInvoiceBody">
+    <form class="tracking-invoice-form" id="trackingInvoiceForm">
+      <input id="trackingInvoiceInput" inputmode="text" autocomplete="off" maxlength="24" placeholder="Contoh: 20260827-0002 atau SRV-20260827-0002" aria-label="Kode invoice servis"/>
+      <button id="trackingInvoiceSubmit" type="submit">🔎 Cek</button>
+    </form>
+    <div class="tracking-invoice-help">Cukup masukkan <b>20260827-0002</b>. AI otomatis membuat <b>SRV-20260827-0002</b> dan membaca tracking.</div>
+  </div>
 </div>
 <div aria-live="polite" class="ai-voice-status" id="aiVoiceStatus">
 <span class="ai-voice-dot"></span><span id="aiVoiceStatusText">Mode teks aktif • Tekan 🎙️ untuk bicara</span>
@@ -4316,6 +4363,25 @@ const ISSUE_CATEGORIES = {
         const trackingInvoiceForm = document.getElementById('trackingInvoiceForm');
         const trackingInvoiceInput = document.getElementById('trackingInvoiceInput');
         const trackingInvoiceSubmit = document.getElementById('trackingInvoiceSubmit');
+        const trackingInvoiceLookup = document.getElementById('trackingInvoiceLookup');
+        const trackingInvoiceToggle = document.getElementById('trackingInvoiceToggle');
+        const trackingInvoiceToggleText = document.getElementById('trackingInvoiceToggleText');
+
+        function setTrackingInvoiceCollapsed(collapsed, focusInput=false) {
+            if (!trackingInvoiceLookup) return;
+            trackingInvoiceLookup.classList.toggle('collapsed', !!collapsed);
+            trackingInvoiceToggle?.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+            if (trackingInvoiceToggleText) trackingInvoiceToggleText.textContent = collapsed ? 'Buka' : 'Minimize';
+            if (!collapsed && focusInput) setTimeout(() => trackingInvoiceInput?.focus(), 80);
+        }
+
+        // Di HP, mulai dalam keadaan ringkas agar panel AI tidak penuh saat pertama dibuka.
+        if (window.matchMedia('(max-width: 520px)').matches) setTrackingInvoiceCollapsed(true);
+
+        trackingInvoiceToggle?.addEventListener('click', () => {
+            const willCollapse = !trackingInvoiceLookup?.classList.contains('collapsed');
+            setTrackingInvoiceCollapsed(willCollapse, !willCollapse);
+        });
 
         trackingInvoiceForm?.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -4329,6 +4395,8 @@ const ISSUE_CATEGORIES = {
                 if (ok && trackingInvoiceInput) {
                     const normalized = normalizeTrackingInvoiceCode(raw);
                     trackingInvoiceInput.value = normalized ? normalized.replace(/^SRV-/i, '') : raw;
+                    // Setelah tiket ditemukan di HP, tutup kembali form agar hasil tracking mendapat ruang lebih besar.
+                    if (window.matchMedia('(max-width: 520px)').matches) setTrackingInvoiceCollapsed(true);
                 }
             } finally {
                 if (trackingInvoiceSubmit) {
@@ -5622,6 +5690,98 @@ window.addEventListener('DOMContentLoaded',()=>{
     },550);
   }
 });
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script id="rkInternalNavigationLogic">
+(function(){
+  const STORE={lat:-3.4661562914766963,lng:102.52485494462947,name:'RK CELL Curup'};
+  const toggle=document.getElementById('rkNavToggle');
+  const body=document.getElementById('rkNavBody');
+  const start=document.getElementById('rkNavStart');
+  const refresh=document.getElementById('rkNavRefresh');
+  const status=document.getElementById('rkNavStatus');
+  const summary=document.getElementById('rkNavSummary');
+  const distanceEl=document.getElementById('rkNavDistance');
+  const durationEl=document.getElementById('rkNavDuration');
+  const accuracyEl=document.getElementById('rkNavAccuracy');
+  const nextEl=document.getElementById('rkNavNext');
+  const stepsEl=document.getElementById('rkNavSteps');
+  const stepsBox=document.getElementById('rkNavStepsBox');
+  if(!toggle||!body||!start||!window.L) return;
+  let map=null,userMarker=null,storeMarker=null,routeLine=null,watchId=null,lastPos=null,lastRouteAt=0;
+  const mobile=window.matchMedia('(max-width:600px)').matches;
+  if(mobile){body.classList.add('collapsed');toggle.textContent='Buka ▸';toggle.setAttribute('aria-expanded','false')}
+  else{toggle.textContent='Minimize ▾';toggle.setAttribute('aria-expanded','true')}
+
+  function setOpen(open){body.classList.toggle('collapsed',!open);toggle.textContent=open?'Minimize ▾':'Buka ▸';toggle.setAttribute('aria-expanded',open?'true':'false');if(open){setTimeout(()=>{ensureMap();map?.invalidateSize()},80)}}
+  toggle.addEventListener('click',()=>setOpen(body.classList.contains('collapsed')));
+
+  function ensureMap(){
+    if(map) return;
+    map=L.map('rkNavMap',{zoomControl:true}).setView([STORE.lat,STORE.lng],16);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+    const storeIcon=L.divIcon({className:'',html:'<div class="rk-store-dot">🏪</div>',iconSize:[38,38],iconAnchor:[19,19]});
+    storeMarker=L.marker([STORE.lat,STORE.lng],{icon:storeIcon}).addTo(map).bindPopup('<strong>RK CELL Curup</strong><br>Jalan Veteran Belakang POS Curup');
+  }
+  function setStatus(msg,type=''){status.className='rk-nav-status'+(type?' '+type:'');status.textContent=msg}
+  function fmtDistance(m){return m<1000?Math.round(m)+' m':(m/1000).toFixed(m<10000?1:0)+' km'}
+  function fmtDuration(sec){const min=Math.max(1,Math.round(sec/60));if(min<60)return '± '+min+' menit';const h=Math.floor(min/60),r=min%60;return '± '+h+' jam'+(r?' '+r+' mnt':'')}
+  function maneuverText(step){
+    const t=step.maneuver?.type||'',mod=step.maneuver?.modifier||'',name=step.name?(' ke '+step.name):'';
+    const dir={left:'belok kiri',right:'belok kanan','sharp left':'belok tajam kiri','sharp right':'belok tajam kanan','slight left':'sedikit ke kiri','slight right':'sedikit ke kanan',straight:'lurus','uturn':'putar balik'}[mod]||'';
+    if(t==='depart') return 'Mulai perjalanan'+name;
+    if(t==='arrive') return 'Tiba di RK CELL';
+    if(t==='roundabout'||t==='rotary') return 'Masuk bundaran'+name;
+    if(t==='turn'||t==='continue'||t==='new name'||t==='merge'||t==='fork'||t==='end of road') return (dir?dir:'Lanjutkan')+name;
+    return (dir?dir:'Lanjutkan')+name;
+  }
+  async function routeFrom(pos,fit=true){
+    ensureMap();
+    const {latitude:lat,longitude:lng,accuracy}=pos.coords;lastPos=pos;
+    const userIcon=L.divIcon({className:'',html:'<div class="rk-user-dot">●</div>',iconSize:[34,34],iconAnchor:[17,17]});
+    if(userMarker) userMarker.setLatLng([lat,lng]); else userMarker=L.marker([lat,lng],{icon:userIcon}).addTo(map).bindPopup('Lokasi Anda');
+    accuracyEl.textContent='± '+Math.round(accuracy||0)+' m';summary.hidden=false;refresh.disabled=false;
+    setStatus('Menghitung rute terbaik menuju RK CELL…');
+    try{
+      const url=`https://router.project-osrm.org/route/v1/driving/${lng},${lat};${STORE.lng},${STORE.lat}?overview=full&geometries=geojson&steps=true`;
+      const res=await fetch(url,{headers:{'Accept':'application/json'}});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const data=await res.json();
+      const route=data.routes?.[0];if(!route) throw new Error('Rute tidak ditemukan');
+      distanceEl.textContent=fmtDistance(route.distance);durationEl.textContent=fmtDuration(route.duration);
+      const coords=route.geometry.coordinates.map(c=>[c[1],c[0]]);
+      if(routeLine) routeLine.remove();routeLine=L.polyline(coords,{weight:6,opacity:.8}).addTo(map);
+      if(fit) map.fitBounds(routeLine.getBounds(),{padding:[35,35]});
+      const steps=(route.legs?.[0]?.steps||[]).filter(x=>x.distance>1||x.maneuver?.type==='arrive');
+      stepsEl.innerHTML=steps.map(st=>`<li><strong>${maneuverText(st)}</strong>${st.distance>1?' • '+fmtDistance(st.distance):''}</li>`).join('');
+      const first=steps.find(x=>x.maneuver?.type!=='depart')||steps[0];
+      if(first){nextEl.hidden=false;nextEl.innerHTML='🧭 <strong>Arah berikutnya:</strong> '+maneuverText(first)+(first.distance>1?' • '+fmtDistance(first.distance):'')}
+      setStatus('Rute aktif. Posisi Anda akan diperbarui selama halaman ini tetap terbuka.','ok');lastRouteAt=Date.now();
+    }catch(err){
+      distanceEl.textContent='—';durationEl.textContent='—';nextEl.hidden=true;stepsEl.innerHTML='';
+      setStatus('GPS berhasil, tetapi layanan rute sedang tidak tersedia. Posisi Anda dan RK CELL tetap ditampilkan di peta.','warn');
+      map.fitBounds(L.latLngBounds([[lat,lng],[STORE.lat,STORE.lng]]),{padding:[35,35]});
+    }
+  }
+  function onGeoError(err){const msg=err.code===1?'Izin lokasi ditolak. Aktifkan izin lokasi browser untuk memakai navigasi.':err.code===2?'Lokasi tidak dapat ditentukan. Pastikan GPS aktif.':'GPS terlalu lama merespons. Coba lagi.';setStatus(msg,'error')}
+  function begin(){
+    setOpen(true);ensureMap();
+    if(!navigator.geolocation){setStatus('Browser ini tidak mendukung lokasi GPS.','error');return}
+    setStatus('Meminta lokasi perangkat…');
+    navigator.geolocation.getCurrentPosition(p=>routeFrom(p,true),onGeoError,{enableHighAccuracy:true,timeout:15000,maximumAge:5000});
+    if(watchId!==null) navigator.geolocation.clearWatch(watchId);
+    watchId=navigator.geolocation.watchPosition(p=>{
+      lastPos=p;
+      if(userMarker) userMarker.setLatLng([p.coords.latitude,p.coords.longitude]);
+      accuracyEl.textContent='± '+Math.round(p.coords.accuracy||0)+' m';
+      if(Date.now()-lastRouteAt>30000) routeFrom(p,false);
+    },()=>{}, {enableHighAccuracy:true,maximumAge:8000,timeout:20000});
+  }
+  start.addEventListener('click',begin);
+  refresh.addEventListener('click',()=>{if(lastPos) routeFrom(lastPos,true); else begin()});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null}});
+})();
 </script>
 </body>
 </html>
