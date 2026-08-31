@@ -6,7 +6,6 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>RK CELL - Service Center HP Professional &amp; Digital Warranty</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
 <!-- html2pdf dimuat hanya saat pengguna benar-benar mengekspor PDF agar loading awal lebih ringan -->
 <style>
         :root {
@@ -926,6 +925,64 @@ details.nav-target-active{box-shadow:0 0 0 3px rgba(0,242,254,.22),0 10px 28px v
 }
 </style>
 
+
+<style id="aiAdaptiveV6Style">
+.ai-message .chip-btn[onclick*="skipDiagnosticToConclusion"]{border-style:dashed;opacity:.92}
+</style>
+
+
+<style id="rkVoiceSpeedStyle">
+.rk-voice-speed{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:7px}
+.rk-voice-speed button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:6px 9px;font-size:7.5pt;cursor:pointer}
+.rk-voice-speed button.active{border-color:var(--accent-cyan);box-shadow:0 0 0 1px rgba(34,211,238,.15);color:var(--accent-cyan)}
+</style>
+<script>
+window.RK_VOICE_RATE = parseFloat(localStorage.getItem('rk_voice_rate') || '1.0');
+window.setRKVoiceRate = function(rate){
+  rate = Math.max(0.75, Math.min(1.5, Number(rate) || 1));
+  window.RK_VOICE_RATE = rate;
+  localStorage.setItem('rk_voice_rate', String(rate));
+  document.querySelectorAll('[data-voice-rate]').forEach(btn=>{
+    btn.classList.toggle('active', Number(btn.dataset.voiceRate) === rate);
+  });
+  const label = document.getElementById('rkVoiceRateLabel');
+  if(label) label.textContent = rate.toFixed(rate % 1 ? 1 : 0) + '×';
+};
+document.addEventListener('DOMContentLoaded',()=>{
+  window.setRKVoiceRate(window.RK_VOICE_RATE);
+});
+</script>
+
+
+<style id="rkSmartVoiceV8Style">
+.rk-smart-voice{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.rk-smart-voice button{border:1px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:999px;padding:6px 9px;font-size:7.5pt;cursor:pointer}
+.rk-smart-voice button.active{border-color:var(--accent-cyan);color:var(--accent-cyan)}
+</style>
+<script>
+window.RK_VOICE_ENABLED = localStorage.getItem('rk_voice_enabled') !== 'false';
+window.RK_LAST_SPOKEN_TEXT = '';
+window.setRKVoiceEnabled = function(enabled){
+  window.RK_VOICE_ENABLED=!!enabled; localStorage.setItem('rk_voice_enabled',String(!!enabled));
+  if(!enabled && 'speechSynthesis' in window) speechSynthesis.cancel();
+  document.querySelectorAll('[data-voice-enabled]').forEach(btn=>btn.classList.toggle('active',String(btn.dataset.voiceEnabled)===String(!!enabled)));
+  const label=document.getElementById('rkVoiceOnOffLabel'); if(label) label.textContent=enabled?'ON':'OFF';
+};
+window.stopRKVoice=function(){if('speechSynthesis' in window)speechSynthesis.cancel();};
+window.repeatRKVoice=function(){
+  if(!window.RK_LAST_SPOKEN_TEXT||!window.RK_VOICE_ENABLED||!('speechSynthesis' in window))return;
+  speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(window.RK_LAST_SPOKEN_TEXT); u.lang='id-ID'; u.rate=window.RK_VOICE_RATE||1; speechSynthesis.speak(u);
+};
+window.smartVoiceClean=function(input){
+ const box=document.createElement('div'); box.innerHTML=String(input||'');
+ box.querySelectorAll('.ai-no-voice,[data-no-voice="true"],button,.chip-container,.rk-voice-speed,.rk-smart-voice,script,style').forEach(el=>el.remove());
+ let s=(box.textContent||box.innerText||'').replace(/https?:\/\/\S+/gi,' ').replace(/\bSRV-\d{8}-\d+\b/gi,'nomor tiket').replace(/\s+/g,' ').trim();
+ if(s.length>520)s=s.slice(0,517).replace(/\s+\S*$/,'')+'...'; return s;
+};
+document.addEventListener('DOMContentLoaded',()=>window.setRKVoiceEnabled(window.RK_VOICE_ENABLED));
+</script>
+
+<style id="aiDetectiveV9Style">@media(max-width:520px){.service-analysis-section .service-analysis-row{align-items:flex-start}.service-analysis-section .service-analysis-row span{text-align:right;max-width:62%}}</style>
 </head>
 <body>
 <!-- NAVBAR -->
@@ -2397,57 +2454,34 @@ const ISSUE_CATEGORIES = {
         }
 
         function speakText(rawHtml) {
-            if (isMuted || !('speechSynthesis' in window)) return;
-
-            let clean = normalizeIndonesianSpeech(prepareTextForSpeech(rawHtml));
+            if (isMuted || !window.RK_VOICE_ENABLED || !('speechSynthesis' in window)) return;
+            let source = window.smartVoiceClean ? window.smartVoiceClean(rawHtml) : prepareTextForSpeech(rawHtml);
+            let clean = normalizeIndonesianSpeech(source);
             if (!clean) return;
-
+            window.RK_LAST_SPOKEN_TEXT = clean;
             synth.cancel();
-
             const voice = pickIndonesianVoice();
-
-            // Jika browser tidak punya voice Indonesia, jangan gunakan suara bahasa lain.
             if (!voice) {
                 setVoiceStatus('error', 'Voice Bahasa Indonesia belum tersedia di browser. Pilih suara Indonesia di Windows atau gunakan Chrome/Edge.');
                 return;
             }
-
             const chunks = splitSpeechText(clean, 180);
             let index = 0;
-
             const speakNext = () => {
-                if (isMuted || index >= chunks.length) {
+                if (isMuted || !window.RK_VOICE_ENABLED || index >= chunks.length) {
                     if (index >= chunks.length) {
                         setVoiceStatus('', voiceConversationMode ? 'Silakan bicara lagi…' : 'Siap menerima percakapan');
-                        if (voiceConversationMode && !isMuted && !isListening) {
-                            setTimeout(() => startListening(), 350);
-                        }
+                        if (voiceConversationMode && !isMuted && window.RK_VOICE_ENABLED && !isListening) setTimeout(() => startListening(), 350);
                     }
                     return;
                 }
-
                 const u = new SpeechSynthesisUtterance(chunks[index++]);
-                u.lang = 'id-ID';
-                u.voice = voice;
-
-                // Lebih lambat dan jelas daripada sebelumnya.
-                u.rate = (window.rkcellVoiceRate || 1.1);
-                u.pitch = 1.0;
-                u.volume = 1;
-
-                u.onstart = () => {
-                    setVoiceStatus('speaking', 'AI sedang berbicara dalam Bahasa Indonesia…');
-                };
-                u.onend = () => {
-                    setTimeout(speakNext, 80);
-                };
-                u.onerror = () => {
-                    setVoiceStatus('error', 'Suara AI gagal diputar. Coba gunakan Chrome atau Edge dan pilih voice Bahasa Indonesia.');
-                };
-
+                u.lang='id-ID'; u.voice=voice; u.rate=(window.RK_VOICE_RATE || window.rkcellVoiceRate || 1.0); u.pitch=1.0; u.volume=1;
+                u.onstart=()=>setVoiceStatus('speaking','AI sedang berbicara dalam Bahasa Indonesia…');
+                u.onend=()=>setTimeout(speakNext,80);
+                u.onerror=()=>setVoiceStatus('error','Suara AI gagal diputar. Coba gunakan Chrome atau Edge dan pilih voice Bahasa Indonesia.');
                 synth.speak(u);
             };
-
             speakNext();
         }
 
@@ -2511,7 +2545,10 @@ const ISSUE_CATEGORIES = {
             trackingCode: '',
             diagnosticAnswers: [],
             diagnosticQueue: [],
-            diagnosticIndex: 0
+            diagnosticIndex: 0,
+            personaMode: 'auto',
+            usedPersonaLines: [],
+            interactionCount: 0
         };
 
         function addMsg(html, isUser = false, persist = true, analyzeUser = true) {
@@ -2560,7 +2597,10 @@ const ISSUE_CATEGORIES = {
                     trackingCode: saved.trackingCode || '',
                     diagnosticAnswers: Array.isArray(saved.diagnosticAnswers) ? saved.diagnosticAnswers : [],
                     diagnosticQueue: Array.isArray(saved.diagnosticQueue) ? saved.diagnosticQueue : [],
-                    diagnosticIndex: Number.isInteger(saved.diagnosticIndex) ? saved.diagnosticIndex : 0
+                    diagnosticIndex: Number.isInteger(saved.diagnosticIndex) ? saved.diagnosticIndex : 0,
+                    personaMode: saved.personaMode || 'auto',
+                    usedPersonaLines: Array.isArray(saved.usedPersonaLines) ? saved.usedPersonaLines : [],
+                    interactionCount: Number.isInteger(saved.interactionCount) ? saved.interactionCount : 0
                 };
                 return true;
             } catch (e) { return false; }
@@ -2594,11 +2634,25 @@ const ISSUE_CATEGORIES = {
             state = {
                 step: 'INIT', customerName: '', deviceModel: '', detectedCategory: null, detectedCategories: [],
                 chronology: '', duration: '', verificationProof: '', trackingCode: '',
-                diagnosticAnswers: [], diagnosticQueue: [], diagnosticIndex: 0
+                diagnosticAnswers: [], diagnosticQueue: [], diagnosticIndex: 0,
+                personaMode: 'auto', usedPersonaLines: [], interactionCount: 0
             };
             setVoiceStatus('', isMuted ? 'Suara AI dimatikan' : 'Percakapan baru • siap menerima suara');
             showTyping(() => {
-                addMsg(`Halo! Selamat datang di <strong>RK CELL</strong> ✦<br><br> Saya siap membantu konsultasi service HP, estimasi perbaikan, atau <strong>cek status service dengan scan barcode</strong>. 😊<br><br>Santai saja, saya kadang serius, kadang bercanda, kadang sedikit menggombal—biar konsultasinya nggak sekaku HP yang nge-freeze 😆.<br><br>Boleh tahu nama panggilan Kakak siapa?`);
+                addMsg(`Halo! Selamat datang di <strong>RK CELL</strong> ✦<br><br> Saya siap membantu konsultasi service HP, estimasi perbaikan, atau <strong>cek status service dengan scan barcode</strong>. 😊<br><br>Santai saja, saya kadang serius, kadang bercanda, kadang sedikit menggombal—biar konsultasinya nggak sekaku HP yang nge-freeze 😆.<br><br>Boleh tahu nama panggilan Kakak siapa?<br><div class="chip-container"><button class="chip-btn" onclick="state.personaMode='auto';saveAIState();addMsg('Mode AI: Adaptif 😄')">😄 Adaptif</button><button class="chip-btn" onclick="state.personaMode='serious';saveAIState();addMsg('Mode AI: Lebih serius 🔬')">🔬 Lebih Serius</button></div>
+<div class="rk-voice-speed ai-no-voice" data-no-voice="true">
+  <small>🔊 Kecepatan Voice: <strong id="rkVoiceRateLabel">1×</strong></small>
+  <button type="button" data-voice-rate="1" onclick="setRKVoiceRate(1)">1×</button>
+  <button type="button" data-voice-rate="1.25" onclick="setRKVoiceRate(1.25)">1.25×</button>
+  <button type="button" data-voice-rate="1.5" onclick="setRKVoiceRate(1.5)">1.5×</button>
+</div>
+<div class="rk-smart-voice ai-no-voice" data-no-voice="true">
+  <small>🎙️ Voice <strong id="rkVoiceOnOffLabel">ON</strong></small>
+  <button type="button" data-voice-enabled="true" onclick="setRKVoiceEnabled(true)">🔊 ON</button>
+  <button type="button" data-voice-enabled="false" onclick="setRKVoiceEnabled(false)">🔇 OFF</button>
+  <button type="button" onclick="stopRKVoice()">⏹ Stop</button>
+  <button type="button" onclick="repeatRKVoice()">🔁 Ulangi</button>
+</div>`);
                 state.step = 'ASK_NAME';
                 saveAIState();
             }, 180);
@@ -3220,18 +3274,73 @@ const ISSUE_CATEGORIES = {
             ]
         };
 
+        function detectCustomerTone(text='') {
+            const t = String(text || '').toLowerCase();
+            if (/(asap|bau terbakar|terbakar|baterai.*kembung|kembung|panas sekali|sangat panas|kena air|terendam|korslet|short|mati total|matot)/i.test(t)) return 'serious';
+            if (/(panik|tolong|takut|cemas|waduh|gawat|darurat|bingung banget|bingung sekali)/i.test(t)) return 'calm';
+            if (/(marah|kesal|kecewa|parah banget|lama banget|kok bisa|ngeselin)/i.test(t)) return 'professional';
+            if (/(wkwk|haha|hehe|😂|😆|😄|🤣|santai|becanda|gombal)/i.test(t)) return 'fun';
+            if (/(berapa volt|berapa amper|arus|psu|rail|pmic|cpu|emmc|ufs|diode|hambatan|ohm|reball|reflow)/i.test(t)) return 'technical';
+            return 'normal';
+        }
+
+        function shouldUseHumor(category, context='') {
+            if (state.personaMode === 'serious') return false;
+            const tone = detectCustomerTone(context);
+            if (tone === 'serious' || tone === 'professional' || tone === 'technical') return false;
+            // Humor rata-rata 1 kali setiap 2-3 interaksi.
+            return (state.interactionCount || 0) % 3 !== 1;
+        }
+
         function rkPersonaLine(category, chronology='') {
             const id = inferQuestionBankId ? inferQuestionBankId(category, chronology) : (category?.id || 'troubleshooting');
             const lines = RK_FLIRTY_LINES[id] || RK_FLIRTY_LINES.troubleshooting;
-            // Variasi deterministik berdasarkan panjang percakapan agar tidak mengulang kalimat yang sama terus.
-            const seed = ((state.diagnosticIndex || 0) + (state.diagnosticAnswers?.length || 0) + String(chronology||'').length) % lines.length;
-            return lines[seed];
+            const used = new Set(state.usedPersonaLines || []);
+            let candidates = lines.filter(x => !used.has(x));
+            if (!candidates.length) {
+                state.usedPersonaLines = [];
+                candidates = lines.slice();
+            }
+            const seed = ((state.diagnosticIndex || 0) + (state.diagnosticAnswers?.length || 0) + String(chronology||'').length) % candidates.length;
+            const picked = candidates[seed] || candidates[0] || '';
+            state.usedPersonaLines = [...(state.usedPersonaLines || []), picked].slice(-12);
+            saveAIState();
+            return picked;
         }
 
         function rkPersonaInterlude(category, chronology='') {
-            // Pada cairan/kembung/panas/mati total tetap humor ringan dan tidak mengaburkan peringatan keselamatan.
-            return `<div style="margin:6px 0;padding:7px 9px;border-radius:9px;background:rgba(34,211,238,.055);font-style:italic;color:var(--accent-cyan)">💬 ${escapeHtml(rkPersonaLine(category, chronology))}</div>`;
+            const context = `${chronology || ''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`;
+            state.interactionCount = (state.interactionCount || 0) + 1;
+            saveAIState();
+
+            const tone = detectCustomerTone(context);
+            if (tone === 'serious') {
+                return `<div style="margin:6px 0;padding:8px 10px;border-radius:9px;background:rgba(239,68,68,.07);color:var(--accent-red);border:1px solid rgba(239,68,68,.18)">⚠️ Saya fokus ke keselamatan dulu ya Kak. Untuk kondisi ini, candaan saya simpan dulu sampai unit aman.</div>`;
+            }
+            if (tone === 'calm') {
+                return `<div style="margin:6px 0;padding:8px 10px;border-radius:9px;background:rgba(59,130,246,.07);color:#60a5fa;border:1px solid rgba(59,130,246,.18)">🤝 Tenang Kak, kita urutkan gejalanya satu-satu supaya tidak salah arah.</div>`;
+            }
+            if (tone === 'professional' || tone === 'technical') {
+                return `<div style="margin:6px 0;padding:8px 10px;border-radius:9px;background:rgba(148,163,184,.06);color:var(--muted);border:1px solid var(--line)">🔬 Saya fokus ke data dan gejala teknis dulu supaya analisisnya lebih tajam.</div>`;
+            }
+            if (!shouldUseHumor(category, context)) return '';
+
+            return `<div style="margin:6px 0;padding:7px 9px;border-radius:9px;background:rgba(34,211,238,.055);font-style:italic;color:var(--accent-cyan)">💬 ${escapeHtml(rkPersonaLine(category, context))}</div>`;
         }
+
+        function diagnosticConfidenceLabel() {
+            const n = state.diagnosticAnswers?.length || 0;
+            if (n >= 4) return 'Kemungkinan kuat';
+            if (n >= 2) return 'Kemungkinan sedang';
+            return 'Masih perlu pemeriksaan';
+        }
+
+        window.skipDiagnosticToConclusion = function() {
+            state.step = 'ASK_DURATION';
+            saveAIState();
+            showTyping(() => addMsg(`Baik Kak, saya langsung ke inti. Dari informasi yang sudah ada, saya akan buat kesimpulan sementara. Sebelum itu, sejak kapan kendala ini mulai dirasakan?`));
+        };
+
 
         // === AI DIAGNOSTIK BERTAHAP V4 ===
         // Tujuan: menggali proses/gejala pelanggan sebelum memberi kemungkinan kerusakan.
@@ -3345,7 +3454,9 @@ const ISSUE_CATEGORIES = {
         }
 
         function askNextDiagnosticQuestion() {
-            const q = state.diagnosticQueue?.[state.diagnosticIndex];
+            let q = state.diagnosticQueue?.[state.diagnosticIndex];
+            const answeredQuestions = new Set((state.diagnosticAnswers||[]).map(a=>String(a.question||'').trim().toLowerCase()));
+            while(q && answeredQuestions.has(String(q.q||'').replace(/<[^>]+>/g,'').trim().toLowerCase())){ state.diagnosticIndex += 1; q = state.diagnosticQueue?.[state.diagnosticIndex]; }
             if (!q) {
                 state.step = 'ASK_DURATION';
                 saveAIState();
@@ -3359,6 +3470,7 @@ const ISSUE_CATEGORIES = {
                 rkPersonaInterlude(state.detectedCategory, state.chronology + ' ' + (state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')) +
                 `<br>${q.q}` +
                 diagnosticChipHtml(q.chips) +
+                `<div class="chip-container"><button class="chip-btn" onclick="skipDiagnosticToConclusion()">⚡ Langsung ke inti</button></div>` +
                 `<small class="muted">Boleh pilih jawaban cepat atau ceritakan dengan kalimat sendiri.</small>`
             ));
         }
@@ -3476,24 +3588,57 @@ const ISSUE_CATEGORIES = {
             }
 
             if (!likely.length) likely=['Perlu pemeriksaan lanjutan; data gejala belum cukup untuk mempersempit penyebab.'];
+            if(id==='lcd' && !safe.includes('Coba restart satu kali bila HP masih dapat dioperasikan dan data aman.')) safe.push('Coba restart satu kali bila HP masih dapat dioperasikan dan data aman.');
+            if(id==='sinyal' && !safe.includes('Aktifkan mode pesawat ±10 detik lalu matikan kembali untuk uji sederhana.')) safe.push('Aktifkan mode pesawat ±10 detik lalu matikan kembali untuk uji sederhana.');
+            if(id==='wifi' && !safe.includes('Coba jaringan Wi‑Fi lain untuk membedakan masalah HP dan router.')) safe.push('Coba jaringan Wi‑Fi lain untuk membedakan masalah HP dan router.');
+            if(id==='kamera' && !safe.includes('Restart lalu uji kamera bawaan tanpa aplikasi pihak ketiga.')) safe.push('Restart lalu uji kamera bawaan tanpa aplikasi pihak ketiga.');
             return {likely, checks, safe, avoid};
         }
 
+
+        // === V9: MESIN DETEKTIF & MULTI-GEJALA ===
+        function detectRedFlags(context='') {
+            const t=String(context||'').toLowerCase(), flags=[]; const push=x=>{if(!flags.includes(x))flags.push(x)};
+            if(/kembung|layar terangkat|backdoor.*terangkat/.test(t))push('Baterai berpotensi kembung');
+            if(/asap|bau terbakar|bau gosong/.test(t))push('Indikasi panas/terbakar');
+            if(/terendam|kena air|masuk air/.test(t))push('Riwayat cairan');
+            if(/panas sekali|sangat panas|overheat/.test(t))push('Panas berlebih');
+            if(/short|korslet/.test(t))push('Indikasi short/korslet'); return flags;
+        }
+        function buildSymptomLinks(context='') {
+            const t=String(context||'').toLowerCase(), links=[]; const has=r=>r.test(t),add=x=>{if(!links.includes(x))links.push(x)};
+            if(has(/cas|charge/)&&has(/panas/)&&has(/boros|cepat habis/))add('Charging lambat + panas + baterai boros dapat saling berkaitan pada baterai, charger/port, atau rangkaian charging.');
+            if(has(/restart/)&&has(/persen|baterai|batre/))add('Restart yang berkaitan dengan persentase baterai memperkuat kebutuhan memeriksa drop baterai, konektor/fuse, dan power path.');
+            if(has(/sinyal|no service/)&&has(/wifi|bluetooth/))add('Gangguan radio yang muncul bersamaan perlu dipisahkan antara antena/koneksi, supply, software, dan bagian board bersama.');
+            if(has(/touch|sentuh/)&&has(/garis|blank|berkedip/))add('Touch dan tampilan yang bermasalah bersamaan lebih kuat mengarah ke modul LCD/flex/supply display sebelum dugaan board lanjutan.');
+            if(has(/kamera/)&&has(/flash/))add('Kamera dan flash yang gagal bersamaan dapat menunjukkan modul/supply/jalur bersama atau proteksi sistem.'); return links;
+        }
+        function detectiveSuspects(prediction){return (prediction?.likely||[]).slice(0,3).map((x,i)=>({rank:i+1,name:x,state:i===0?'Tersangka utama':i===1?'Tersangka kedua':'Masih dipantau'}));}
+        function renderDetectivePanel(prediction){
+            const ctx=`${state.chronology||''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`,flags=detectRedFlags(ctx),links=buildSymptomLinks(ctx),suspects=detectiveSuspects(prediction);
+            return `<div class="service-analysis-section" style="background:rgba(124,58,237,.055)"><b>🕵️ Mode Detektif RK CELL</b>${suspects.length?`<div style="margin-top:6px">${suspects.map(s=>`<div class="service-analysis-row"><b>#${s.rank} ${escapeHtml(s.state)}</b><span>${escapeHtml(s.name)}</span></div>`).join('')}</div>`:''}${links.length?`<div style="margin-top:8px"><b>🔗 Hubungan antar gejala</b><ul>${links.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}${flags.length?`<div style="margin-top:8px;padding:8px;border-radius:8px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2)"><b>🚨 Red Flag</b><ul>${flags.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul><small>Prioritaskan keselamatan dan pemeriksaan fisik sebelum eksperimen lanjutan.</small></div>`:''}</div>`;
+        }
+        function shouldStopDiagnosticEarly(){const ctx=`${state.chronology||''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`;const f=detectRedFlags(ctx),l=buildSymptomLinks(ctx),n=state.diagnosticAnswers?.length||0;return (f.length>0&&n>=2)||(l.length>0&&n>=3)||n>=4;}
+        function detectContradiction(newAnswer=''){const previous=(state.diagnosticAnswers||[]).map(a=>String(a.answer||'').toLowerCase()).join(' | '),n=String(newAnswer||'').toLowerCase(),c=[];if(/seluruh layar/.test(previous)&&/sebagian|bagian atas|bagian bawah/.test(n))c.push('Awalnya seluruh layar disebut bermasalah, tetapi informasi baru menunjukkan hanya sebagian area.');if(/tidak ada respons/.test(previous)&&/ada getar|ada suara|muncul logo/.test(n))c.push('Informasi baru menunjukkan HP sebenarnya masih memiliki tanda kehidupan.');if(/sim tidak terbaca/.test(previous)&&/sim terbaca|no signal/.test(n))c.push('SIM ternyata terdeteksi; analisis bergeser dari reader SIM ke jalur sinyal/RF.');return c;}
         function renderDiagnosticPrediction() {
             const p = buildDiagnosticPrediction(state.detectedCategory, state.chronology, state.diagnosticAnswers, state.duration, state.deviceModel);
-            const confidence = state.diagnosticAnswers.length >= 3 ? 'Sedang' : 'Awal';
-            return `<div class="tracking-card ai-advice-card" style="border-color:var(--accent-purple)">
+            const confidence = diagnosticConfidenceLabel();
+            const toneNow = detectCustomerTone(`${state.chronology || ''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`);
+            return `<div class="tracking-card ai-advice-card" style="border-color:${toneNow==='serious' ? 'var(--accent-red)' : 'var(--accent-purple)'}">
                 <strong>🧠 Prediksi Awal AI RK CELL</strong>
                 ${rkPersonaInterlude(state.detectedCategory, state.chronology + ' ' + (state.diagnosticAnswers||[]).map(a=>a.answer).join(' '))}
-                <div class="service-analysis-section"><b>🎯 Kemungkinan utama • tingkat keyakinan ${confidence}</b><ol>${p.likely.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ol></div>
+                ${renderDetectivePanel(p)}
+                <div class="service-analysis-section"><b>🎯 Kesimpulan Bertingkat • ${confidence}</b><ol>${p.likely.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ol></div>
                 ${p.checks.length ? `<div class="service-analysis-section"><b>🔬 Pemeriksaan yang disarankan</b><ul>${p.checks.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}
                 ${p.safe.length ? `<div class="service-analysis-section"><b>✅ Yang boleh dilakukan pelanggan</b><ul>${p.safe.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}
                 ${p.avoid.length ? `<div class="service-analysis-section"><b>⚠️ Yang sebaiknya dihindari</b><ul>${p.avoid.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`:''}
                 <div class="muted" style="font-size:7.2pt;margin-top:7px">Prediksi ini berdasarkan cerita pelanggan, bukan pengganti pengukuran teknisi. AI sengaja tidak langsung memvonis IC/CPU sebelum faktor part, konektor, software, dan hasil ukur dipisahkan.</div>
+                ${confidence === 'Masih perlu pemeriksaan' ? `<div class="chip-container ai-no-voice" data-no-voice="true"><button class="chip-btn" onclick="window.open('https://wa.me/6285148495045','_blank')">👨‍🔧 Panggil Admin RK CELL</button></div>` : ''}
             </div>`;
         }
 
         function processFlow(userText, overrideCategory = null) {
+            if ('speechSynthesis' in window) speechSynthesis.cancel();
             let parsed = parseUserInputSmart(userText);
             if (overrideCategory && ISSUE_CATEGORIES[overrideCategory]) {
                 parsed.foundCategory = ISSUE_CATEGORIES[overrideCategory];
@@ -3507,6 +3652,8 @@ const ISSUE_CATEGORIES = {
                 state.diagnosticAnswers = [];
                 state.diagnosticQueue = [];
                 state.diagnosticIndex = 0;
+                state.usedPersonaLines = [];
+                state.interactionCount = 0;
                 
                 showTyping(() => {
                     let switchMsg = `💡 <em>Oh, topik perbaikan diubah ke <strong>${parsed.foundCategory.label}</strong> ya Kak? Siap, AI sudah menyesuaikan!</em><br><br>`;
@@ -3661,13 +3808,24 @@ const ISSUE_CATEGORIES = {
             if (state.step === 'DIAGNOSTIC_INTERVIEW') {
                 const q = state.diagnosticQueue?.[state.diagnosticIndex];
                 if (q) {
+                    const contradictions = detectContradiction(userText);
                     state.diagnosticAnswers.push({
                         question: String(q.q || '').replace(/<[^>]+>/g,''),
                         answer: userText
                     });
                     state.diagnosticIndex += 1;
-                    saveAIState();
-                    askNextDiagnosticQuestion();
+                    if (contradictions.length) addMsg(`<strong>🔄 Saya perbarui analisisnya.</strong><br>${contradictions.map(x=>`• ${escapeHtml(x)}`).join('<br>')}<br><small>Informasi terbaru saya prioritaskan agar diagnosis tidak terpaku pada dugaan awal.</small>`);
+
+                    const combinedDiagText = `${state.chronology || ''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`.toLowerCase();
+                    const highSignal = /(kembung|asap|bau terbakar|terendam|kena air|mati total|baseband unknown|imei hilang|harus ditekan|ghost touch|blank|tidak ada respons)/i.test(combinedDiagText);
+                    if (shouldStopDiagnosticEarly() || (highSignal && state.diagnosticAnswers.length >= 2)) {
+                        state.step = 'ASK_DURATION';
+                        saveAIState();
+                        showTyping(() => addMsg(`Detailnya sudah cukup kuat untuk membuat analisa awal. <strong>Sejak kapan</strong> kendala ini mulai dirasakan Kak?`));
+                    } else {
+                        saveAIState();
+                        askNextDiagnosticQuestion();
+                    }
                 } else {
                     state.step = 'ASK_DURATION';
                     saveAIState();
@@ -3708,7 +3866,9 @@ const ISSUE_CATEGORIES = {
                                  `Keluhan: ${catLabel}\n` +
                                  `Kronologi: ${state.chronology}\n` +
                                  `Detail gejala: ${(state.diagnosticAnswers||[]).map((a,i)=>`${i+1}) ${a.question}: ${a.answer}`).join(' | ') || '-'}\n` +
-                                 `Durasi: ${state.duration}`;
+                                 `Durasi: ${state.duration}\n` +
+                                 `Red flag: ${detectRedFlags(`${state.chronology||''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`).join(', ') || '-'}\n` +
+                                 `Catatan AI: ${buildSymptomLinks(`${state.chronology||''} ${(state.diagnosticAnswers||[]).map(a=>a.answer).join(' ')}`).join(' | ') || 'Perlu pemeriksaan teknisi'}`;
                     if(state.verificationProof) waText += `\nVerifikasi: ${state.verificationProof}`;
                     waText += `\n\n(Nota PDF telah diunduh dari sistem web)`;
 
@@ -3743,6 +3903,8 @@ const ISSUE_CATEGORIES = {
                 state.diagnosticAnswers = [];
                 state.diagnosticQueue = [];
                 state.diagnosticIndex = 0;
+                state.usedPersonaLines = [];
+                state.interactionCount = 0;
                 saveAIState();
                 processFlow(label, categoryKey);
                 return;
